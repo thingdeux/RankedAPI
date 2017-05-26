@@ -82,6 +82,7 @@ paths:
           name: "UserCreation"
           schema:
             "$ref": "#/definitions/User"
+
   /users/{userId}:
     get:
       summary: "Returns a user queried by id"
@@ -108,25 +109,28 @@ paths:
           "description": "Access Denied"
 
 
-  /users/friends:
-    summary: "Users Profile Information"
-    consumes:
-      - "application/json"
-    produces:
-      - "application/json"
-    security:
-      - ranked_auth:
-         - write:user
-         - read:user
-    responses:
-        200:
-          description: "Success"
-          schema:
-            $ref: "#/definitions/User"
-        404:
-          description: "Account does not exist"
-        403:
-          "description": "Access Denied"
+  /users/{userId}/following:
+    get:
+      summary: "List a given users' following"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      responses:
+          200:
+            description: "Success"
+            schema:
+              $ref: "#/definitions/UserArray"
+          404:
+            description: "Account does not exist"
+          403:
+            "description": "Access Denied"
+    post:
+
 
 definitions:
   User:
@@ -157,4 +161,10 @@ definitions:
       last_logged_in:
         type: "string"
         example: "2009-06-11 17:02:09+0000"
-  UserLite:
+  UserArray:
+    type: "object"
+    properties:
+      users:
+        type: "array"
+        items:
+          $ref: '#/definitions/User'
