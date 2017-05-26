@@ -1,0 +1,160 @@
+swagger: "2.0"
+info:
+  title: "Ranked API"
+  description: "API for mobile and/or Web Clients"
+  version: "0.0.1"
+  contact:
+    email: "me@josh.land"
+
+host: "localhost"
+basePath:
+  "/api/v1"
+schemes:
+  - "https"
+  - "http"
+
+securityDefinitions:
+  ranked_auth:
+      type: "oauth2"
+      authorizationUrl: "http://api.localhost/auth/"
+      flow: "implicit"
+      scopes:
+        write:user: "Modify User profile"
+        write:videos: "Upload and classify Videos"
+        read:user: "Read your user profile"
+        read:videos: "Read and Explore Videos"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+
+paths:
+  /users:
+    get:
+      summary: "Users Profile Information"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: "Account has been deleted"
+        403:
+          "description": "Access Denied"
+
+    post:
+      summary: "Create a New User"
+      consumes:
+        - "application/json"
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: "formData"
+          name: "email"
+          description: "Users' E-Mail address"
+          required: true
+          type: "string"
+        - in: "formdata"
+          name: "username"
+          description: "Users' Username"
+          required: true
+          type: "string"
+        - in: "formData"
+          name: "password"
+          description: "Users' Password"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: "Success"
+          name: "UserCreation"
+          schema:
+            "$ref": "#/definitions/User"
+  /users/{userId}:
+    get:
+      summary: "Returns a user queried by id"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: int64
+          minimum: 1
+      security:
+        - ranked_auth:
+          - write:user
+          - read:user
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: "Account does not exist"
+        403:
+          "description": "Access Denied"
+
+
+  /users/friends:
+    summary: "Users Profile Information"
+    consumes:
+      - "application/json"
+    produces:
+      - "application/json"
+    security:
+      - ranked_auth:
+         - write:user
+         - read:user
+    responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: "Account does not exist"
+        403:
+          "description": "Access Denied"
+
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 12345
+      username:
+        type: "string"
+        example: "Joshinator"
+      email:
+        type: "string"
+        example: "josh@josh.com"
+      avatar_url:
+        type: "string"
+        example: "http://localhost/static/images/1234.jpg"
+      password:
+        type: "string"
+        example: "InPlainText?!"
+      is_partner:
+        type: "boolean"
+        example: true
+      is_featured:
+        type: "boolean"
+        example: false
+      last_logged_in:
+        type: "string"
+        example: "2009-06-11 17:02:09+0000"
+  UserLite:

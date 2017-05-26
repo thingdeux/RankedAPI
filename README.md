@@ -2,6 +2,8 @@
 
 Ranked API - A Backend platform for providing services to the Ranked Mobile apps.
 
+# [WIP] API Documentation can be found [HERE]()
+
 ### What is this repository for? ###
 
 * Ranked API
@@ -16,3 +18,4 @@ Ranked API - A Backend platform for providing services to the Ranked Mobile apps
 
 * PEP8 or bust! [With exceptions when applicable - no need to be completely beholden to it]
 * Simple, Yeah....Simple.  Clarity is better than brevity.
+
