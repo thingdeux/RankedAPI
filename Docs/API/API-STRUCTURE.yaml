@@ -16,7 +16,7 @@ schemes:
 securityDefinitions:
   ranked_auth:
       type: "oauth2"
-      authorizationUrl: "http://api.localhost/auth/"
+      authorizationUrl: "http://api.localhost/users/auth/"
       flow: "implicit"
       scopes:
         write:user: "Modify User profile"
@@ -28,128 +28,13 @@ securityDefinitions:
     name: "api_key"
     in: "header"
 
-paths:
-  /users:
-    get:
-      summary: "Users Profile Information"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      security:
-        - ranked_auth:
-           - write:user
-           - read:user
-
-      responses:
-        200:
-          description: "Success"
-          schema:
-            $ref: "#/definitions/User"
-        404:
-          description: "Account has been deleted"
-        403:
-          "description": "Access Denied"
-
-    post:
-      summary: "Create a New User"
-      consumes:
-        - "application/json"
-        - "application/x-www-form-urlencoded"
-      produces:
-        - "application/json"
-
-      parameters:
-        - in: "formData"
-          name: "email"
-          description: "Users' E-Mail address"
-          required: true
-          type: "string"
-        - in: "formdata"
-          name: "username"
-          description: "Users' Username"
-          required: true
-          type: "string"
-        - in: "formData"
-          name: "password"
-          description: "Users' Password"
-          required: true
-          type: "string"
-
-      responses:
-        200:
-          description: "Success"
-          name: "UserCreation"
-          schema:
-            "$ref": "#/definitions/User"
-
-  /users/{user_id}:
-    get:
-      summary: "Returns a user queried by id"
-      produces:
-        - "application/json"
-      parameters:
-        - in: path
-          name: user_id
-          required: true
-          type: int64
-          minimum: 1
-      security:
-        - ranked_auth:
-          - write:user
-          - read:user
-      responses:
-        200:
-          description: "Success"
-          schema:
-            $ref: "#/definitions/User"
-        404:
-          description: "Account does not exist"
-        403:
-          "description": "Access Denied"
-
-
-  /users/{user_id}/friends:
-    get:
-      summary: "List a given users' friends"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      security:
-        - ranked_auth:
-           - write:user
-           - read:user
-      responses:
-          200:
-            description: "Success"
-            schema:
-              $ref: "#/definitions/UserArray"
-          404:
-            description: "Account does not exist"
-          403:
-            "description": "Access Denied"
-
-    post:
-      summary: "Follow a user"
-    consumes:
-        - "application/json"
-    produces:
-      - "application/json"
-    security:
-      - ranked_auth:
-         - write:user
-         - read:user
-    responses:
-        200:
-          description: "Success"
-        404:
-          description: "Account does not exist"
-        403:
-          "description": "Access Denied - Can't Follow"
-
-
 definitions:
+  SortCriteria:
+    type: string
+    enum: &SORTS
+      - Top
+      - New
+      - Featured
   User:
     type: "object"
     properties:
@@ -185,3 +70,150 @@ definitions:
         type: "array"
         items:
           $ref: '#/definitions/User'
+
+paths:
+  /users/auth:
+    post:
+
+
+  /users:
+    get:
+      summary: "Users Profile Information"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: query
+          name: sort
+          required: false
+          type: string
+          enum: *SORTS
+
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/User"
+        401:
+          description: "Unauthorized"
+        403:
+          "description": "Access Denied"
+        404:
+          description: "Account has been deleted"
+
+    post:
+      summary: "Create a New User"
+      consumes:
+        - "application/json"
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: "formData"
+          name: "email"
+          description: "Users' E-Mail address"
+          required: true
+          type: "string"
+        - in: "formdata"
+          name: "username"
+          description: "Users' Username"
+          required: true
+          type: "string"
+        - in: "formData"
+          name: "password"
+          description: "Users' Password"
+          required: true
+          type: "string"
+
+      responses:
+        200:
+          description: "Success"
+          name: "UserCreation"
+          schema:
+            "$ref": "#/definitions/User"
+        401:
+          description: "Unauthorized"
+        403:
+          "description": "Access Denied"
+
+  /users/{user_id}:
+    get:
+      summary: "Returns a user queried by id"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          type: int64
+          minimum: 1
+      security:
+        - ranked_auth:
+          - write:user
+          - read:user
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/User"
+        401:
+          description: "Unauthorized"
+        403:
+          "description": "Access Denied"
+        404:
+          description: "Account does not exist"
+
+  /users/{user_id}/friends:
+    get:
+      summary: "List a given users' friends"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      responses:
+          200:
+            description: "Success"
+            schema:
+              $ref: "#/definitions/UserArray"
+          401:
+            description: "Unauthorized"
+          404:
+            description: "Account does not exist"
+          403:
+            "description": "Access Denied"
+
+    post:
+      summary: "Follow a user"
+    consumes:
+      - "application/json"
+    produces:
+      - "application/json"
+    security:
+      - ranked_auth:
+         - write:user
+         - read:user
+    parameters:
+      - in: path
+        name: user_id
+
+    responses:
+        200:
+          description: "Success"
+        401:
+          description: "Unauthorized"
+        403:
+          "description": "Access Denied - Can't Follow this user."
+        404:
+          description: "Account does not exist"
+
+
