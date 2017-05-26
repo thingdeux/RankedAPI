@@ -10,7 +10,7 @@ Ranked API - A Backend platform for providing services to the Ranked Mobile apps
 
 ### How do I get set up? ###
 
-* Dependencies:  Python 3.x | Django 1.9 | Celery 4.x
+* Dependencies:  Python 3.x | Django 1.11 | Celery 4.x
 
 ### Contribution guidelines ###
 

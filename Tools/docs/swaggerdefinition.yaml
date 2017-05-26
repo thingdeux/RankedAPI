@@ -1,0 +1,115 @@
+swagger: "2.0"
+info:
+  title: "Ranked API"
+  description: "API for mobile and/or Web Clients"
+  version: "0.0.1"
+  contact:
+    email: "me@josh.land"
+
+host: "localhost"
+basePath:
+  "/api/v1"
+schemes:
+  - "https"
+  - "http"
+
+securityDefinitions:
+  ranked_auth:
+      type: "oauth2"
+      authorizationUrl: "http://api.localhost/auth/"
+      flow: "implicit"
+      scopes:
+        write:user: "Modify User profile"
+        write:videos: "Upload and classify Videos"
+        read:user: "Read your user profile"
+        read:videos: "Read and Explore Videos"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+
+paths:
+  /user:
+    get:
+      summary: "Users Profile Information"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      security:
+        - ranked_auth:
+           - write:user,
+           - read:user
+
+      responses:
+        200:
+          description: "Success"
+          schema:
+            "$ref": "#/definitions/User"
+        404:
+          description: "Account has been deleted"
+        403:
+          "description": "Access Denied"
+
+    post:
+      summary: "Create a New User"
+      consumes:
+        - "application/json"
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+
+      parameters:
+        schema:
+          $ref: "#/definitions/UserCreate"
+
+      responses:
+        200:
+          description: "Success"
+          name: "UserCreation"
+          schema:
+            "$ref": "#/definitions/User"
+
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      email:
+        type: "string"
+      avatar_url:
+        "type": "string"
+      password:
+        "type": "string"
+      is_partner:
+        "type": "boolean"
+      is_featured:
+        "type": "boolean"
+      last_logged_in:
+        "type": "string"
+
+  UserCreate:
+    type": "object"
+    properties:
+      email:
+        "in": "formData"
+        "description": "Users' E-Mail address"
+        "required": true
+        "type": "string"
+
+      username:
+        in: "formData"
+        description: "Users' Username"
+        required: true
+        type: "string"
+
+      password:
+        in: "formData"
+        description: "Users' Password"
+        required: true,
+        type: "string"
