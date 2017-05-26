@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "Ranked API"
   description: "API for mobile and/or Web Clients"
-  version: "0.0.1"
+  version: "0.0.5"
   contact:
     email: "me@josh.land"
 
@@ -83,14 +83,14 @@ paths:
           schema:
             "$ref": "#/definitions/User"
 
-  /users/{userId}:
+  /users/{user_id}:
     get:
       summary: "Returns a user queried by id"
       produces:
         - "application/json"
       parameters:
         - in: path
-          name: userId
+          name: user_id
           required: true
           type: int64
           minimum: 1
@@ -109,9 +109,9 @@ paths:
           "description": "Access Denied"
 
 
-  /users/{userId}/following:
+  /users/{user_id}/friends:
     get:
-      summary: "List a given users' following"
+      summary: "List a given users' friends"
       consumes:
         - "application/json"
       produces:
@@ -129,7 +129,24 @@ paths:
             description: "Account does not exist"
           403:
             "description": "Access Denied"
+
     post:
+      summary: "Follow a user"
+    consumes:
+        - "application/json"
+    produces:
+      - "application/json"
+    security:
+      - ranked_auth:
+         - write:user
+         - read:user
+    responses:
+        200:
+          description: "Success"
+        404:
+          description: "Account does not exist"
+        403:
+          "description": "Access Denied - Can't Follow"
 
 
 definitions:
