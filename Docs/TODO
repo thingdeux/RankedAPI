@@ -1,0 +1,4 @@
+Before Production:
+    Update CodeDeploy Permissions for code deploy user. More restrictive
+
+Before Demo:
