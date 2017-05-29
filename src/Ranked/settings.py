@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Ranked.urls'
+ROOT_URLCONF = 'src.Ranked.urls'
 
 TEMPLATES = [
     {
@@ -75,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Ranked.wsgi.application'
+WSGI_APPLICATION = 'src.Ranked.wsgi.application'
 
 
 # Database
