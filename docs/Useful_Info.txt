@@ -1,0 +1,5 @@
+Code Deploy Instances:
+    Helpful Locations:
+        VirtualEnv Location: /home/ec2-user/.virtualenvs
+        App Location: /home/ec2-user/src/ranked
+        Deploy Log: /opt/codedeploy-agent/deployment-root/deployment-logs
