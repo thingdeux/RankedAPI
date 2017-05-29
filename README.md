@@ -10,7 +10,7 @@ Ranked API - A Backend platform for providing services to the Ranked Mobile apps
 
 ### How do I get set up? ###
 
-* Dependencies:  Python 3.6
+* Dependencies:  Python 3.5
 
 * Installing:
     - run pip(3) -r requirements.txt
