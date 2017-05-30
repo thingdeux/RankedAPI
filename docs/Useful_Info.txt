@@ -1,4 +1,6 @@
 Code Deploy Instances:
+    Useful Commands:
+        [Activate VirtualEnv on web server] source /home/ec2-user/.virtualenvs/ranked-venv/bin/activate
     Helpful Locations:
         VirtualEnv Location: /home/ec2-user/.virtualenvs
         App Location: /home/ec2-user/src/ranked
