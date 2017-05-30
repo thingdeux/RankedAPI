@@ -10,7 +10,7 @@ fi
 PATH=$PATH:$HOME/bin
 
 export PATH
-export WORKON_HOME=/home/ec2-user/src/ranked-venv
+export WORKON_HOME=$HOME/.virtualenvs/
 export PROJECT_HOME=$HOME/src/ranked/
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 source /usr/local/bin/virtualenvwrapper_lazy.sh
