@@ -5,7 +5,7 @@ source /home/ec2-user/.virtualenvs/ranked-venv/bin/activate
 echo yes | DJANGO_SETTINGS_MODULE=src.Ranked.settings /home/ec2-user/src/ranked/manage.py collectstatic
 DJANGO_SETTINGS_MODULE=src.Ranked.settings
 /home/ec2-user/src/ranked/manage.py collectstatic
-exec /usr/local/bin/uwsgi --ini /home/ec2-user/src/ranked/conf/uwsgi/goranked.ini --log-maxsize 10485760
+/usr/local/bin/uwsgi --ini /home/ec2-user/src/ranked/conf/uwsgi/goranked.ini --log-maxsize 10485760
 echo Server Started
 
 
