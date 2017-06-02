@@ -16,7 +16,7 @@
     },
     {
       "type": "text",
-      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\">Added uWSGI configuration for Django Host.<br>Updated NGINX rules for passthru to uWSGI<br>Fixed static root conf argument.<br>Updated os dependency script to include uWSGI install.</pre>"
+      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\">Make sure to touch the log file and the socket</pre>"
     }
   ]
 }
