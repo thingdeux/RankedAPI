@@ -4,8 +4,8 @@ cd /home/ec2-user/src/ranked/
 source /home/ec2-user/.virtualenvs/ranked-venv/bin/activate
 echo yes | DJANGO_SETTINGS_MODULE=src.Ranked.settings /home/ec2-user/src/ranked/manage.py collectstatic
 DJANGO_SETTINGS_MODULE=src.Ranked.settings
-/home/ec2-user/src/ranked/manage.py collectstatic
-gunicorn --env DJANGO_SETTINGS_MODULE=src.Ranked.settings src.Ranked.wsgi unix:$(/tmp/gunicorn.sock)
+/home/ec2-user/src/ranked/manage.py collectstatic --noinput --clear
+gunicorn --env DJANGO_SETTINGS_MODULE=src.Ranked.settings src.Ranked.wsgi --bind unix:/tmp/gunicorn.sock
 echo Server Started
 
 #/usr/local/bin/uwsgi --ini /home/ec2-user/src/ranked/conf/uwsgi/goranked.ini --log-maxsize 10485760

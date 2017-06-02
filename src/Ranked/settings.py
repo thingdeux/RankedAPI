@@ -25,7 +25,7 @@ SECRET_KEY = 'THIS WILL NEED TO CHANGE WHEN DEPLOYED!!! Local_settings.py should
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dev.goranked.com']
 
 
 # Application definition

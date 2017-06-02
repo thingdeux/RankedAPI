@@ -6,7 +6,7 @@ rm -rf /tmp/docs/*
 chown -R ec2-user:ec2-user /home/ec2-user/src
 chown -R nginx:nginx /tmp/docs
 
-touch /tmp/gunicorn.sock
+rm /tmp/gunicorn.sock
 chown ec2-user:ec2-user /tmp/gunicorn.sock
 # TODO: Remove these permissions
 chmod 777 /tmp/gunicorn.sock

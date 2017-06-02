@@ -16,7 +16,7 @@
     },
     {
       "type": "text",
-      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\">Make sure to touch the log file and the socket</pre>"
+      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\">route docs/ to /docs/index.html</pre>"
     }
   ]
 }
