@@ -303,3 +303,10 @@ paths:
           description: "Account does not exist"
 
 
+  /videos:
+    get:
+      summary: "List of Videos (sorted)"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
