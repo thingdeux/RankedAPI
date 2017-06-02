@@ -6,7 +6,7 @@ info:
   contact:
     email: "me@josh.land"
 
-host: "localhost"
+host: "dev.goranked.com"
 basePath:
   "/api/v1"
 schemes:
@@ -16,7 +16,7 @@ schemes:
 securityDefinitions:
   ranked_auth:
       type: "oauth2"
-      authorizationUrl: "http://api.localhost/api/v1/users/auth/"
+      authorizationUrl: "http://dev.goranked.com/api/v1/users/auth/"
       flow: "implicit"
       scopes:
         write:user: "Modify User profile"
@@ -301,12 +301,3 @@ paths:
           "description": "Access Denied - Can't Follow this user."
         404:
           description: "Account does not exist"
-
-
-  /videos:
-    get:
-      summary: "List of Videos (sorted)"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"

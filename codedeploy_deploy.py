@@ -109,6 +109,5 @@ def main():
     if not deploy_new_revision():
         sys.exit(1)
 
-
 if __name__ == "__main__":
     main()
