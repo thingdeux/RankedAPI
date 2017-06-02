@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from src.videos.views import placeholder
 
 urlpatterns = [
-    url(r'^api/', admin.site.urls),
+    url(r'^', placeholder),
+    # url(r'^api/', admin.site.urls),
     # url(r'^admin/', admin.site.urls),
     # url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]

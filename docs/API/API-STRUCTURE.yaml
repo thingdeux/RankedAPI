@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "Ranked API"
   description: "API for mobile and/or Web Clients"
-  version: "0.0.5"
+  version: "0.0.1"
   contact:
     email: "me@josh.land"
 
@@ -10,8 +10,11 @@ host: "dev.goranked.com"
 basePath:
   "/api/v1"
 schemes:
-  - "https"
   - "http"
+tags:
+  - User:
+    name: "User"
+    description: "Everything related to user accounts"
 
 securityDefinitions:
   ranked_auth:
@@ -83,6 +86,11 @@ definitions:
       last_logged_in:
         type: "string"
         example: "2009-06-11 17:02:09+0000"
+      videos:
+        type: "array"
+        items:
+          $ref: "#/definitions/Video"
+
   UserArray:
     type: "object"
     properties:
@@ -91,10 +99,41 @@ definitions:
         items:
           $ref: '#/definitions/User'
 
+  Video:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 12345
+      title:
+        type: "string"
+        example: "When you've got it - flaunt it"
+      ranking:
+        type: "integer"
+        format: "int32"
+        example: 34
+      is_featured:
+        type: "boolean"
+        example: false
+      uploaded_by:
+        type: "object"
+        $ref: "#/definitions/User"
+
+  VideoArray:
+    type: "object"
+    properties:
+      videos:
+        type: "array"
+        items:
+          $ref: '#/definitions/Video'
+
 paths:
   /users/register:
     post:
       summary: "User Registration Endpoint"
+      tags:
+        - "User"
       consumes:
         - "application/x-www-form-urlencoded"
       produces:
@@ -132,6 +171,8 @@ paths:
   /users/auth:
     post:
       summary: "OAuth Authorization Endpoint for already registered users."
+      tags:
+        - "User"
       consumes:
         - "application/x-www-form-urlencoded"
       produces:
@@ -161,25 +202,17 @@ paths:
           description: "Incorrect username/password combo"
         403:
           description: "Access Denied or account deleted"
-
-  /users:
+  /users/me:
     get:
-      summary: "Users Profile Information"
-      consumes:
-        - "application/json"
+      summary: "Returns authorized users information"
+      tags:
+        - "User"
       produces:
         - "application/json"
       security:
         - ranked_auth:
-           - write:user
-           - read:user
-      parameters:
-        - in: query
-          name: sort
-          required: false
-          type: string
-          enum: *SORTS
-
+          - write:user
+          - read:user
       responses:
         200:
           description: "Success"
@@ -190,17 +223,55 @@ paths:
         403:
           "description": "Access Denied"
         404:
-          description: "Account has been deleted"
+          description: "No account found"
 
-    post:
-      summary: "Create a New User"
+  /users/{user_id}:
+    get:
+      summary: "Returns a user queried by id"
+      tags:
+        - "User"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          type: int64
+          minimum: 1
+      security:
+        - ranked_auth:
+          - write:user
+          - read:user
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/User"
+        401:
+          description: "Unauthorized"
+        403:
+          "description": "Access Denied"
+        404:
+          description: "Account does not exist"
+
+    put:
+      summary: "Update a Users information"
+      tags:
+        - "User"
       consumes:
         - "application/json"
         - "application/x-www-form-urlencoded"
       produces:
         - "application/json"
-
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
       parameters:
+        - in: query
+          name: user_id
+          required: true
+          type: string
         - in: "formData"
           name: "email"
           description: "Users' E-Mail address"
@@ -228,36 +299,11 @@ paths:
         403:
           "description": "Access Denied"
 
-  /users/{user_id}:
-    get:
-      summary: "Returns a user queried by id"
-      produces:
-        - "application/json"
-      parameters:
-        - in: path
-          name: user_id
-          required: true
-          type: int64
-          minimum: 1
-      security:
-        - ranked_auth:
-          - write:user
-          - read:user
-      responses:
-        200:
-          description: "Success"
-          schema:
-            $ref: "#/definitions/User"
-        401:
-          description: "Unauthorized"
-        403:
-          "description": "Access Denied"
-        404:
-          description: "Account does not exist"
-
   /users/{user_id}/friends:
     get:
       summary: "List a given users' friends"
+      tags:
+        - "User"
       consumes:
         - "application/json"
       produces:
@@ -277,27 +323,57 @@ paths:
             description: "Account does not exist"
           403:
             "description": "Access Denied"
-
     post:
       summary: "Follow a user"
-    consumes:
-      - "application/json"
-    produces:
-      - "application/json"
-    security:
-      - ranked_auth:
-         - write:user
-         - read:user
-    parameters:
-      - in: path
-        name: user_id
-
-    responses:
-        200:
-          description: "Success"
-        401:
-          description: "Unauthorized"
-        403:
-          "description": "Access Denied - Can't Follow this user."
-        404:
-          description: "Account does not exist"
+      tags:
+        - "User"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          type: int64
+          minimum: 1
+      responses:
+          200:
+            description: "Success"
+          401:
+            description: "Unauthorized"
+          403:
+            "description": "Access Denied - Can't Follow this user."
+          404:
+            description: "Account does not exist"
+    delete:
+      summary: "Stop Following a user"
+      tags:
+        - "User"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          type: int64
+          minimum: 1
+      responses:
+          200:
+            description: "Success"
+          401:
+            description: "Unauthorized"
+          403:
+            "description": "Access Denied"
+          404:
+            description: "Not currently following this user"
