@@ -16,7 +16,7 @@ schemes:
 securityDefinitions:
   ranked_auth:
       type: "oauth2"
-      authorizationUrl: "http://api.localhost/users/auth/"
+      authorizationUrl: "http://api.localhost/api/v1/users/auth/"
       flow: "implicit"
       scopes:
         write:user: "Modify User profile"
@@ -35,6 +35,26 @@ definitions:
       - Top
       - New
       - Featured
+  UserAuth:
+    type: "object"
+    properties:
+      access_token:
+        type: "string"
+        example: "FF$#($&*%#BFBFBKA123"
+      token_type:
+        type: "string"
+        example: "Bearer"
+      expires_in:
+        type: "integer"
+        format: "int64"
+        example: 36000
+      refresh_token:
+        type: "string"
+        example: "RW$)%(^(^$#DSJFJ"
+      scope:
+        type: "string"
+        example: "read"
+
   User:
     type: "object"
     properties:
@@ -72,9 +92,75 @@ definitions:
           $ref: '#/definitions/User'
 
 paths:
+  /users/register:
+    post:
+      summary: "User Registration Endpoint"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "formData"
+          name: "username"
+          type: "string"
+          required: true
+          example: "SaraDean245"
+        - in: "formData"
+          name: "email"
+          type: "string"
+          required: true
+          example: "me@me.me"
+        - in: "formData"
+          name: "password"
+          type: "string"
+          required: true
+          example: "4Toxic"
+        - in: "formData"
+          name: "unlock_key"
+          type: "string"
+          required: true
+          example: "TooSoonButN0TSoon"
+      responses:
+        201:
+          description: "Account created"
+        400:
+          description: "Missing Required Fields"
+        408:
+          description: "Account already exists"
+
+
   /users/auth:
     post:
-
+      summary: "OAuth Authorization Endpoint for already registered users."
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "formData"
+          name: "grant_type"
+          type: "string"
+          required: true
+          example: "SaraDean245"
+        - in: "formData"
+          name: "Username"
+          type: "string"
+          required: true
+          example: "Timmy2"
+        - in: "formData"
+          name: "password"
+          type: "string"
+          required: true
+          example: "f34455"
+      responses:
+        200:
+          description: "Auth Success"
+          schema:
+            $ref: "#/definitions/UserAuth"
+        401:
+          description: "Incorrect username/password combo"
+        403:
+          description: "Access Denied or account deleted"
 
   /users:
     get:

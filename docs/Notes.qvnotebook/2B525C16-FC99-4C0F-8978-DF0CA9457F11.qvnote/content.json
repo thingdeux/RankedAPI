@@ -1,0 +1,9 @@
+{
+  "title": "TODO",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "### Before Production:\n\n * Update CodeDeploy Permissions for code deploy user. More restrictive\n\n * See if Python 3.6 is available on Amazon Yum Repo.\n\n### Before Demo:"
+    }
+  ]
+}
