@@ -114,6 +114,8 @@ Class | Method | HTTP request | Description
  - [RankedApi.UserList](docs/UserList.md)
  - [RankedApi.Video](docs/Video.md)
  - [RankedApi.VideoDetail](docs/VideoDetail.md)
+ - [RankedApi.VideoImageOptions](docs/VideoImageOptions.md)
+ - [RankedApi.VideoLinks](docs/VideoLinks.md)
  - [RankedApi.VideoList](docs/VideoList.md)
  - [RankedApi.VideoQualityOptions](docs/VideoQualityOptions.md)
  - [RankedApi.VideoUploadDetails](docs/VideoUploadDetails.md)

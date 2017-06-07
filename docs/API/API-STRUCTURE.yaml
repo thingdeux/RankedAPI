@@ -136,6 +136,8 @@ definitions:
         type: integer
         format: "int32"
         example: 12
+      image_links:
+        $ref: "#/definitions/VideoImageOptions"
       uploaded_by:
         $ref: "#/definitions/User"
   VideoDetail:
@@ -170,9 +172,20 @@ definitions:
           $ref: '#/definitions/Comment'
       links:
         type: "object"
-        $ref: "#/definitions/VideoQualityOptions"
+        $ref: "#/definitions/VideoLinks"
       uploaded_by:
         $ref: "#/definitions/User"
+  VideoImageOptions:
+    type: "object"
+    properties:
+      thumbnail:
+        type: "string"
+        name: "thumbnail"
+        example: "http://aws.s3344555/static/vifff.jpg"
+      large:
+        type: "string"
+        name: "large"
+        example: "http://aws.s3344555/static/vifff.jpg"
   VideoQualityOptions:
     type: "object"
     properties:
@@ -192,6 +205,16 @@ definitions:
         type: "string"
         name: "hd"
         example: "http://aws.s3344555/video.mp4"
+  VideoLinks:
+    type: "object"
+    properties:
+      video_links:
+        type: "object"
+        $ref: "#/definitions/VideoQualityOptions"
+      image_links:
+        type: "object"
+        $ref: "#/definitions/VideoImageOptions"
+
   VideoList:
     type: "object"
     properties:

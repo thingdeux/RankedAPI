@@ -14,18 +14,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/User'], factory);
+    define(['ApiClient', 'model/User', 'model/VideoImageOptions'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./User'));
+    module.exports = factory(require('../ApiClient'), require('./User'), require('./VideoImageOptions'));
   } else {
     // Browser globals (root is window)
     if (!root.RankedApi) {
       root.RankedApi = {};
     }
-    root.RankedApi.Video = factory(root.RankedApi.ApiClient, root.RankedApi.User);
+    root.RankedApi.Video = factory(root.RankedApi.ApiClient, root.RankedApi.User, root.RankedApi.VideoImageOptions);
   }
-}(this, function(ApiClient, User) {
+}(this, function(ApiClient, User, VideoImageOptions) {
   'use strict';
 
 
@@ -44,6 +44,7 @@
    */
   var exports = function() {
     var _this = this;
+
 
 
 
@@ -87,6 +88,9 @@
       if (data.hasOwnProperty('likes')) {
         obj['likes'] = ApiClient.convertToType(data['likes'], 'Number');
       }
+      if (data.hasOwnProperty('image_links')) {
+        obj['image_links'] = VideoImageOptions.constructFromObject(data['image_links']);
+      }
       if (data.hasOwnProperty('uploaded_by')) {
         obj['uploaded_by'] = User.constructFromObject(data['uploaded_by']);
       }
@@ -122,6 +126,10 @@
    * @member {Number} likes
    */
   exports.prototype['likes'] = undefined;
+  /**
+   * @member {module:model/VideoImageOptions} image_links
+   */
+  exports.prototype['image_links'] = undefined;
   /**
    * @member {module:model/User} uploaded_by
    */

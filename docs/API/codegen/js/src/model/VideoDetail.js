@@ -14,18 +14,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Comment', 'model/User', 'model/VideoQualityOptions'], factory);
+    define(['ApiClient', 'model/Comment', 'model/User', 'model/VideoLinks'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./Comment'), require('./User'), require('./VideoQualityOptions'));
+    module.exports = factory(require('../ApiClient'), require('./Comment'), require('./User'), require('./VideoLinks'));
   } else {
     // Browser globals (root is window)
     if (!root.RankedApi) {
       root.RankedApi = {};
     }
-    root.RankedApi.VideoDetail = factory(root.RankedApi.ApiClient, root.RankedApi.Comment, root.RankedApi.User, root.RankedApi.VideoQualityOptions);
+    root.RankedApi.VideoDetail = factory(root.RankedApi.ApiClient, root.RankedApi.Comment, root.RankedApi.User, root.RankedApi.VideoLinks);
   }
-}(this, function(ApiClient, Comment, User, VideoQualityOptions) {
+}(this, function(ApiClient, Comment, User, VideoLinks) {
   'use strict';
 
 
@@ -93,7 +93,7 @@
         obj['comments'] = ApiClient.convertToType(data['comments'], [Comment]);
       }
       if (data.hasOwnProperty('links')) {
-        obj['links'] = VideoQualityOptions.constructFromObject(data['links']);
+        obj['links'] = VideoLinks.constructFromObject(data['links']);
       }
       if (data.hasOwnProperty('uploaded_by')) {
         obj['uploaded_by'] = User.constructFromObject(data['uploaded_by']);
@@ -135,7 +135,7 @@
    */
   exports.prototype['comments'] = undefined;
   /**
-   * @member {module:model/VideoQualityOptions} links
+   * @member {module:model/VideoLinks} links
    */
   exports.prototype['links'] = undefined;
   /**

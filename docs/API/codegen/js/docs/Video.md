@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **category** | **String** |  | [optional] 
 **subCategory** | **String** |  | [optional] 
 **likes** | **Number** |  | [optional] 
+**imageLinks** | [**VideoImageOptions**](VideoImageOptions.md) |  | [optional] 
 **uploadedBy** | [**User**](User.md) |  | [optional] 
 
 

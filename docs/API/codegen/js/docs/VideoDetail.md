@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **subCategory** | **String** |  | [optional] 
 **isProcessing** | **Boolean** |  | [optional] 
 **comments** | [**[Comment]**](Comment.md) |  | [optional] 
-**links** | [**VideoQualityOptions**](VideoQualityOptions.md) |  | [optional] 
+**links** | [**VideoLinks**](VideoLinks.md) |  | [optional] 
 **uploadedBy** | [**User**](User.md) |  | [optional] 
 
 
