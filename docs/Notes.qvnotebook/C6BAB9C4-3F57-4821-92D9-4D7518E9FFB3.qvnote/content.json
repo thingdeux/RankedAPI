@@ -2,9 +2,22 @@
   "title": "Flow Diagrams",
   "cells": [
     {
+      "type": "markdown",
+      "data": "### VIDEO UPLOAD [RAW]"
+    },
+    {
       "type": "diagram",
       "diagramType": "flow",
-      "data": ""
+      "data": "start=>start: Request Upload\ndone=>end: Success\nfailure=>end: Failed\n\n\nauthOp1=>operation: Authorize\nauthCheck=>condition: Authorized?\n\nuploadOp1=>operation: Upload Processor\nuploadOp2=>operation: Generate Unique Reference Name\nuploadOp3=>operation: Request AWS Cognito S3 Auth\n(GetOpenIdTokenForDeveloperIdentity)\nuploadAWSAuthCheck=>condition: Authorized?\n\nuploadOp4=>operation: Get AWS Cognito S3 Credentials\n(GetCredentialsForIdentity)\nuploadOp5=>operation: Respond w/ Key/Secret\nuploadOp6=>operation: Respond w/ Credentials and Resource for Upload\nuploadOp7=>inputoutput: Start Upload\nuploadDoneCheck=>condition: Complete?\n\nstart->authCheck\n    authCheck(yes)->uploadOp1->uploadOp2->uploadOp3->uploadAWSAuthCheck\n        uploadAWSAuthCheck(yes)->uploadOp4->uploadOp5->uploadOp6->uploadOp7->uploadDoneCheck\n            uploadDoneCheck(yes)->done\n            uploadDoneCheck(no)->failure\n        uploadAWSAuthCheck(no)->failure\n    \nauthCheck(no)->failure"
+    },
+    {
+      "type": "markdown",
+      "data": "### VIDEO PROCESSING CELERY WORKER QUEUE"
+    },
+    {
+      "type": "diagram",
+      "diagramType": "flow",
+      "data": "start=>start: Check For Unprocessed\ndone=>end: Processed\ndoneWait=>end: WaitForNextPoll\n\npoll0=>operation: Check RAW folder for files\npollCheckVideoFound=>condition: Video Found?\n\nprocess0=>operation: Process Video\nprocess01=>operation: Save new file(x3 Qualities)\nprocess1=>operation: Delete Raw (or mark)\nprocess2=>operation: Create Notify File\nprocess3=>operation: Lambda(Notify Backend w/ Ref)\nbackendNotified=>condition: Received?\nprocess4=>operation: Lambda(Delete Notify File)\n\n\nstart->poll0->pollCheckVideoFound\npollCheckVideoFound(yes, right)->process0->process01->process1->process2->process3->backendNotified\n    backendNotified(yes)->process4(left)->doneWait\n    backendNotified(no)->doneWait\npollCheckVideoFound(no)->doneWait"
     }
   ]
 }

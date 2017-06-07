@@ -12,11 +12,15 @@
     },
     {
       "type": "text",
-      "data": "<h3><span style=\"font-weight: normal;\">Types of Resources:</span></h3>\n<pre><code>/Videos\n  Get\n  List [-Sort- Method] [Top | New | Featured]\n  Put [Update Metadata]\n  Delete\n  Post [Upload]\n\n    ../[id]/rate\n    ../[id]/comment\n    \n/Photos\n  Get\n  List [-Sort- Method] [Top | New | Featured]\n  Rating\n  Post [Upload]\n    ../[id]/rate\n    ../[id]/comment\n\n/Users\n  Get\n  List [-Sort- Method] [Top | New | Featured]\n  Post\n\n  ../Friends\n    List\n    Crea\n</code></pre>\n"
+      "data": "<h3><span style=\"font-weight: normal;\">Types of Resources:</span></h3>\n<pre><code>/Videos\n  Get\n  List [-Sort- Method] [Top | New | Featured]\n  Put [Update Metadata]\n  Delete\n  Post [Upload]\n\n    ../[id]/rate\n    ../[id]/comment\n    \n/Photos\n  Get\n  List [-Sort- Method] [Top | New | Featured]\n  Rating\n  Post [Upload]\n    ../[id]/rate\n    ../[id]/comment\n</code></pre>\n"
     },
     {
       "type": "text",
-      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\">route docs/ to /docs/index.html</pre>"
+      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\">route docs/ to /docs/index.html</pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><br></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><a href=\"https://engineering.hipolabs.com/serverless-file-upload-with-aws-cognito-and-s3/\">https://engineering.hipolabs.com/serverless-file-upload-with-aws-cognito-and-s3/</a><br></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><br></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><br></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><br></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><div style=\"color: rgb(0, 0, 0); font-size: 10pt; font-variant-ligatures: normal; orphans: 2; white-space: normal; widows: 2; background-color: rgb(255, 255, 255); font-family: verdana, geneva;\">Create profile/Sign up&nbsp;</div><div style=\"color: rgb(0, 0, 0); font-size: 10pt; font-variant-ligatures: normal; orphans: 2; white-space: normal; widows: 2; background-color: rgb(255, 255, 255); font-family: verdana, geneva;\">Upload Videos | Pics&nbsp;</div><div style=\"color: rgb(0, 0, 0); font-size: 10pt; font-variant-ligatures: normal; orphans: 2; white-space: normal; widows: 2; background-color: rgb(255, 255, 255); font-family: verdana, geneva;\">User post</div><div style=\"color: rgb(0, 0, 0); font-size: 10pt; font-variant-ligatures: normal; orphans: 2; white-space: normal; widows: 2; background-color: rgb(255, 255, 255); font-family: verdana, geneva;\">Tag / Category support</div><div style=\"color: rgb(0, 0, 0); font-size: 10pt; font-variant-ligatures: normal; orphans: 2; white-space: normal; widows: 2; background-color: rgb(255, 255, 255); font-family: verdana, geneva;\">Search [ Basic Search by Title | Category ]</div><div style=\"color: rgb(0, 0, 0); font-size: 10pt; font-variant-ligatures: normal; orphans: 2; white-space: normal; widows: 2; background-color: rgb(255, 255, 255); font-family: verdana, geneva;\">- Mocked: Ranking</div></pre>"
+    },
+    {
+      "type": "text",
+      "data": ""
     }
   ]
 }

@@ -15,6 +15,9 @@ tags:
   - User:
     name: "User"
     description: "Everything related to user accounts"
+  - Videos:
+    name: "Videos"
+    description: "Everything related to Videos"
 
 securityDefinitions:
   ranked_auth:
@@ -57,7 +60,6 @@ definitions:
       scope:
         type: "string"
         example: "read"
-
   User:
     type: "object"
     properties:
@@ -74,9 +76,6 @@ definitions:
       avatar_url:
         type: "string"
         example: "http://localhost/static/images/1234.jpg"
-      password:
-        type: "string"
-        example: "InPlainText?!"
       is_partner:
         type: "boolean"
         example: true
@@ -86,10 +85,6 @@ definitions:
       last_logged_in:
         type: "string"
         example: "2009-06-11 17:02:09+0000"
-      videos:
-        type: "array"
-        items:
-          $ref: "#/definitions/Video"
 
   UserArray:
     type: "object"
@@ -116,8 +111,39 @@ definitions:
       is_featured:
         type: "boolean"
         example: false
+      category:
+        type: "string"
+        example: "Music"
+      sub_category:
+        type: "string"
+        example: "Acapella"
       uploaded_by:
-        type: "object"
+        $ref: "#/definitions/User"
+
+  VideoDetail:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 12345
+      title:
+        type: "string"
+        example: "When you've got it - flaunt it"
+      ranking:
+        type: "integer"
+        format: "int32"
+        example: 34
+      is_featured:
+        type: "boolean"
+        example: false
+      category:
+        type: "string"
+        example: "Music"
+      sub_category:
+        type: "string"
+        example: "Acapella"
+      uploaded_by:
         $ref: "#/definitions/User"
 
   VideoArray:
@@ -162,12 +188,12 @@ paths:
       responses:
         201:
           description: "Account created"
+          schema:
+            $ref: "#/definitions/UserAuth"
         400:
           description: "Missing Required Fields"
         408:
           description: "Account already exists"
-
-
   /users/auth:
     post:
       summary: "OAuth Authorization Endpoint for already registered users."
@@ -224,7 +250,6 @@ paths:
           "description": "Access Denied"
         404:
           description: "No account found"
-
   /users/{user_id}:
     get:
       summary: "Returns a user queried by id"
@@ -298,7 +323,6 @@ paths:
           description: "Unauthorized"
         403:
           "description": "Access Denied"
-
   /users/{user_id}/friends:
     get:
       summary: "List a given users' friends"
@@ -377,3 +401,44 @@ paths:
             "description": "Access Denied"
           404:
             description: "Not currently following this user"
+
+  # Videos
+  /videos:
+    get:
+      summary: "List of most popular videos"
+      tags:
+        - "Videos"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - read:user
+      responses:
+        200:
+          description: "Success"
+          object: "array"
+          schema:
+            $ref: "#/definitions/VideoArray"
+
+  /videos/{video_id}:
+    get:
+      summary: "List of most popular videos"
+      tags:
+        - "Videos"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - read:user
+      parameters:
+        - in: "query"
+          name: "video_id"
+          description: "Ranked Video Detail Resource - All details on a given video"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Success"
+          object: "array"
+          schema:
+            $ref: "#/definitions/VideoArray"

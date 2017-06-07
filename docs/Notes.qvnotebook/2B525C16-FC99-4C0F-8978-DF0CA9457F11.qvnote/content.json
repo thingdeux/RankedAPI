@@ -3,7 +3,7 @@
   "cells": [
     {
       "type": "markdown",
-      "data": "### Before Production:\n\n * Update CodeDeploy Permissions for code deploy user. More restrictive\n\n * See if Python 3.6 is available on Amazon Yum Repo.\n\n### Before Demo:\n\n### Up Next:\n* Deployment stalling during afterInstall"
+      "data": "### Before Production:\n\n * Update CodeDeploy Permissions for code deploy user. More restrictive\n * See if Python 3.6 is available on Amazon Yum Repo.\n\n### Before Demo:\n* Auto-Scale - Spin up another app box\n* RDS Setup for shared DB\n* Load Test\n\n\n### July Deliverables\n- [ ] Profile Creation\n- [ ] Video Upload\n- [ ] Video Transcode / Storage\n- [ ] Basic Search\n- [ ] Basic Analytics\n- [ ] Video Ranked\n- [ ] Tag / Category support for videos\n- [ ] User \"Friending\" / Following\n- [ ] Featured User increased ranking weight\n\n### Up Next:\n* Deployment stalling during afterInstall"
     }
   ]
 }
