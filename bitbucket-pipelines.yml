@@ -6,12 +6,14 @@
 image: python:3.6.0
 
 pipelines:
-  default:
-    - step:
-        script: # Modify the commands below to build your repository.
-          - apt-get update # required to install zip
-          - apt-get install -y zip # required for packaging up the application
-          - pip install -r requirements.txt
-          - python manage.py test
-          - zip -r /tmp/artifact.zip * # package up the application for deployment
-          - python codedeploy_deploy.py # run the deployment script
+  # Deployment pipeline for Ranked CodeDeploy
+  branches:
+    master:
+      - step:
+          script: # Modify the commands below to build your repository.
+            - apt-get update # required to install zip
+            - apt-get install -y zip # required for packaging up the application
+            - pip install -r requirements.txt
+            - python manage.py test
+            - zip -r /tmp/artifact.zip * # package up the application for deployment
+            - python codedeploy_deploy.py # run the deployment script

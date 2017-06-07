@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "Ranked API"
   description: "API for mobile and/or Web Clients"
-  version: "0.0.1"
+  version: "0.0.8"
   contact:
     email: "me@josh.land"
 
@@ -18,6 +18,12 @@ tags:
   - Videos:
     name: "Videos"
     description: "Everything related to Videos"
+  - Comments:
+    name: "Comments"
+    description: "Everything related to comments"
+  - Search:
+    name: "Search"
+    description: "Everything related to Searching"
 
 securityDefinitions:
   ranked_auth:
@@ -36,11 +42,20 @@ securityDefinitions:
 
 definitions:
   SortCriteria:
+    name: "Sort Criteria"
     type: string
     enum: &SORTS
       - Top
       - New
       - Featured
+  SearchTypes:
+    name: "Search Types"
+    type: string
+    enum: &SEARCHTYPES
+      - Video
+      - Picture
+      - User
+  # User Definitions
   UserAuth:
     type: "object"
     properties:
@@ -85,7 +100,6 @@ definitions:
       last_logged_in:
         type: "string"
         example: "2009-06-11 17:02:09+0000"
-
   UserList:
     type: "object"
     properties:
@@ -93,7 +107,7 @@ definitions:
         type: "array"
         items:
           $ref: '#/definitions/User'
-
+  # Videos Definitions
   Video:
     type: "object"
     properties:
@@ -104,7 +118,7 @@ definitions:
       title:
         type: "string"
         example: "When you've got it - flaunt it"
-      ranking:
+      rank:
         type: "integer"
         format: "int32"
         example: 34
@@ -117,9 +131,12 @@ definitions:
       sub_category:
         type: "string"
         example: "Acapella"
+      likes:
+        type: integer
+        format: "int32"
+        example: 12
       uploaded_by:
         $ref: "#/definitions/User"
-
   VideoDetail:
     type: "object"
     properties:
@@ -155,7 +172,6 @@ definitions:
         $ref: "#/definitions/VideoQualityOptions"
       uploaded_by:
         $ref: "#/definitions/User"
-
   VideoQualityOptions:
     type: "object"
     properties:
@@ -175,7 +191,6 @@ definitions:
         type: "string"
         name: "hd"
         example: "http://aws.s3344555/video.mp4"
-
   VideoList:
     type: "object"
     properties:
@@ -194,7 +209,7 @@ definitions:
         type: "integer"
         name: "video_id"
         description: "Generated Video ID that can be used to check status and update any values on /videos"
-
+  # Comments Definitions
   Comment:
     type: "object"
     properties:
@@ -207,6 +222,22 @@ definitions:
       posted_on:
         type: "string"
         example: "2009-06-11 17:02:09+0000"
+  # Search Definitions
+  SearchResult:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1234
+      name:
+        type: "string"
+        example: "I like my moves"
+      image_url:
+        type: "string"
+        example: "http://dev.ranked.com/images/thumbnails/fsdf25.jpg"
+      result_type:
+        type: "string"
+        enum: *SEARCHTYPES
 
 paths:
   /users/register:
@@ -478,6 +509,8 @@ paths:
           description: "Success"
           schema:
             $ref: "#/definitions/VideoList"
+        403:
+          description: "Access Denied"
 
   /videos/{video_id}:
     get:
@@ -491,7 +524,7 @@ paths:
            - read:videos
            - read:user
       parameters:
-        - in: "query"
+        - in: "path"
           name: "video_id"
           description: "Ranked Video Detail Resource - All details on a given video"
           required: true
@@ -501,6 +534,10 @@ paths:
           description: "Success"
           schema:
             $ref: "#/definitions/VideoDetail"
+        403:
+          description: "Access Denied - Not authorized"
+        404:
+          description: "Video Not Found"
 
     put:
       summary: "Update an existing Video"
@@ -515,7 +552,7 @@ paths:
            - write:user
            - read:user
       parameters:
-        - in: "query"
+        - in: "path"
           name: "video_id"
           required: true
           type: "integer"
@@ -529,11 +566,20 @@ paths:
           required: false
           type: "string"
           description: "String name for valid category"
+        - in: "formData"
+          name: "sub_category"
+          required: false
+          type: "string"
+          description: "String name for valid sub-category"
       responses:
         200:
           description: "Success"
           schema:
             $ref: "#/definitions/Video"
+        403:
+          description: "Access Denied"
+        404:
+          description: "Video Not Found"
 
     delete:
       summary: "Delete personal videos from Ranked"
@@ -546,7 +592,7 @@ paths:
            - write: user
            - read:user
       parameters:
-        - in: "query"
+        - in: "path"
           name: "video_id"
           description: "Ranked Video Detail Resource - All details on a given video"
           required: true
@@ -556,6 +602,8 @@ paths:
           description: "Success"
         403:
           description: "Access Denied! You don't own this video"
+        404:
+          description: "Video Not Found"
 
   /videos/upload:
     post:
@@ -581,3 +629,135 @@ paths:
             $ref: "#/definitions/VideoUploadDetails"
         403:
           description: "Access Denied"
+
+  /videos/{video_id}/comments/:
+    post:
+      summary: "Comment on a given video"
+      tags:
+        - "Videos"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "path"
+          name: "video_id"
+          required: true
+          type: "integer"
+          description: "Video ID to be commented upon"
+        - in: "formData"
+          name: "comment"
+          required: false
+          type: "string"
+          description: "Comment to be left the video"
+      responses:
+        200:
+          description: "Success"
+        403:
+          description: "Access Denied"
+        404:
+          description: "Video Not Found"
+
+  /videos/{video_id}/rank/:
+    post:
+      summary: "'Like' or rank a given video"
+      tags:
+        - "Videos"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "path"
+          name: "video_id"
+          required: true
+          type: "integer"
+          description: "Video ID to be ranked"
+      responses:
+        200:
+          description: "Success"
+        304:
+          description: "This Video has already been ranked"
+        403:
+          description: "Access Denied"
+        404:
+          description: "Video Not Found"
+
+    delete:
+      summary: "'Dislike' or de-rank a given video"
+      tags:
+        - "Videos"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "path"
+          name: "video_id"
+          required: true
+          type: "integer"
+          description: "Video ID to unrank"
+      responses:
+        200:
+          description: "Success"
+        403:
+          description: "Access Denied"
+        404:
+          description: "No Ranking Found for user"
+
+  /search:
+    get:
+      summary: "Search for Content"
+      tags:
+        - "Search"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "query"
+          name: "category"
+          required: false
+          type: "string"
+          description: 'Search by specific category. ex: "Food"'
+          example: "Music"
+        - in: "query"
+          name: "sub_category"
+          required: false
+          type: "string"
+          description: "Search by specific sub-category. ex: Latin"
+          example: "Music"
+        - in: "query"
+          name: "types"
+          required: false
+          type: "string"
+          description: "Comma delimited list of search result types (see models re: Search Types). ex: Video,Users"
+          enum: *SEARCHTYPES
+        - in: "query"
+          name: "sort"
+          type: "string"
+          description: "NOTE: Ignored for Alpha - always top - sort order (see models re: Sort Criteria)"
+          enum: *SORTS
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: '#/definitions/SearchResult'
+        404:
+          description: "Error During Search"
