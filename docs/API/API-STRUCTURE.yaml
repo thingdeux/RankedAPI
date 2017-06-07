@@ -86,7 +86,7 @@ definitions:
         type: "string"
         example: "2009-06-11 17:02:09+0000"
 
-  UserArray:
+  UserList:
     type: "object"
     properties:
       users:
@@ -143,16 +143,70 @@ definitions:
       sub_category:
         type: "string"
         example: "Acapella"
+      is_processing:
+        type: "boolean"
+        example: false
+      comments:
+        type: "array"
+        items:
+          $ref: '#/definitions/Comment'
+      links:
+        type: "object"
+        $ref: "#/definitions/VideoQualityOptions"
       uploaded_by:
         $ref: "#/definitions/User"
 
-  VideoArray:
+  VideoQualityOptions:
+    type: "object"
+    properties:
+      mobile:
+        type: "string"
+        name: "mobile"
+        example: "http://aws.s3344555/video.mp4"
+      low:
+        type: "string"
+        name: "low"
+        example: "http://aws.s3344555/video.mp4"
+      high:
+        type: "string"
+        name: "high"
+        example: "http://aws.s3344555/video.mp4"
+      hd:
+        type: "string"
+        name: "hd"
+        example: "http://aws.s3344555/video.mp4"
+
+  VideoList:
     type: "object"
     properties:
       videos:
         type: "array"
         items:
           $ref: '#/definitions/Video'
+  VideoUploadDetails:
+    type: "object"
+    properties:
+      pre_signed_upload_url:
+        type: "string"
+        name: "pre_signed_upload_url"
+        example: "https://aws.pre-sign/324234"
+      video_id:
+        type: "integer"
+        name: "video_id"
+        description: "Generated Video ID that can be used to check status and update any values on /videos"
+
+  Comment:
+    type: "object"
+    properties:
+      posted_by:
+        type: "string"
+        example: "Jane_Doe"
+      text:
+        type: "string"
+        example: "I love how rambunctious you are during Summer."
+      posted_on:
+        type: "string"
+        example: "2009-06-11 17:02:09+0000"
 
 paths:
   /users/register:
@@ -185,6 +239,11 @@ paths:
           type: "string"
           required: true
           example: "TooSoonButN0TSoon"
+        - in: "formData"
+          name: "phone_number"
+          type: "string"
+          required: false
+          example: "(555) 123-4567"
       responses:
         201:
           description: "Account created"
@@ -340,7 +399,7 @@ paths:
           200:
             description: "Success"
             schema:
-              $ref: "#/definitions/UserArray"
+              $ref: "#/definitions/UserList"
           401:
             description: "Unauthorized"
           404:
@@ -405,30 +464,31 @@ paths:
   # Videos
   /videos:
     get:
-      summary: "List of most popular videos"
+      summary: "List of top 20 most popular videos"
       tags:
         - "Videos"
       produces:
         - "application/json"
       security:
         - ranked_auth:
+           - read:videos
            - read:user
       responses:
         200:
           description: "Success"
-          object: "array"
           schema:
-            $ref: "#/definitions/VideoArray"
+            $ref: "#/definitions/VideoList"
 
   /videos/{video_id}:
     get:
-      summary: "List of most popular videos"
+      summary: "Detailed information about one video"
       tags:
         - "Videos"
       produces:
         - "application/json"
       security:
         - ranked_auth:
+           - read:videos
            - read:user
       parameters:
         - in: "query"
@@ -439,6 +499,85 @@ paths:
       responses:
         200:
           description: "Success"
-          object: "array"
           schema:
-            $ref: "#/definitions/VideoArray"
+            $ref: "#/definitions/VideoDetail"
+
+    put:
+      summary: "Update an existing Video"
+      tags:
+        - "Videos"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "query"
+          name: "video_id"
+          required: true
+          type: "integer"
+        - in: "formData"
+          name: "title"
+          required: false
+          type: "string"
+          description: "Title of the video"
+        - in: "formData"
+          name: "category"
+          required: false
+          type: "string"
+          description: "String name for valid category"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Video"
+
+    delete:
+      summary: "Delete personal videos from Ranked"
+      tags:
+        - "Videos"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write: user
+           - read:user
+      parameters:
+        - in: "query"
+          name: "video_id"
+          description: "Ranked Video Detail Resource - All details on a given video"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Success"
+        403:
+          description: "Access Denied! You don't own this video"
+
+  /videos/upload:
+    post:
+      summary: "Endpoint to handle video uploads"
+      tags:
+          - "Videos"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "formData"
+          name: "filename"
+          description: "name of file being uploaded"
+          required: true
+          type: "string"
+      security:
+          - ranked_auth:
+             - write:user
+             - read:user
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/VideoUploadDetails"
+        403:
+          description: "Access Denied"

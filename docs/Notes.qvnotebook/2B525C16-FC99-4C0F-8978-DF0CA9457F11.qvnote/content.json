@@ -3,7 +3,7 @@
   "cells": [
     {
       "type": "markdown",
-      "data": "### Before Production:\n\n * Update CodeDeploy Permissions for code deploy user. More restrictive\n * See if Python 3.6 is available on Amazon Yum Repo.\n\n### Before Demo:\n* Auto-Scale - Spin up another app box\n* RDS Setup for shared DB\n* Load Test\n\n\n### July Deliverables\n- [ ] Profile Creation\n- [ ] Video Upload\n- [ ] Video Transcode / Storage\n- [ ] Basic Search\n- [ ] Basic Analytics\n- [ ] Video Ranked\n- [ ] Tag / Category support for videos\n- [ ] User \"Friending\" / Following\n- [ ] Featured User increased ranking weight\n\n### Up Next:\n* Deployment stalling during afterInstall"
+      "data": "### Before Production:\n\n * Update CodeDeploy Permissions for code deploy user. More restrictive\n * See if Python 3.6 is available on Amazon Yum Repo.\n\n### Before Demo:\n* Auto-Scale - Spin up another app box\n* RDS Setup for shared DB\n* Load Test\n\n\n### July Deliverables\n- [ ] Profile Creation\n- [ ] Video Upload\n- [ ] Video Transcode / Storage\n- [ ] Basic Search\n- [ ] Basic Analytics\n- [ ] Video Ranked\n- [ ] Tag / Category support for videos\n- [ ] User \"Friending\" / Following\n- [ ] Featured User increased ranking weight\n\n### Up Next:\n- [ ] Finish API Documentation\n- [ ] Listen to AWS SNS for - 'RankedEncodingDone' and 'RankedEncodingFailed'\n- [ ] Pre-Signed URLs for AWS Posts (Check Boto)\n- [ ] Setup gunicorn upstart conf\n- [ ] Link filename from /videos/upload to videos object.\n- [x] Deployment stalling during afterInstall (gunicorn direct not daemon - upstart)"
     }
   ]
 }
