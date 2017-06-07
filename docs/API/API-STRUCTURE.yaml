@@ -11,6 +11,7 @@ basePath:
   "/api/v1"
 schemes:
   - "http"
+  - "https"
 tags:
   - User:
     name: "User"
@@ -213,6 +214,10 @@ definitions:
   Comment:
     type: "object"
     properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 12345
       posted_by:
         type: "string"
         example: "Jane_Doe"
@@ -243,6 +248,7 @@ paths:
   /users/register:
     post:
       summary: "User Registration Endpoint"
+      operationId: "register_user"
       tags:
         - "User"
       consumes:
@@ -287,6 +293,7 @@ paths:
   /users/auth:
     post:
       summary: "OAuth Authorization Endpoint for already registered users."
+      operationId: "authorize_user"
       tags:
         - "User"
       consumes:
@@ -321,6 +328,7 @@ paths:
   /users/me:
     get:
       summary: "Returns authorized users information"
+      operationId: "get_current_user_details"
       tags:
         - "User"
       produces:
@@ -343,6 +351,7 @@ paths:
   /users/{user_id}:
     get:
       summary: "Returns a user queried by id"
+      operationId: "get_user_details"
       tags:
         - "User"
       produces:
@@ -351,7 +360,8 @@ paths:
         - in: path
           name: user_id
           required: true
-          type: int64
+          type: integer
+          format: "int64"
           minimum: 1
       security:
         - ranked_auth:
@@ -371,6 +381,7 @@ paths:
 
     put:
       summary: "Update a Users information"
+      operationId: "update_user_details"
       tags:
         - "User"
       consumes:
@@ -386,7 +397,7 @@ paths:
         - in: query
           name: user_id
           required: true
-          type: string
+          type: integer
         - in: "formData"
           name: "email"
           description: "Users' E-Mail address"
@@ -415,7 +426,8 @@ paths:
           "description": "Access Denied"
   /users/{user_id}/friends:
     get:
-      summary: "List a given users' friends"
+      summary: "List a given users' followed friends"
+      operationId: "get_friends"
       tags:
         - "User"
       consumes:
@@ -439,6 +451,7 @@ paths:
             "description": "Access Denied"
     post:
       summary: "Follow a user"
+      operationId: "add_new_followers"
       tags:
         - "User"
       consumes:
@@ -453,7 +466,7 @@ paths:
         - in: path
           name: user_id
           required: true
-          type: int64
+          type: integer
           minimum: 1
       responses:
           200:
@@ -466,6 +479,7 @@ paths:
             description: "Account does not exist"
     delete:
       summary: "Stop Following a user"
+      operationId: "stop_following_user"
       tags:
         - "User"
       consumes:
@@ -480,7 +494,8 @@ paths:
         - in: path
           name: user_id
           required: true
-          type: int64
+          type: integer
+          format: "int64"
           minimum: 1
       responses:
           200:
@@ -496,6 +511,7 @@ paths:
   /videos:
     get:
       summary: "List of top 20 most popular videos"
+      operationId: "get_top_videos"
       tags:
         - "Videos"
       produces:
@@ -515,6 +531,7 @@ paths:
   /videos/{video_id}:
     get:
       summary: "Detailed information about one video"
+      operationId: "get_video_details"
       tags:
         - "Videos"
       produces:
@@ -541,6 +558,7 @@ paths:
 
     put:
       summary: "Update an existing Video"
+      operationId: "update_video_details"
       tags:
         - "Videos"
       consumes:
@@ -583,6 +601,7 @@ paths:
 
     delete:
       summary: "Delete personal videos from Ranked"
+      operationId: "remove_video"
       tags:
         - "Videos"
       produces:
@@ -608,6 +627,7 @@ paths:
   /videos/upload:
     post:
       summary: "Endpoint to handle video uploads"
+      operationId: "init_video_upload"
       tags:
           - "Videos"
       produces:
@@ -633,6 +653,7 @@ paths:
   /videos/{video_id}/comments/:
     post:
       summary: "Comment on a given video"
+      operationId: "create_video_comment"
       tags:
         - "Videos"
       consumes:
@@ -665,6 +686,7 @@ paths:
   /videos/{video_id}/rank/:
     post:
       summary: "'Like' or rank a given video"
+      operationId: "add_video_rank"
       tags:
         - "Videos"
       consumes:
@@ -693,6 +715,7 @@ paths:
 
     delete:
       summary: "'Dislike' or de-rank a given video"
+      operationId: "remove_vide_rank"
       tags:
         - "Videos"
       consumes:
@@ -720,6 +743,7 @@ paths:
   /search:
     get:
       summary: "Search for Content"
+      operationId: "get_search_results"
       tags:
         - "Search"
       consumes:
