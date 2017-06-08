@@ -25,6 +25,6 @@ admin.site.register(Profile, UserAdmin)
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^api/', include(api_urls)),
+    url(r'^api/v1/', include(api_urls)),
     url(r'^admin/', admin.site.urls)
 ]
