@@ -13,18 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-# Django Imports
 from django.conf.urls import url, include
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-# Project Imports
-import src.api.urls as api_urls
-from src.profile.models import Profile
+from rest_framework import routers
+from src.profile.viewsets import ProfileViewSet
 
-admin.site.register(Profile, UserAdmin)
-admin.autodiscover()
+router = routers.DefaultRouter()
+router.register(r'users/me', ProfileViewSet)
 
 urlpatterns = [
-    url(r'^api/', include(api_urls)),
-    url(r'^admin/', admin.site.urls)
+    url(r'^users/auth', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^', include(router.urls)),
 ]

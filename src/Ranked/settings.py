@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['dev.goranked.com', '127.0.0.1']
 
-
+AUTH_USER_MODEL = 'profile.Profile'
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,12 +38,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'oauth2_provider',
+    'rest_framework',
+    'src.profile',
+    'src.video',
+    'src.api'
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     )
+}
+
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope'}
+    # read:user | write:user - read:videos | write: videos
 }
 
 MIDDLEWARE = [

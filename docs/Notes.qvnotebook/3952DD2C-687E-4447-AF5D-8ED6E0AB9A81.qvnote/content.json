@@ -1,9 +1,0 @@
-{
-  "title": "TODO API DOCUMENTATION",
-  "cells": [
-    {
-      "type": "markdown",
-      "data": "- [x] GET: Search\n- [x] POST: Rank\n- [x] PUT: Video\n- [x] POST: Comment\n- [ ] Add thumbnail urls to videos"
-    }
-  ]
-}

@@ -1,0 +1,13 @@
+{
+  "title": "TODO: OAUTH",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "- [ ] OAuth Urls registration\n- [ ] ViewSets Tweaks for urls\n- [ ] AUTH endpoint\n- [ ] Testing\n- [ ] Setup migration for default providers\n- [ ] Ensure other endpoints are auth OAUTH required\n\n"
+    },
+    {
+      "type": "text",
+      "data": "<div><span style=\"color: rgb(221, 221, 221);\">/users/register - OPEN</span></div><div><span style=\"color: rgb(221, 221, 221);\">/users/auth - OAuth Authorization Endpoint for already registered users</span><br></div><div>/users/me - Returns Users<font color=\"#cccccc\">’</font>&nbsp;information</div>"
+    }
+  ]
+}

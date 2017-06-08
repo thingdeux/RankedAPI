@@ -14,7 +14,7 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Video', 'model/VideoDetail', 'model/VideoList', 'model/VideoUploadDetails'], factory);
+    define(['ApiClient', 'model/video', 'model/VideoDetail', 'model/VideoList', 'model/VideoUploadDetails'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(require('../ApiClient'), require('../model/Video'), require('../model/VideoDetail'), require('../model/VideoList'), require('../model/VideoUploadDetails'));
@@ -38,7 +38,7 @@
    * Constructs a new VideosApi. 
    * @alias module:api/VideosApi
    * @class
-   * @param {module:ApiClient} apiClient Optional API client implementation to use,
+   * @param {module:ApiClient} apiClient Optional api client implementation to use,
    * default to {@link module:ApiClient#instance} if unspecified.
    */
   var exports = function(apiClient) {
@@ -55,7 +55,7 @@
 
     /**
      * &#39;Like&#39; or rank a given video
-     * @param {Number} videoId Video ID to be ranked
+     * @param {Number} videoId video ID to be ranked
      * @param {module:api/VideosApi~addVideoRankCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.addVideoRank = function(videoId, callback) {
@@ -99,7 +99,7 @@
 
     /**
      * Comment on a given video
-     * @param {Number} videoId Video ID to be commented upon
+     * @param {Number} videoId video ID to be commented upon
      * @param {Object} opts Optional parameters
      * @param {String} opts.comment Comment to be left the video
      * @param {module:api/VideosApi~createVideoCommentCallback} callback The callback function, accepting three arguments: error, data, response
@@ -185,7 +185,7 @@
 
     /**
      * Detailed information about one video
-     * @param {Number} videoId Ranked Video Detail Resource - All details on a given video
+     * @param {Number} videoId Ranked video Detail Resource - All details on a given video
      * @param {module:api/VideosApi~getVideoDetailsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/VideoDetail}
      */
@@ -275,7 +275,7 @@
 
     /**
      * &#39;Dislike&#39; or de-rank a given video
-     * @param {Number} videoId Video ID to unrank
+     * @param {Number} videoId video ID to unrank
      * @param {module:api/VideosApi~removeVideRankCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.removeVideRank = function(videoId, callback) {
@@ -319,7 +319,7 @@
 
     /**
      * Delete personal videos from Ranked
-     * @param {Number} videoId Ranked Video Detail Resource - All details on a given video
+     * @param {Number} videoId Ranked video Detail Resource - All details on a given video
      * @param {module:api/VideosApi~removeVideoCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.removeVideo = function(videoId, callback) {
@@ -362,7 +362,7 @@
      */
 
     /**
-     * Update an existing Video
+     * Update an existing video
      * @param {Number} videoId 
      * @param {Object} opts Optional parameters
      * @param {String} opts.title Title of the video

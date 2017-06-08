@@ -137,7 +137,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log(api + data);
   }
 };
 apiInstance.getTopVideos(callback);
@@ -274,7 +274,7 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
-var videoId = 56; // Number | Video ID to unrank
+var videoId = 56; video
 
 
 var callback = function(error, data, response) {
