@@ -48,6 +48,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',
     # )

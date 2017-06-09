@@ -12,7 +12,7 @@
     },
     {
       "type": "text",
-      "data": "<h3><span style=\"font-weight: normal;\">Types of Resources:</span></h3>\n<pre><code>/Videos\n  Get\n  List [-Sort- Method] [Top | New | Featured]\n  Put [Update Metadata]\n  Delete\n  Post [Upload]\n\n    ../[id]/rate\n    ../[id]/comment\n    \n/Photos\n  Get\n  List [-Sort- Method] [Top | New | Featured]\n  Rating\n  Post [Upload]\n    ../[id]/rate\n    ../[id]/comment\n</code></pre>\n"
+      "data": "<h3><span style=\"color: rgb(0, 0, 0); font-family: Times; font-size: medium; font-variant-ligatures: normal; font-weight: normal; orphans: 2; widows: 2;\">AssertionError at /api/v1/users/register/ (\"Creating a ModelSerializer without either the 'fields' attribute or the 'exclude' attribute has been deprecated since 3.3.0, and is now disallowed. Add an explicit fields = '__all__' to the ProfileSerializer serializer.\",) Request Method: POST Request URL: http://127.0.0.1:8000/api/v1/users/register/ Django Version: 1.11.1 Python Executable: /Users/Envoy/.virtualenvs/Ranked/bin/python Python Version: 3.6.1 Python Path: ['/Users/Envoy/Development/Python/Ranked', '/Users/Envoy/Development/Python/Ranked', '/Users/Envoy/.virtualenvs/Ranked/lib/python36.zip', '/Users/Envoy/.virtualenvs/Ranked/lib/python3.6', '/Users/Envoy/.virtualenvs/Ranked/lib/python3.6/lib-dynload',&nbsp;</span><br></h3>\n"
     },
     {
       "type": "text",

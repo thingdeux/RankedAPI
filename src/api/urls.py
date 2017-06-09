@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from rest_framework import routers
-from src.profile.viewsets import ProfileViewSet
+from src.profile.viewsets import ProfileViewSet, RegisterViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users/me', ProfileViewSet)
-# router.register(r'users/register', RegisterViewSet)
+router.register(r'users/register', RegisterViewSet)
 
 urlpatterns = [
     url(r'^users/auth', include('oauth2_provider.urls', namespace='oauth2_provider')),
