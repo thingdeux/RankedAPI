@@ -3,7 +3,7 @@
   "cells": [
     {
       "type": "markdown",
-      "data": "- [ ] Setup Registration endpoint\n- [ ] Explicitly Define fields on RegisterSerializer\n- [ ] OAuth Urls registration\n- [ ] ViewSets Tweaks for urls\n- [ ] AUTH endpoint\n- [ ] Testing\n- [ ] Setup migration for default providers\n- [ ] Ensure other endpoints are auth OAUTH required\n- [ ] Rate Throttling for Register and Auth\n- [x] Initial Models / setup\n"
+      "data": "- [x] Setup Registration endpoint\n- [x] Explicitly Define fields on RegisterSerializer\n- [ ] OAuth Urls registration\n- [ ] ViewSets Tweaks for urls\n- [ ] AUTH endpoint\n- [ ] Testing\n- [ ] Setup migration for default providers\n- [ ] Ensure other endpoints are auth OAUTH required\n- [ ] Rate Throttling for Register and Auth\n- [x] Initial Models / setup\n"
     },
     {
       "type": "text",

@@ -110,7 +110,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 <a name="getCurrentUserDetails"></a>
@@ -134,7 +134,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log(api + data);
+    console.log('API called successfully. Returned data: ' + data);
   }
 };
 apiInstance.getCurrentUserDetails(callback);
@@ -250,7 +250,7 @@ Name | Type | Description  | Notes
 
 <a name="registerUser"></a>
 # **registerUser**
-> UserAuth registerUser(username, email, password, unlockKey, opts)
+> User registerUser(username, email, password, unlockKey, opts)
 
 User Registration Endpoint
 
@@ -294,7 +294,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**UserAuth**](UserAuth.md)
+[**User**](User.md)
 
 ### Authorization
 
@@ -302,7 +302,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 <a name="stopFollowingUser"></a>

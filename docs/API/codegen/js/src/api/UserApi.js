@@ -137,7 +137,7 @@
       };
 
       var authNames = [];
-      var contentTypes = ['application/x-www-form-urlencoded'];
+      var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = UserAuth;
 
@@ -273,7 +273,7 @@
      * Callback function to receive the result of the registerUser operation.
      * @callback module:api/UserApi~registerUserCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/UserAuth} data The data returned by the service call.
+     * @param {module:model/User} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -286,7 +286,7 @@
      * @param {Object} opts Optional parameters
      * @param {String} opts.phoneNumber 
      * @param {module:api/UserApi~registerUserCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/UserAuth}
+     * data is of type: {@link module:model/User}
      */
     this.registerUser = function(username, email, password, unlockKey, opts, callback) {
       opts = opts || {};
@@ -328,9 +328,9 @@
       };
 
       var authNames = [];
-      var contentTypes = ['application/x-www-form-urlencoded'];
+      var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = UserAuth;
+      var returnType = User;
 
       return this.apiClient.callApi(
         '/users/register', 'POST',

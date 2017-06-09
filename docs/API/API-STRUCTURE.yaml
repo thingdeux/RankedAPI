@@ -275,7 +275,7 @@ paths:
       tags:
         - "User"
       consumes:
-        - "application/x-www-form-urlencoded"
+        - "application/json"
       produces:
         - "application/json"
       parameters:
@@ -308,7 +308,7 @@ paths:
         201:
           description: "Account created"
           schema:
-            $ref: "#/definitions/UserAuth"
+            $ref: "#/definitions/User"
         400:
           description: "Missing Required Fields"
         408:
@@ -320,7 +320,7 @@ paths:
       tags:
         - "User"
       consumes:
-        - "application/x-www-form-urlencoded"
+        - "application/json"
       produces:
         - "application/json"
       parameters:
