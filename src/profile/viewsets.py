@@ -6,7 +6,12 @@ from .models import Profile
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 class ProfileSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        return Profile(**validated_data)
+
     class Meta:
+        fields = ['id', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'username']
+        read_only_fields = ('is_partner', 'is_featured')
         model = Profile
 
 class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
@@ -15,52 +20,32 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProfileSerializer
 
 
-
-
-
-
-
-
-class Registration():
-    def __init__(self, email, username, password, unlock_key, phone_number):
-        self.email = email
-        self.username = username
-        self.password = password
-        self.unlock_key = unlock_key
-        self.phone_number = phone_number
-
-
-class RegistrationSerializer(serializers.Serializer):
-    email = serializers.EmailField(min_length=4)
-    username = serializers.CharField(min_length=2, max_length=40)
-    password = serializers.CharField(min_length=4, max_length=100)
-    unlock_key = serializers.CharField(min_length=8, max_length=8)
-    phone_number = serializers.CharField()
-
-    def create(self, validated_data):
-        return Registration(**validated_data)
-
-
-
 class RegisterViewSet(viewsets.ModelViewSet):
     """
     Viewset for User Registration
     """
     queryset = Profile.objects.all()
-    serializer_class = RegistrationSerializer
+    serializer_class = ProfileSerializer
 
     def create(self, request, *args, **kwargs):
         try:
             # Get e-mail post param
-            # Make sure e-mai doesn't already exist
+            # Make sure e-mail doesn't already exist
             serialized_profile = ProfileSerializer(data=request.data)
             if serialized_profile.is_valid():
-                existing_account = list(Profile.objects.filter(email=serialized_profile.email))
+                existing_account = list(Profile.objects.filter(email=serialized_profile.validated_data['email']))
                 if len(existing_account) > 0:
-                    return Response(status=408)
+                    error = {"description": "E-Mail already exists"}
+                    return Response(status=408, data=error)
 
-                return Response(serialized_profile.data)
+                new_profile = serialized_profile.save()
+                new_profile.save()
+                serialized_new_profile = ProfileSerializer(new_profile)
+                return Response(serialized_new_profile.data)
             else:
-                return Response(status=400)
-        except KeyError:
-            pass
+                error = {"description": str(serialized_profile.errors) }
+                return Response(status=400, data=error)
+        except KeyError as e:
+            error = {"description": "Not sending over proper values {}".format(e)}
+            return Response(status=400)
+
