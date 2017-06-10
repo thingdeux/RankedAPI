@@ -11,7 +11,7 @@
     },
     {
       "type": "text",
-      "data": "<div>{</div><div>&nbsp; \"access_token\": \"<span style=\"color: rgb(80, 80, 80); font-family: OpenSans, Helvetica, Arial, sans-serif; font-size: 12px; font-variant-ligatures: normal; orphans: 2; white-space: pre-wrap; widows: 2; background-color: rgb(255, 255, 255);\">TC14TmaY69ZCWa0vSpvN5WKttHIEQE</span>\",</div><div>&nbsp; \"expires_in\": 36000,</div><div>&nbsp; \"token_type\": \"Bearer\",</div><div>&nbsp; \"scope\": \"read write\",</div><div>&nbsp; \"refresh_token\": \"Y5mYBxZkPfzalzyig9utB1EcH027IX\"</div><div>}</div>"
+      "data": "<div>{</div><div>&nbsp; \"access_token\": \"<span style=\"color: rgb(80, 80, 80); font-family: OpenSans, Helvetica, Arial, sans-serif; font-size: 12px; font-variant-ligatures: normal; orphans: 2; white-space: pre-wrap; widows: 2; background-color: rgb(255, 255, 255);\">TC14TmaY69ZCWa0vSpvN5WKttHIEQE</span>\",</div><div>&nbsp; \"expires_in\": 36000,</div><div>&nbsp; \"token_type\": \"Bearer\",</div><div>&nbsp; \"scope\": \"read write\",</div><div>&nbsp; \"refresh_token\": \"Y5mYBxZkPfzalzyig9utB1EcH027IX\"</div><div>}</div><div><br></div><div><span style=\"color: rgb(80, 80, 80); font-family: OpenSans, Helvetica, Arial, sans-serif; font-size: 12px; font-variant-ligatures: normal; orphans: 2; white-space: pre-wrap; widows: 2; background-color: rgb(255, 255, 255);\">Bearer TC14TmaY69ZCWa0vSpvN5WKttHIEQE</span><br></div>"
     }
   ]
 }

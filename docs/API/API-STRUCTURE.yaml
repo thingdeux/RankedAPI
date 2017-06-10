@@ -474,6 +474,68 @@ paths:
           description: "Unauthorized"
         403:
           "description": "Access Denied"
+
+    patch:
+      summary: "Update one or more fields of a Users' profile"
+      operationId: "update_user_detail_patch"
+      tags:
+        - "User"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
+        - in: query
+          name: user_id
+          required: true
+          type: integer
+        - in: "formData"
+          name: "email"
+          description: "Users' E-Mail address"
+          required: false
+          type: "string"
+        - in: "formdata"
+          name: "username"
+          description: "Users' Username"
+          required: false
+          type: "string"
+        - in: "formData"
+          name: "password"
+          description: "Users' Password"
+          required: false
+          type: "string"
+        - in: "formData"
+          name: "avatar_url"
+          description: "Avatar URL"
+          required: false
+          type: "string"
+        - in: "formData"
+          name: "phone_number"
+          description: "Phone Number"
+          required: false
+          type: "string"
+
+      responses:
+        200:
+          description: "Success"
+          name: "UserCreation"
+          schema:
+            "$ref": "#/definitions/User"
+        401:
+          description: "Unauthorized"
+        403:
+          "description": "Access Denied"
+
   /users/{user_id}/friends:
     get:
       summary: "List a given users' followed friends"

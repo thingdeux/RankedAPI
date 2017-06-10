@@ -23,16 +23,14 @@ def me(request):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        return Profile(**validated_data)
 
     class Meta:
         fields = ['id', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'username']
-        read_only_fields = ('is_partner', 'is_featured')
+        read_only_fields = ('id','is_partner', 'is_featured')
         model = Profile
 
 
-class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
+class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()

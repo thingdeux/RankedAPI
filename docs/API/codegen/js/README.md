@@ -94,6 +94,7 @@ Class | Method | HTTP request | Description
 *RankedApi.UserApi* | [**getUserDetails**](docs/UserApi.md#getUserDetails) | **GET** /users/{user_id} | Returns a user queried by id
 *RankedApi.UserApi* | [**registerUser**](docs/UserApi.md#registerUser) | **POST** /users/register | User Registration Endpoint
 *RankedApi.UserApi* | [**stopFollowingUser**](docs/UserApi.md#stopFollowingUser) | **DELETE** /users/{user_id}/friends | Stop Following a user
+*RankedApi.UserApi* | [**updateUserDetailPatch**](docs/UserApi.md#updateUserDetailPatch) | **PATCH** /users/{user_id} | Update one or more fields of a Users&#39; profile
 *RankedApi.UserApi* | [**updateUserDetails**](docs/UserApi.md#updateUserDetails) | **PUT** /users/{user_id} | Update a Users information
 *RankedApi.VideosApi* | [**addVideoRank**](docs/VideosApi.md#addVideoRank) | **POST** /videos/{video_id}/rank/ | &#39;Like&#39; or rank a given video
 *RankedApi.VideosApi* | [**createVideoComment**](docs/VideosApi.md#createVideoComment) | **POST** /videos/{video_id}/comments/ | Comment on a given video

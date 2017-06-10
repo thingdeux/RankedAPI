@@ -426,6 +426,68 @@
     }
 
     /**
+     * Callback function to receive the result of the updateUserDetailPatch operation.
+     * @callback module:api/UserApi~updateUserDetailPatchCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/User} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Update one or more fields of a Users&#39; profile
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
+     * @param {Number} userId 
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.email Users&#39; E-Mail address
+     * @param {String} opts.password Users&#39; Password
+     * @param {String} opts.avatarUrl Avatar URL
+     * @param {String} opts.phoneNumber Phone Number
+     * @param {module:api/UserApi~updateUserDetailPatchCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/User}
+     */
+    this.updateUserDetailPatch = function(authorization, userId, opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling updateUserDetailPatch");
+      }
+
+      // verify the required parameter 'userId' is set
+      if (userId == undefined || userId == null) {
+        throw new Error("Missing the required parameter 'userId' when calling updateUserDetailPatch");
+      }
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+        'user_id': userId
+      };
+      var headerParams = {
+        'Authorization': authorization
+      };
+      var formParams = {
+        'email': opts['email'],
+        'password': opts['password'],
+        'avatar_url': opts['avatarUrl'],
+        'phone_number': opts['phoneNumber']
+      };
+
+      var authNames = ['ranked_auth'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = User;
+
+      return this.apiClient.callApi(
+        '/users/{user_id}', 'PATCH',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the updateUserDetails operation.
      * @callback module:api/UserApi~updateUserDetailsCallback
      * @param {String} error Error message, if any.
