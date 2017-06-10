@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**stopFollowingUser**](UserApi.md#stopFollowingUser) | **DELETE** /users/{user_id}/friends | Stop Following a user
 [**updateUserDetailPatch**](UserApi.md#updateUserDetailPatch) | **PATCH** /users/{user_id} | Update one or more fields of a Users&#39; profile
 [**updateUserDetails**](UserApi.md#updateUserDetails) | **PUT** /users/{user_id} | Update a Users information
+[**uploadAvatar**](UserApi.md#uploadAvatar) | **PUT** /users/{user_id}/avatar | Upload an avatar image file.
 
 
 <a name="addNewFollowers"></a>
@@ -498,4 +499,54 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json, application/x-www-form-urlencoded
  - **Accept**: application/json
+
+<a name="uploadAvatar"></a>
+# **uploadAvatar**
+> User uploadAvatar(opts)
+
+Upload an avatar image file.
+
+### Example
+```javascript
+var RankedApi = require('ranked_api');
+var defaultClient = RankedApi.ApiClient.default;
+
+// Configure OAuth2 access token for authorization: ranked_auth
+var ranked_auth = defaultClient.authentications['ranked_auth'];
+ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
+
+var apiInstance = new RankedApi.UserApi();
+
+var opts = { 
+  'file': "/path/to/file.txt" // File | The file to upload [ Size should be under 1mb ]
+};
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.uploadAvatar(opts, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **file** | **File**| The file to upload [ Size should be under 1mb ] | [optional] 
+
+### Return type
+
+[**User**](User.md)
+
+### Authorization
+
+[ranked_auth](../README.md#ranked_auth)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: Not defined
 

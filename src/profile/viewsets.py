@@ -11,17 +11,6 @@ from .models import Profile
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 
-@api_view(('GET',))
-@permission_classes((IsAuthenticated, TokenHasReadWriteScope))
-def me(request):
-    try:
-        instance = Profile.objects.get(pk=request.user.id)
-        return Response(ProfileSerializer(instance=instance,
-                                          context={"request": request}).data, status=200)
-    except ObjectDoesNotExist:
-        Response(status=404)
-
-
 class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -66,3 +55,4 @@ class RegisterViewSet(viewsets.ModelViewSet):
         except KeyError as e:
             error = {"description": "Not sending over proper values {}".format(e)}
             return Response(status=400, data=error)
+

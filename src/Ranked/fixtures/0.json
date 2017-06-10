@@ -14,7 +14,7 @@
 		"created": "2017-06-09T23:22:14.425Z",
 		"last_modified": "2017-06-09T23:22:14.425Z",
 		"email": "me@josh.land",
-		"avatar_url": null,
+		"avatar_url": "http://static.goranked.com/ava1.jpg",
 		"is_partner": false,
 		"is_featured": false,
 		"last_logged_in": "2017-06-09",
@@ -58,7 +58,7 @@
 		"user": 1,
 		"token": "TC14TmaY69ZCWa0vSpvN5WKttHIEQE",
 		"application": 1,
-		"expires": "2017-06-10T09:47:37.928Z",
+		"expires": "2018-06-10T09:47:37.928Z",
 		"scope": "read write"
 	}
 }, {

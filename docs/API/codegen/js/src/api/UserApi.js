@@ -552,6 +552,48 @@
         authNames, contentTypes, accepts, returnType, callback
       );
     }
+
+    /**
+     * Callback function to receive the result of the uploadAvatar operation.
+     * @callback module:api/UserApi~uploadAvatarCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/User} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Upload an avatar image file.
+     * @param {Object} opts Optional parameters
+     * @param {File} opts.file The file to upload [ Size should be under 1mb ]
+     * @param {module:api/UserApi~uploadAvatarCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/User}
+     */
+    this.uploadAvatar = function(opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+        'file': opts['file']
+      };
+
+      var authNames = ['ranked_auth'];
+      var contentTypes = ['multipart/form-data'];
+      var accepts = [];
+      var returnType = User;
+
+      return this.apiClient.callApi(
+        '/users/{user_id}/avatar', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
   };
 
   return exports;

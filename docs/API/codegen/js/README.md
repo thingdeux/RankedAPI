@@ -96,6 +96,7 @@ Class | Method | HTTP request | Description
 *RankedApi.UserApi* | [**stopFollowingUser**](docs/UserApi.md#stopFollowingUser) | **DELETE** /users/{user_id}/friends | Stop Following a user
 *RankedApi.UserApi* | [**updateUserDetailPatch**](docs/UserApi.md#updateUserDetailPatch) | **PATCH** /users/{user_id} | Update one or more fields of a Users&#39; profile
 *RankedApi.UserApi* | [**updateUserDetails**](docs/UserApi.md#updateUserDetails) | **PUT** /users/{user_id} | Update a Users information
+*RankedApi.UserApi* | [**uploadAvatar**](docs/UserApi.md#uploadAvatar) | **PUT** /users/{user_id}/avatar | Upload an avatar image file.
 *RankedApi.VideosApi* | [**addVideoRank**](docs/VideosApi.md#addVideoRank) | **POST** /videos/{video_id}/rank/ | &#39;Like&#39; or rank a given video
 *RankedApi.VideosApi* | [**createVideoComment**](docs/VideosApi.md#createVideoComment) | **POST** /videos/{video_id}/comments/ | Comment on a given video
 *RankedApi.VideosApi* | [**getTopVideos**](docs/VideosApi.md#getTopVideos) | **GET** /videos | List of top 20 most popular videos
