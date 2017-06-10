@@ -102,10 +102,11 @@
      * @param {String} grantType 
      * @param {String} username 
      * @param {String} password 
+     * @param {String} clientId 
      * @param {module:api/UserApi~authorizeUserCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/UserAuth}
      */
-    this.authorizeUser = function(grantType, username, password, callback) {
+    this.authorizeUser = function(grantType, username, password, clientId, callback) {
       var postBody = null;
 
       // verify the required parameter 'grantType' is set
@@ -123,6 +124,11 @@
         throw new Error("Missing the required parameter 'password' when calling authorizeUser");
       }
 
+      // verify the required parameter 'clientId' is set
+      if (clientId == undefined || clientId == null) {
+        throw new Error("Missing the required parameter 'clientId' when calling authorizeUser");
+      }
+
 
       var pathParams = {
       };
@@ -133,7 +139,8 @@
       var formParams = {
         'grant_type': grantType,
         'Username': username,
-        'password': password
+        'password': password,
+        'client_id': clientId
       };
 
       var authNames = [];
@@ -142,7 +149,7 @@
       var returnType = UserAuth;
 
       return this.apiClient.callApi(
-        '/users/auth', 'POST',
+        '/users/auth/token', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

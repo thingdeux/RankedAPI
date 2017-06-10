@@ -5,7 +5,7 @@ All URIs are relative to *http://dev.goranked.com/api/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addNewFollowers**](UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends | Follow a user
-[**authorizeUser**](UserApi.md#authorizeUser) | **POST** /users/auth | OAuth Authorization Endpoint for already registered users.
+[**authorizeUser**](UserApi.md#authorizeUser) | **POST** /users/auth/token | OAuth Authorization Endpoint for already registered users.
 [**getCurrentUserDetails**](UserApi.md#getCurrentUserDetails) | **GET** /users/me | Returns authorized users information
 [**getFriends**](UserApi.md#getFriends) | **GET** /users/{user_id}/friends | List a given users&#39; followed friends
 [**getUserDetails**](UserApi.md#getUserDetails) | **GET** /users/{user_id} | Returns a user queried by id
@@ -65,7 +65,7 @@ null (empty response body)
 
 <a name="authorizeUser"></a>
 # **authorizeUser**
-> UserAuth authorizeUser(grantType, username, password)
+> UserAuth authorizeUser(grantType, username, password, clientId)
 
 OAuth Authorization Endpoint for already registered users.
 
@@ -81,6 +81,8 @@ var username = "username_example"; // String |
 
 var password = "password_example"; // String | 
 
+var clientId = "clientId_example"; // String | 
+
 
 var callback = function(error, data, response) {
   if (error) {
@@ -89,7 +91,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.authorizeUser(grantType, username, password, callback);
+apiInstance.authorizeUser(grantType, username, password, clientId, callback);
 ```
 
 ### Parameters
@@ -99,6 +101,7 @@ Name | Type | Description  | Notes
  **grantType** | **String**|  | 
  **username** | **String**|  | 
  **password** | **String**|  | 
+ **clientId** | **String**|  | 
 
 ### Return type
 

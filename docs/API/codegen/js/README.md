@@ -86,7 +86,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *RankedApi.SearchApi* | [**getSearchResults**](docs/SearchApi.md#getSearchResults) | **GET** /search | Search for Content
 *RankedApi.UserApi* | [**addNewFollowers**](docs/UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends | Follow a user
-*RankedApi.UserApi* | [**authorizeUser**](docs/UserApi.md#authorizeUser) | **POST** /users/auth | OAuth Authorization Endpoint for already registered users.
+*RankedApi.UserApi* | [**authorizeUser**](docs/UserApi.md#authorizeUser) | **POST** /users/auth/token | OAuth Authorization Endpoint for already registered users.
 *RankedApi.UserApi* | [**getCurrentUserDetails**](docs/UserApi.md#getCurrentUserDetails) | **GET** /users/me | Returns authorized users information
 *RankedApi.UserApi* | [**getFriends**](docs/UserApi.md#getFriends) | **GET** /users/{user_id}/friends | List a given users&#39; followed friends
 *RankedApi.UserApi* | [**getUserDetails**](docs/UserApi.md#getUserDetails) | **GET** /users/{user_id} | Returns a user queried by id

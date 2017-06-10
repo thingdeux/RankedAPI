@@ -1,8 +1,11 @@
+# DRF Imports
 from rest_framework import permissions, routers, serializers, viewsets
 from rest_framework.response import Response
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+# Project Imports
 from .models import Profile
-
+# Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -14,10 +17,19 @@ class ProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ('is_partner', 'is_featured')
         model = Profile
 
+
 class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
-    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+
+
+@api_view(('GET',))
+@permission_classes((IsAuthenticated, TokenHasReadWriteScope))
+def me(request):
+    instance = Profile.objects.get(pk=request.user.id)
+    return Response(ProfileSerializer(instance=instance,
+                                             context={"request": request}).data, status=200)
 
 
 class RegisterViewSet(viewsets.ModelViewSet):

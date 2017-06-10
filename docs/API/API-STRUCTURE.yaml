@@ -313,7 +313,7 @@ paths:
           description: "Missing Required Fields"
         408:
           description: "Account already exists"
-  /users/auth:
+  /users/auth/token:
     post:
       summary: "OAuth Authorization Endpoint for already registered users."
       operationId: "authorize_user"
@@ -339,6 +339,11 @@ paths:
           type: "string"
           required: true
           example: "f34455"
+        - in: "formData"
+          name: "client_id"
+          type: "string"
+          required: true
+          example: "44555jfjffj"
       responses:
         200:
           description: "Auth Success"
