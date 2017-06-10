@@ -356,6 +356,7 @@ paths:
           description: "Incorrect username/password combo"
         403:
           description: "Access Denied or account deleted"
+
   /users/me:
     get:
       summary: "Returns authorized users information"
@@ -386,6 +387,7 @@ paths:
           "description": "Access Denied"
         404:
           description: "No account found"
+
   /users/{user_id}:
     get:
       summary: "Returns a user queried by id"
@@ -637,6 +639,37 @@ paths:
             "description": "Access Denied"
           404:
             description: "Not currently following this user"
+
+  /users/{user_id}/avatar:
+     put:
+       summary: Upload an avatar image file.
+       operationId: "upload_avatar"
+       security:
+        - ranked_auth:
+           - write:user
+           - read:user
+       tags:
+         - "User"
+       consumes:
+         - multipart/form-data
+       parameters:
+         - in: formData
+           name: file
+           type: file
+           description: The file to upload [ Size should be under 1mb ]
+       responses:
+          200:
+            description: "Success"
+            schema:
+              $ref: "#/definitions/User"
+          304:
+            description: "Not Modified"
+          401:
+            description: "Unauthorized"
+          404:
+            description: "Account does not exist"
+          403:
+            "description": "Access Denied"
 
   # Videos
   /videos:

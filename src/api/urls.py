@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from rest_framework import routers
-from src.profile.viewsets import me, RegisterViewSet, ProfileViewSet
+from src.profile.viewsets import RegisterViewSet, ProfileViewSet
+from src.profile.views import me, AvatarUploadView
 
 router = routers.DefaultRouter()
 router.register(r'users/register', RegisterViewSet)
@@ -23,6 +24,7 @@ router.register(r'users', ProfileViewSet)
 
 urlpatterns = [
     url(r'^users/auth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    url(r'^users/me/', me),
+    url(r'^users/me/$', me),
+    url(r'^users/me/avatar/$', AvatarUploadView.as_view()),
     url(r'^', include(router.urls)),
 ]
