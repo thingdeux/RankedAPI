@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 <a name="getSearchResults"></a>
 # **getSearchResults**
-> SearchResult getSearchResults(opts)
+> getSearchResults(authorization, opts)
 
 Search for Content
 
@@ -24,6 +24,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.SearchApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var opts = { 
   'category': "category_example", // String | Search by specific category. ex: \"Food\"
   'subCategory': "subCategory_example", // String | Search by specific sub-category. ex: Latin
@@ -35,16 +37,17 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
-apiInstance.getSearchResults(opts, callback);
+apiInstance.getSearchResults(authorization, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **category** | **String**| Search by specific category. ex: \&quot;Food\&quot; | [optional] 
  **subCategory** | **String**| Search by specific sub-category. ex: Latin | [optional] 
  **types** | **String**| Comma delimited list of search result types (see models re: Search Types). ex: Video,Users | [optional] 
@@ -52,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SearchResult**](SearchResult.md)
+null (empty response body)
 
 ### Authorization
 

@@ -55,11 +55,17 @@
 
     /**
      * &#39;Like&#39; or rank a given video
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} videoId Video ID to be ranked
      * @param {module:api/VideosApi~addVideoRankCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.addVideoRank = function(videoId, callback) {
+    this.addVideoRank = function(authorization, videoId, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling addVideoRank");
+      }
 
       // verify the required parameter 'videoId' is set
       if (videoId == undefined || videoId == null) {
@@ -73,6 +79,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -99,14 +106,20 @@
 
     /**
      * Comment on a given video
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} videoId Video ID to be commented upon
      * @param {Object} opts Optional parameters
      * @param {String} opts.comment Comment to be left the video
      * @param {module:api/VideosApi~createVideoCommentCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.createVideoComment = function(videoId, opts, callback) {
+    this.createVideoComment = function(authorization, videoId, opts, callback) {
       opts = opts || {};
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling createVideoComment");
+      }
 
       // verify the required parameter 'videoId' is set
       if (videoId == undefined || videoId == null) {
@@ -120,6 +133,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
         'comment': opts['comment']
@@ -147,11 +161,17 @@
 
     /**
      * List of top 20 most popular videos
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {module:api/VideosApi~getTopVideosCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/VideoList}
      */
-    this.getTopVideos = function(callback) {
+    this.getTopVideos = function(authorization, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling getTopVideos");
+      }
 
 
       var pathParams = {
@@ -159,6 +179,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -185,12 +206,18 @@
 
     /**
      * Detailed information about one video
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} videoId Ranked Video Detail Resource - All details on a given video
      * @param {module:api/VideosApi~getVideoDetailsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/VideoDetail}
      */
-    this.getVideoDetails = function(videoId, callback) {
+    this.getVideoDetails = function(authorization, videoId, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling getVideoDetails");
+      }
 
       // verify the required parameter 'videoId' is set
       if (videoId == undefined || videoId == null) {
@@ -204,6 +231,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -230,12 +258,18 @@
 
     /**
      * Endpoint to handle video uploads
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {String} filename name of file being uploaded
      * @param {module:api/VideosApi~initVideoUploadCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/VideoUploadDetails}
      */
-    this.initVideoUpload = function(filename, callback) {
+    this.initVideoUpload = function(authorization, filename, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling initVideoUpload");
+      }
 
       // verify the required parameter 'filename' is set
       if (filename == undefined || filename == null) {
@@ -248,6 +282,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
         'filename': filename
@@ -275,11 +310,17 @@
 
     /**
      * &#39;Dislike&#39; or de-rank a given video
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} videoId Video ID to unrank
      * @param {module:api/VideosApi~removeVideRankCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.removeVideRank = function(videoId, callback) {
+    this.removeVideRank = function(authorization, videoId, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling removeVideRank");
+      }
 
       // verify the required parameter 'videoId' is set
       if (videoId == undefined || videoId == null) {
@@ -293,6 +334,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -319,11 +361,17 @@
 
     /**
      * Delete personal videos from Ranked
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} videoId Ranked Video Detail Resource - All details on a given video
      * @param {module:api/VideosApi~removeVideoCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.removeVideo = function(videoId, callback) {
+    this.removeVideo = function(authorization, videoId, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling removeVideo");
+      }
 
       // verify the required parameter 'videoId' is set
       if (videoId == undefined || videoId == null) {
@@ -337,6 +385,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -363,6 +412,7 @@
 
     /**
      * Update an existing Video
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} videoId 
      * @param {Object} opts Optional parameters
      * @param {String} opts.title Title of the video
@@ -371,9 +421,14 @@
      * @param {module:api/VideosApi~updateVideoDetailsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Video}
      */
-    this.updateVideoDetails = function(videoId, opts, callback) {
+    this.updateVideoDetails = function(authorization, videoId, opts, callback) {
       opts = opts || {};
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling updateVideoDetails");
+      }
 
       // verify the required parameter 'videoId' is set
       if (videoId == undefined || videoId == null) {
@@ -387,6 +442,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
         'title': opts['title'],

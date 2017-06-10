@@ -14,18 +14,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/SearchResult'], factory);
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/SearchResult'));
+    module.exports = factory(require('../ApiClient'));
   } else {
     // Browser globals (root is window)
     if (!root.RankedApi) {
       root.RankedApi = {};
     }
-    root.RankedApi.SearchApi = factory(root.RankedApi.ApiClient, root.RankedApi.SearchResult);
+    root.RankedApi.SearchApi = factory(root.RankedApi.ApiClient);
   }
-}(this, function(ApiClient, SearchResult) {
+}(this, function(ApiClient) {
   'use strict';
 
   /**
@@ -49,23 +49,28 @@
      * Callback function to receive the result of the getSearchResults operation.
      * @callback module:api/SearchApi~getSearchResultsCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/SearchResult} data The data returned by the service call.
+     * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * Search for Content
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Object} opts Optional parameters
      * @param {String} opts.category Search by specific category. ex: \&quot;Food\&quot;
      * @param {String} opts.subCategory Search by specific sub-category. ex: Latin
      * @param {module:model/String} opts.types Comma delimited list of search result types (see models re: Search Types). ex: Video,Users
      * @param {module:model/String} opts.sort NOTE: Ignored for Alpha - always top - sort order (see models re: Sort Criteria)
      * @param {module:api/SearchApi~getSearchResultsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/SearchResult}
      */
-    this.getSearchResults = function(opts, callback) {
+    this.getSearchResults = function(authorization, opts, callback) {
       opts = opts || {};
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling getSearchResults");
+      }
 
 
       var pathParams = {
@@ -77,6 +82,7 @@
         'sort': opts['sort']
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -84,7 +90,7 @@
       var authNames = ['ranked_auth'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = SearchResult;
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/search', 'GET',

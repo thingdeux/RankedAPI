@@ -55,11 +55,17 @@
 
     /**
      * Follow a user
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} userId 
      * @param {module:api/UserApi~addNewFollowersCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.addNewFollowers = function(userId, callback) {
+    this.addNewFollowers = function(authorization, userId, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling addNewFollowers");
+      }
 
       // verify the required parameter 'userId' is set
       if (userId == undefined || userId == null) {
@@ -73,6 +79,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -102,10 +109,11 @@
      * @param {String} grantType 
      * @param {String} username 
      * @param {String} password 
+     * @param {String} clientId 
      * @param {module:api/UserApi~authorizeUserCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/UserAuth}
      */
-    this.authorizeUser = function(grantType, username, password, callback) {
+    this.authorizeUser = function(grantType, username, password, clientId, callback) {
       var postBody = null;
 
       // verify the required parameter 'grantType' is set
@@ -123,6 +131,11 @@
         throw new Error("Missing the required parameter 'password' when calling authorizeUser");
       }
 
+      // verify the required parameter 'clientId' is set
+      if (clientId == undefined || clientId == null) {
+        throw new Error("Missing the required parameter 'clientId' when calling authorizeUser");
+      }
+
 
       var pathParams = {
       };
@@ -133,7 +146,8 @@
       var formParams = {
         'grant_type': grantType,
         'Username': username,
-        'password': password
+        'password': password,
+        'client_id': clientId
       };
 
       var authNames = [];
@@ -142,7 +156,7 @@
       var returnType = UserAuth;
 
       return this.apiClient.callApi(
-        '/users/auth', 'POST',
+        '/users/auth/token', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -158,11 +172,17 @@
 
     /**
      * Returns authorized users information
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {module:api/UserApi~getCurrentUserDetailsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/User}
      */
-    this.getCurrentUserDetails = function(callback) {
+    this.getCurrentUserDetails = function(authorization, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling getCurrentUserDetails");
+      }
 
 
       var pathParams = {
@@ -170,6 +190,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -196,11 +217,17 @@
 
     /**
      * List a given users&#39; followed friends
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {module:api/UserApi~getFriendsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/UserList}
      */
-    this.getFriends = function(callback) {
+    this.getFriends = function(authorization, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling getFriends");
+      }
 
 
       var pathParams = {
@@ -208,6 +235,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -234,12 +262,18 @@
 
     /**
      * Returns a user queried by id
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} userId 
      * @param {module:api/UserApi~getUserDetailsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/User}
      */
-    this.getUserDetails = function(userId, callback) {
+    this.getUserDetails = function(authorization, userId, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling getUserDetails");
+      }
 
       // verify the required parameter 'userId' is set
       if (userId == undefined || userId == null) {
@@ -253,6 +287,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -349,11 +384,17 @@
 
     /**
      * Stop Following a user
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} userId 
      * @param {module:api/UserApi~stopFollowingUserCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.stopFollowingUser = function(userId, callback) {
+    this.stopFollowingUser = function(authorization, userId, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling stopFollowingUser");
+      }
 
       // verify the required parameter 'userId' is set
       if (userId == undefined || userId == null) {
@@ -367,6 +408,7 @@
       var queryParams = {
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
       };
@@ -393,14 +435,20 @@
 
     /**
      * Update a Users information
+     * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} userId 
      * @param {String} email Users&#39; E-Mail address
      * @param {String} password Users&#39; Password
      * @param {module:api/UserApi~updateUserDetailsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/User}
      */
-    this.updateUserDetails = function(userId, email, password, callback) {
+    this.updateUserDetails = function(authorization, userId, email, password, callback) {
       var postBody = null;
+
+      // verify the required parameter 'authorization' is set
+      if (authorization == undefined || authorization == null) {
+        throw new Error("Missing the required parameter 'authorization' when calling updateUserDetails");
+      }
 
       // verify the required parameter 'userId' is set
       if (userId == undefined || userId == null) {
@@ -424,6 +472,7 @@
         'user_id': userId
       };
       var headerParams = {
+        'Authorization': authorization
       };
       var formParams = {
         'email': email,

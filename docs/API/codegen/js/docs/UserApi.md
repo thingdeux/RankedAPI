@@ -5,7 +5,7 @@ All URIs are relative to *http://dev.goranked.com/api/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addNewFollowers**](UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends | Follow a user
-[**authorizeUser**](UserApi.md#authorizeUser) | **POST** /users/auth | OAuth Authorization Endpoint for already registered users.
+[**authorizeUser**](UserApi.md#authorizeUser) | **POST** /users/auth/token | OAuth Authorization Endpoint for already registered users.
 [**getCurrentUserDetails**](UserApi.md#getCurrentUserDetails) | **GET** /users/me | Returns authorized users information
 [**getFriends**](UserApi.md#getFriends) | **GET** /users/{user_id}/friends | List a given users&#39; followed friends
 [**getUserDetails**](UserApi.md#getUserDetails) | **GET** /users/{user_id} | Returns a user queried by id
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 <a name="addNewFollowers"></a>
 # **addNewFollowers**
-> addNewFollowers(userId)
+> addNewFollowers(authorization, userId)
 
 Follow a user
 
@@ -31,6 +31,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.UserApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var userId = 56; // Number | 
 
 
@@ -41,13 +43,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.addNewFollowers(userId, callback);
+apiInstance.addNewFollowers(authorization, userId, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **userId** | **Number**|  | 
 
 ### Return type
@@ -65,7 +68,7 @@ null (empty response body)
 
 <a name="authorizeUser"></a>
 # **authorizeUser**
-> UserAuth authorizeUser(grantType, username, password)
+> UserAuth authorizeUser(grantType, username, password, clientId)
 
 OAuth Authorization Endpoint for already registered users.
 
@@ -81,6 +84,8 @@ var username = "username_example"; // String |
 
 var password = "password_example"; // String | 
 
+var clientId = "clientId_example"; // String | 
+
 
 var callback = function(error, data, response) {
   if (error) {
@@ -89,7 +94,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.authorizeUser(grantType, username, password, callback);
+apiInstance.authorizeUser(grantType, username, password, clientId, callback);
 ```
 
 ### Parameters
@@ -99,6 +104,7 @@ Name | Type | Description  | Notes
  **grantType** | **String**|  | 
  **username** | **String**|  | 
  **password** | **String**|  | 
+ **clientId** | **String**|  | 
 
 ### Return type
 
@@ -115,7 +121,7 @@ No authorization required
 
 <a name="getCurrentUserDetails"></a>
 # **getCurrentUserDetails**
-> User getCurrentUserDetails()
+> User getCurrentUserDetails(authorization)
 
 Returns authorized users information
 
@@ -130,6 +136,9 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.UserApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -137,11 +146,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getCurrentUserDetails(callback);
+apiInstance.getCurrentUserDetails(authorization, callback);
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
 
 ### Return type
 
@@ -158,7 +170,7 @@ This endpoint does not need any parameter.
 
 <a name="getFriends"></a>
 # **getFriends**
-> UserList getFriends()
+> UserList getFriends(authorization)
 
 List a given users&#39; followed friends
 
@@ -173,6 +185,9 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.UserApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -180,11 +195,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getFriends(callback);
+apiInstance.getFriends(authorization, callback);
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
 
 ### Return type
 
@@ -201,7 +219,7 @@ This endpoint does not need any parameter.
 
 <a name="getUserDetails"></a>
 # **getUserDetails**
-> User getUserDetails(userId)
+> User getUserDetails(authorization, userId)
 
 Returns a user queried by id
 
@@ -216,6 +234,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.UserApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var userId = 789; // Number | 
 
 
@@ -226,13 +246,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getUserDetails(userId, callback);
+apiInstance.getUserDetails(authorization, userId, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **userId** | **Number**|  | 
 
 ### Return type
@@ -307,7 +328,7 @@ No authorization required
 
 <a name="stopFollowingUser"></a>
 # **stopFollowingUser**
-> stopFollowingUser(userId)
+> stopFollowingUser(authorization, userId)
 
 Stop Following a user
 
@@ -322,6 +343,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.UserApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var userId = 789; // Number | 
 
 
@@ -332,13 +355,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.stopFollowingUser(userId, callback);
+apiInstance.stopFollowingUser(authorization, userId, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **userId** | **Number**|  | 
 
 ### Return type
@@ -356,7 +380,7 @@ null (empty response body)
 
 <a name="updateUserDetails"></a>
 # **updateUserDetails**
-> User updateUserDetails(userId, email, password)
+> User updateUserDetails(authorization, userId, email, password)
 
 Update a Users information
 
@@ -370,6 +394,8 @@ var ranked_auth = defaultClient.authentications['ranked_auth'];
 ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.UserApi();
+
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
 
 var userId = 56; // Number | 
 
@@ -385,13 +411,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateUserDetails(userId, email, password, callback);
+apiInstance.updateUserDetails(authorization, userId, email, password, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **userId** | **Number**|  | 
  **email** | **String**| Users&#39; E-Mail address | 
  **password** | **String**| Users&#39; Password | 

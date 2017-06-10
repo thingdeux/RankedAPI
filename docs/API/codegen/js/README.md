@@ -60,6 +60,8 @@ ranked_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new RankedApi.SearchApi()
 
+var authorization = "authorization_example"; // {String} Required Authorization Bearer Token for OAuth2
+
 var opts = { 
   'category': "category_example", // {String} Search by specific category. ex: \"Food\"
   'subCategory': "subCategory_example", // {String} Search by specific sub-category. ex: Latin
@@ -71,10 +73,10 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
-api.getSearchResults(opts, callback);
+api.getSearchResults(authorization, opts, callback);
 
 ```
 
@@ -86,7 +88,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *RankedApi.SearchApi* | [**getSearchResults**](docs/SearchApi.md#getSearchResults) | **GET** /search | Search for Content
 *RankedApi.UserApi* | [**addNewFollowers**](docs/UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends | Follow a user
-*RankedApi.UserApi* | [**authorizeUser**](docs/UserApi.md#authorizeUser) | **POST** /users/auth | OAuth Authorization Endpoint for already registered users.
+*RankedApi.UserApi* | [**authorizeUser**](docs/UserApi.md#authorizeUser) | **POST** /users/auth/token | OAuth Authorization Endpoint for already registered users.
 *RankedApi.UserApi* | [**getCurrentUserDetails**](docs/UserApi.md#getCurrentUserDetails) | **GET** /users/me | Returns authorized users information
 *RankedApi.UserApi* | [**getFriends**](docs/UserApi.md#getFriends) | **GET** /users/{user_id}/friends | List a given users&#39; followed friends
 *RankedApi.UserApi* | [**getUserDetails**](docs/UserApi.md#getUserDetails) | **GET** /users/{user_id} | Returns a user queried by id
@@ -127,14 +129,14 @@ Class | Method | HTTP request | Description
 ### api_key
 
 - **Type**: API key
-- **API key parameter name**: api_key
+- **API key parameter name**: Authorization
 - **Location**: HTTP header
 
 ### ranked_auth
 
 - **Type**: OAuth
-- **Flow**: implicit
-- **Authorization URL**: http://dev.goranked.com/api/v1/users/auth/
+- **Flow**: password
+- **Authorization URL**: 
 - **Scopes**: 
   - write:user: Modify User profile
   - write:videos: Upload and classify Videos

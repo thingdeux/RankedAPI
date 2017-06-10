@@ -3,11 +3,15 @@
   "cells": [
     {
       "type": "markdown",
-      "data": "- [x] Setup Registration endpoint\n- [x] Explicitly Define fields on RegisterSerializer\n- [ ] OAuth Urls registration\n- [ ] ViewSets Tweaks for urls\n- [ ] AUTH endpoint\n- [ ] Testing\n- [ ] Setup migration for default providers\n- [ ] Ensure other endpoints are auth OAUTH required\n- [ ] Rate Throttling for Register and Auth\n- [x] Initial Models / setup\n"
+      "data": "- [ ] ViewSets Tweaks for urls\n- [ ] Testing\n- [ ] Setup migration for default providers\n- [ ] Rate Throttling for Register and Auth\n- [x] Setup Registration endpoint\n- [x] Explicitly Define fields on RegisterSerializer\n- [x] OAuth Urls registration\n- [x] users/me creation\n- [x] AUTH endpoint\n- [x] Ensure other endpoints are auth OAUTH required\n- [x] Initial Models / setup\n"
     },
     {
       "type": "text",
-      "data": "<div><span style=\"color: rgb(221, 221, 221);\">/users/register - OPEN</span></div><div><span style=\"color: rgb(221, 221, 221);\">/users/auth - OAuth Authorization Endpoint for already registered users</span><br></div><div>/users/me - Returns Users<font color=\"#cccccc\">’</font>&nbsp;information</div>"
+      "data": "<div><span style=\"color: rgb(221, 221, 221);\">/users/register - OPEN</span></div><div><span style=\"color: rgb(221, 221, 221);\">/users/auth/token - OAuth Authorization Endpoint for already registered users</span><br></div><div>/users/me - Returns Users<font color=\"#cccccc\">’</font>&nbsp;information</div>"
+    },
+    {
+      "type": "text",
+      "data": "<div>{</div><div>&nbsp; \"access_token\": \"<span style=\"color: rgb(80, 80, 80); font-family: OpenSans, Helvetica, Arial, sans-serif; font-size: 12px; font-variant-ligatures: normal; orphans: 2; white-space: pre-wrap; widows: 2; background-color: rgb(255, 255, 255);\">TC14TmaY69ZCWa0vSpvN5WKttHIEQE</span>\",</div><div>&nbsp; \"expires_in\": 36000,</div><div>&nbsp; \"token_type\": \"Bearer\",</div><div>&nbsp; \"scope\": \"read write\",</div><div>&nbsp; \"refresh_token\": \"Y5mYBxZkPfzalzyig9utB1EcH027IX\"</div><div>}</div>"
     }
   ]
 }

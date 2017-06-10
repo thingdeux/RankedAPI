@@ -1,9 +1,26 @@
+# Django Imports
+from django.core.exceptions import ObjectDoesNotExist
+# DRF Imports
 from rest_framework import permissions, routers, serializers, viewsets
 from rest_framework.response import Response
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+# Project Imports
 from .models import Profile
-
+# Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
+
+
+@api_view(('GET',))
+@permission_classes((IsAuthenticated, TokenHasReadWriteScope))
+def me(request):
+    try:
+        instance = Profile.objects.get(pk=request.user.id)
+        return Response(ProfileSerializer(instance=instance,
+                                          context={"request": request}).data, status=200)
+    except ObjectDoesNotExist:
+        Response(status=404)
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
@@ -14,12 +31,14 @@ class ProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ('is_partner', 'is_featured')
         model = Profile
 
+
 class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
-    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
 
 
+# Viewset for /users/register endpoint.
 class RegisterViewSet(viewsets.ModelViewSet):
     """
     Viewset for User Registration
@@ -44,9 +63,8 @@ class RegisterViewSet(viewsets.ModelViewSet):
                 return Response(status=201, data=serialized_new_profile.data)
             else:
                 # TODO: If 'email' or 'username' is in the errors dict then 408 otherwise 400
-                error = {"description": str(serialized_profile.errors) }
+                error = { "description": str(serialized_profile.errors) }
                 return Response(status=400, data=error)
         except KeyError as e:
             error = {"description": "Not sending over proper values {}".format(e)}
-            return Response(status=400)
-
+            return Response(status=400, data=error)

@@ -29,8 +29,8 @@ tags:
 securityDefinitions:
   ranked_auth:
       type: "oauth2"
-      authorizationUrl: "http://dev.goranked.com/api/v1/users/auth/"
-      flow: "implicit"
+      tokenUrl: "http://dev.goranked.com/api/v1/users/auth/token"
+      flow: "password"
       scopes:
         write:user: "Modify User profile"
         write:videos: "Upload and classify Videos"
@@ -38,7 +38,7 @@ securityDefinitions:
         read:videos: "Read and Explore Videos"
   api_key:
     type: "apiKey"
-    name: "api_key"
+    name: "Authorization"
     in: "header"
 
 definitions:
@@ -311,9 +311,12 @@ paths:
             $ref: "#/definitions/User"
         400:
           description: "Missing Required Fields"
+        401:
+          description: "Unauthorized"
         408:
           description: "Account already exists"
-  /users/auth:
+
+  /users/auth/token:
     post:
       summary: "OAuth Authorization Endpoint for already registered users."
       operationId: "authorize_user"
@@ -339,6 +342,11 @@ paths:
           type: "string"
           required: true
           example: "f34455"
+        - in: "formData"
+          name: "client_id"
+          type: "string"
+          required: true
+          example: "44555jfjffj"
       responses:
         200:
           description: "Auth Success"
@@ -360,6 +368,13 @@ paths:
         - ranked_auth:
           - write:user
           - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
       responses:
         200:
           description: "Success"
@@ -380,6 +395,12 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: path
           name: user_id
           required: true
@@ -417,6 +438,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: query
           name: user_id
           required: true
@@ -461,6 +488,13 @@ paths:
         - ranked_auth:
            - write:user
            - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
       responses:
           200:
             description: "Success"
@@ -486,6 +520,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: path
           name: user_id
           required: true
@@ -514,6 +554,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: path
           name: user_id
           required: true
@@ -543,11 +589,20 @@ paths:
         - ranked_auth:
            - read:videos
            - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
       responses:
         200:
           description: "Success"
           schema:
             $ref: "#/definitions/VideoList"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied"
 
@@ -564,6 +619,12 @@ paths:
            - read:videos
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "path"
           name: "video_id"
           description: "Ranked Video Detail Resource - All details on a given video"
@@ -574,6 +635,8 @@ paths:
           description: "Success"
           schema:
             $ref: "#/definitions/VideoDetail"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied - Not authorized"
         404:
@@ -593,6 +656,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "path"
           name: "video_id"
           required: true
@@ -617,6 +686,8 @@ paths:
           description: "Success"
           schema:
             $ref: "#/definitions/Video"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied"
         404:
@@ -634,6 +705,12 @@ paths:
            - write: user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "path"
           name: "video_id"
           description: "Ranked Video Detail Resource - All details on a given video"
@@ -642,6 +719,8 @@ paths:
       responses:
         200:
           description: "Success"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied! You don't own this video"
         404:
@@ -656,6 +735,12 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "formData"
           name: "filename"
           description: "name of file being uploaded"
@@ -670,6 +755,8 @@ paths:
           description: "Success"
           schema:
             $ref: "#/definitions/VideoUploadDetails"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied"
 
@@ -688,6 +775,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "path"
           name: "video_id"
           required: true
@@ -701,6 +794,8 @@ paths:
       responses:
         200:
           description: "Success"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied"
         404:
@@ -721,6 +816,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "path"
           name: "video_id"
           required: true
@@ -731,6 +832,8 @@ paths:
           description: "Success"
         304:
           description: "This Video has already been ranked"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied"
         404:
@@ -750,6 +853,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "path"
           name: "video_id"
           required: true
@@ -758,6 +867,8 @@ paths:
       responses:
         200:
           description: "Success"
+        401:
+          description: "Unauthorized"
         403:
           description: "Access Denied"
         404:
@@ -778,6 +889,12 @@ paths:
            - write:user
            - read:user
       parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
         - in: "query"
           name: "category"
           required: false
@@ -804,7 +921,10 @@ paths:
       responses:
         200:
           description: "Success"
-          schema:
+          type: "array"
+          items:
             $ref: '#/definitions/SearchResult'
+        401:
+          description: "Unauthorized"
         404:
           description: "Error During Search"
