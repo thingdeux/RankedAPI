@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 <a name="addVideoRank"></a>
 # **addVideoRank**
-> addVideoRank(videoId)
+> addVideoRank(authorization, videoId)
 
 &#39;Like&#39; or rank a given video
 
@@ -31,6 +31,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var videoId = 56; // Number | Video ID to be ranked
 
 
@@ -41,13 +43,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.addVideoRank(videoId, callback);
+apiInstance.addVideoRank(authorization, videoId, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **videoId** | **Number**| Video ID to be ranked | 
 
 ### Return type
@@ -65,7 +68,7 @@ null (empty response body)
 
 <a name="createVideoComment"></a>
 # **createVideoComment**
-> createVideoComment(videoId, opts)
+> createVideoComment(authorization, videoId, opts)
 
 Comment on a given video
 
@@ -80,6 +83,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var videoId = 56; // Number | Video ID to be commented upon
 
 var opts = { 
@@ -93,13 +98,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.createVideoComment(videoId, opts, callback);
+apiInstance.createVideoComment(authorization, videoId, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **videoId** | **Number**| Video ID to be commented upon | 
  **comment** | **String**| Comment to be left the video | [optional] 
 
@@ -118,7 +124,7 @@ null (empty response body)
 
 <a name="getTopVideos"></a>
 # **getTopVideos**
-> VideoList getTopVideos()
+> VideoList getTopVideos(authorization)
 
 List of top 20 most popular videos
 
@@ -133,6 +139,9 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -140,11 +149,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getTopVideos(callback);
+apiInstance.getTopVideos(authorization, callback);
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
 
 ### Return type
 
@@ -161,7 +173,7 @@ This endpoint does not need any parameter.
 
 <a name="getVideoDetails"></a>
 # **getVideoDetails**
-> VideoDetail getVideoDetails(videoId)
+> VideoDetail getVideoDetails(authorization, videoId)
 
 Detailed information about one video
 
@@ -176,6 +188,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var videoId = 56; // Number | Ranked Video Detail Resource - All details on a given video
 
 
@@ -186,13 +200,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.getVideoDetails(videoId, callback);
+apiInstance.getVideoDetails(authorization, videoId, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **videoId** | **Number**| Ranked Video Detail Resource - All details on a given video | 
 
 ### Return type
@@ -210,7 +225,7 @@ Name | Type | Description  | Notes
 
 <a name="initVideoUpload"></a>
 # **initVideoUpload**
-> VideoUploadDetails initVideoUpload(filename)
+> VideoUploadDetails initVideoUpload(authorization, filename)
 
 Endpoint to handle video uploads
 
@@ -225,6 +240,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var filename = "filename_example"; // String | name of file being uploaded
 
 
@@ -235,13 +252,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.initVideoUpload(filename, callback);
+apiInstance.initVideoUpload(authorization, filename, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **filename** | **String**| name of file being uploaded | 
 
 ### Return type
@@ -259,7 +277,7 @@ Name | Type | Description  | Notes
 
 <a name="removeVideRank"></a>
 # **removeVideRank**
-> removeVideRank(videoId)
+> removeVideRank(authorization, videoId)
 
 &#39;Dislike&#39; or de-rank a given video
 
@@ -274,6 +292,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var videoId = 56; // Number | Video ID to unrank
 
 
@@ -284,13 +304,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.removeVideRank(videoId, callback);
+apiInstance.removeVideRank(authorization, videoId, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **videoId** | **Number**| Video ID to unrank | 
 
 ### Return type
@@ -308,7 +329,7 @@ null (empty response body)
 
 <a name="removeVideo"></a>
 # **removeVideo**
-> removeVideo(videoId)
+> removeVideo(authorization, videoId)
 
 Delete personal videos from Ranked
 
@@ -323,6 +344,8 @@ ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
 
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
+
 var videoId = 56; // Number | Ranked Video Detail Resource - All details on a given video
 
 
@@ -333,13 +356,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.removeVideo(videoId, callback);
+apiInstance.removeVideo(authorization, videoId, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **videoId** | **Number**| Ranked Video Detail Resource - All details on a given video | 
 
 ### Return type
@@ -357,7 +381,7 @@ null (empty response body)
 
 <a name="updateVideoDetails"></a>
 # **updateVideoDetails**
-> Video updateVideoDetails(videoId, opts)
+> Video updateVideoDetails(authorization, videoId, opts)
 
 Update an existing Video
 
@@ -371,6 +395,8 @@ var ranked_auth = defaultClient.authentications['ranked_auth'];
 ranked_auth.accessToken = 'YOUR ACCESS TOKEN';
 
 var apiInstance = new RankedApi.VideosApi();
+
+var authorization = "authorization_example"; // String | Required Authorization Bearer Token for OAuth2
 
 var videoId = 56; // Number | 
 
@@ -387,13 +413,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateVideoDetails(videoId, opts, callback);
+apiInstance.updateVideoDetails(authorization, videoId, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **videoId** | **Number**|  | 
  **title** | **String**| Title of the video | [optional] 
  **category** | **String**| String name for valid category | [optional] 
