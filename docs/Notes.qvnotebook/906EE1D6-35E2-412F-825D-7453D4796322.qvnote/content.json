@@ -1,0 +1,9 @@
+{
+  "title": "TODO: Video Upload",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "- [ ] Generate Pre-Signed Upload URL for S3\n- [ ] Setup Celery processing job to poll video upload bucket for new videos\n- [ ] Implement ability to generate transcoding jobs in a celery task\n- [ ] Implement naming convention / account linking for processing and completed jobs.\n- [ ] Listen to AWS SNS for - 'RankedEncodingDone' and 'RankedEncodingFailed'\n- [ ] Pre-Signed URLs for AWS Posts (Check Boto)\n- [ ] Link filename from /videos/upload to videos object."
+    }
+  ]
+}
