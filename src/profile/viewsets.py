@@ -5,6 +5,8 @@ from rest_framework import permissions, routers, serializers, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import JSONParser, FormParser
+
 # Project Imports
 from .models import Profile
 # Library Imports
@@ -32,6 +34,7 @@ class RegisterViewSet(viewsets.ModelViewSet):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    parser_classes = (FormParser,)
 
     def create(self, request, *args, **kwargs):
         try:
@@ -50,7 +53,11 @@ class RegisterViewSet(viewsets.ModelViewSet):
                 return Response(status=201, data=serialized_new_profile.data)
             else:
                 # TODO: If 'email' or 'username' is in the errors dict then 408 otherwise 400
-                error = { "description": str(serialized_profile.errors) }
+                errors = []
+                for error in serialized_profile.errors:
+                    errors.append(error)
+
+                error = { "description": "Errors in fields", "errors": errors }
                 return Response(status=400, data=error)
         except KeyError as e:
             error = {"description": "Not sending over proper values {}".format(e)}

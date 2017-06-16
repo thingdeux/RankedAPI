@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Email">
+                        <input type="text" class="form-control" id="username" placeholder="Username">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -56,8 +56,6 @@
     <!-- *JS* - Javascript form handling -->
     <script>
         $(document).ready(function() {
-            var submission_form = $("#register-form");
-
             $(".submit_button").click(function (event) {
                 // Prevent normal submit button logic
                 // Retrieve values from form elements.
@@ -72,20 +70,47 @@
 
                 var request = $.ajax({
                     method: "POST",
-                    url: "http://dev.goranked.com/api/v1/users/register/", // Note: The Url from the documentation
+                    url: "http://dev.goranked.com/api/v1/users/register/",  // Note: The Url from the documentation,
                     crossDomain: true,
                     data: formData,
                     dataType: "json",
-                    contentType: "application/json"
+                    contentType: "application/x-www-form-urlencoded",
+                    statusCode: {
+                        // Handler for receiving status code 400
+                        400: function(data) {
+                            // console.log("Missing Fields!");
+                            // console.log(data.responseJSON);
+                            errorArray = data.responseJSON["errors"];
+                            console.log(errorArray);
+
+                            // If the email key exists in the error array do something
+                            if (jQuery.inArray("email", errorArray) >= 0) {
+                                console.log("Missing E-mail");
+                            }
+
+                            // If the Username key exists in the error array do something
+                            if (jQuery.inArray("username", errorArray) >= 0) {
+                                console.log("ERROR: Missing Username");
+                            }
+                            // Do some logic here to validate that all fields are correct or notify user.
+                        },
+                        // Handler for receiving status code 201 (CREATED)
+                        201: function(data) {
+                            console.log("SUCCESS - Account created");
+                            console.log(data.responseJSON);
+                        }
+                    }
                 });
 
+                // Handler for generic success
                 request.done(function (data) {
-                    console.log(data);
-                });
-                request.fail(function (data) {
-                    console.log(data);
                 });
 
+                // Handler for generic failure
+                request.fail(function (data) {
+                    console.log("REQUEST FAILED");
+                    console.log(data);
+                });
             });
 
         });

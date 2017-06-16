@@ -14,18 +14,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/User', 'model/UserAuth', 'model/UserList'], factory);
+    define(['ApiClient', 'model/ErrorInfo', 'model/User', 'model/UserAuth', 'model/UserList'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/User'), require('../model/UserAuth'), require('../model/UserList'));
+    module.exports = factory(require('../ApiClient'), require('../model/ErrorInfo'), require('../model/User'), require('../model/UserAuth'), require('../model/UserList'));
   } else {
     // Browser globals (root is window)
     if (!root.RankedApi) {
       root.RankedApi = {};
     }
-    root.RankedApi.UserApi = factory(root.RankedApi.ApiClient, root.RankedApi.User, root.RankedApi.UserAuth, root.RankedApi.UserList);
+    root.RankedApi.UserApi = factory(root.RankedApi.ApiClient, root.RankedApi.ErrorInfo, root.RankedApi.User, root.RankedApi.UserAuth, root.RankedApi.UserList);
   }
-}(this, function(ApiClient, User, UserAuth, UserList) {
+}(this, function(ApiClient, ErrorInfo, User, UserAuth, UserList) {
   'use strict';
 
   /**

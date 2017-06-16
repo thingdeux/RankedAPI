@@ -110,6 +110,7 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [RankedApi.Comment](docs/Comment.md)
+ - [RankedApi.ErrorInfo](docs/ErrorInfo.md)
  - [RankedApi.SearchResult](docs/SearchResult.md)
  - [RankedApi.SearchTypes](docs/SearchTypes.md)
  - [RankedApi.SortCriteria](docs/SortCriteria.md)

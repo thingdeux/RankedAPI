@@ -266,6 +266,18 @@ definitions:
       result_type:
         type: "string"
         enum: *SEARCHTYPES
+  ErrorInfo:
+    type: "object"
+    properties:
+      description:
+        name: "description"
+        example: "Missing The Following Fields"
+      errors:
+        name: "errors"
+        type: "array"
+        items:
+          type: "string"
+          example: "username"
 
 paths:
   /users/register:
@@ -275,7 +287,7 @@ paths:
       tags:
         - "User"
       consumes:
-        - "application/json"
+        - "application/x-www-form-urlencoded"
       produces:
         - "application/json"
       parameters:
@@ -311,6 +323,8 @@ paths:
             $ref: "#/definitions/User"
         400:
           description: "Missing Required Fields"
+          schema:
+            $ref: "#/definitions/ErrorInfo"
         401:
           description: "Unauthorized"
         408:
