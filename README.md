@@ -12,6 +12,9 @@ Ranked API - A Backend platform for providing services to the Ranked Mobile apps
 
 * Dependencies:  Python 3.5 (will be 3.6 when AWS images catch up)
 
+* PreRequisites: 
+    - Credentials need to be setup in ~/.aws/credentials for the S3 buckets.  Not storing them in the repo.
+
 * Installing:
     - run pip(3) -r requirements.txt
     - run manage.py migrate to setup the DB.
