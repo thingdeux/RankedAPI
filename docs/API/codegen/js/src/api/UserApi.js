@@ -14,18 +14,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/ErrorInfo', 'model/User', 'model/UserAuth', 'model/UserList'], factory);
+    define(['ApiClient', 'model/ErrorInfo', 'model/InlineResponse200', 'model/User', 'model/UserAuth', 'model/UserList'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/ErrorInfo'), require('../model/User'), require('../model/UserAuth'), require('../model/UserList'));
+    module.exports = factory(require('../ApiClient'), require('../model/ErrorInfo'), require('../model/InlineResponse200'), require('../model/User'), require('../model/UserAuth'), require('../model/UserList'));
   } else {
     // Browser globals (root is window)
     if (!root.RankedApi) {
       root.RankedApi = {};
     }
-    root.RankedApi.UserApi = factory(root.RankedApi.ApiClient, root.RankedApi.ErrorInfo, root.RankedApi.User, root.RankedApi.UserAuth, root.RankedApi.UserList);
+    root.RankedApi.UserApi = factory(root.RankedApi.ApiClient, root.RankedApi.ErrorInfo, root.RankedApi.InlineResponse200, root.RankedApi.User, root.RankedApi.UserAuth, root.RankedApi.UserList);
   }
-}(this, function(ApiClient, ErrorInfo, User, UserAuth, UserList) {
+}(this, function(ApiClient, ErrorInfo, InlineResponse200, User, UserAuth, UserList) {
   'use strict';
 
   /**
@@ -166,7 +166,7 @@
      * Callback function to receive the result of the getCurrentUserDetails operation.
      * @callback module:api/UserApi~getCurrentUserDetailsCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/User} data The data returned by the service call.
+     * @param {module:model/InlineResponse200} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -174,7 +174,7 @@
      * Returns authorized users information
      * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {module:api/UserApi~getCurrentUserDetailsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/User}
+     * data is of type: {@link module:model/InlineResponse200}
      */
     this.getCurrentUserDetails = function(authorization, callback) {
       var postBody = null;
@@ -198,7 +198,7 @@
       var authNames = ['ranked_auth'];
       var contentTypes = [];
       var accepts = ['application/json'];
-      var returnType = User;
+      var returnType = InlineResponse200;
 
       return this.apiClient.callApi(
         '/users/me', 'GET',
@@ -363,7 +363,7 @@
       };
 
       var authNames = [];
-      var contentTypes = ['application/json'];
+      var contentTypes = ['application/x-www-form-urlencoded'];
       var accepts = ['application/json'];
       var returnType = User;
 

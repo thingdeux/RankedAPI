@@ -123,7 +123,7 @@ No authorization required
 
 <a name="getCurrentUserDetails"></a>
 # **getCurrentUserDetails**
-> User getCurrentUserDetails(authorization)
+> InlineResponse200 getCurrentUserDetails(authorization)
 
 Returns authorized users information
 
@@ -159,7 +159,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**User**](User.md)
+[**InlineResponse200**](InlineResponse200.md)
 
 ### Authorization
 
@@ -325,7 +325,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json
 
 <a name="stopFollowingUser"></a>

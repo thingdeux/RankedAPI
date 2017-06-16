@@ -57,9 +57,10 @@
      * &#39;Like&#39; or rank a given video
      * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {Number} videoId Video ID to be ranked
+     * @param {Number} rankAmount Rank value between 1-10
      * @param {module:api/VideosApi~addVideoRankCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.addVideoRank = function(authorization, videoId, callback) {
+    this.addVideoRank = function(authorization, videoId, rankAmount, callback) {
       var postBody = null;
 
       // verify the required parameter 'authorization' is set
@@ -72,6 +73,11 @@
         throw new Error("Missing the required parameter 'videoId' when calling addVideoRank");
       }
 
+      // verify the required parameter 'rankAmount' is set
+      if (rankAmount == undefined || rankAmount == null) {
+        throw new Error("Missing the required parameter 'rankAmount' when calling addVideoRank");
+      }
+
 
       var pathParams = {
         'video_id': videoId
@@ -82,6 +88,7 @@
         'Authorization': authorization
       };
       var formParams = {
+        'rank_amount': rankAmount
       };
 
       var authNames = ['ranked_auth'];

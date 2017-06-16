@@ -14,12 +14,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Comment', 'model/ErrorInfo', 'model/SearchResult', 'model/SearchTypes', 'model/SortCriteria', 'model/User', 'model/UserAuth', 'model/UserList', 'model/Video', 'model/VideoDetail', 'model/VideoImageOptions', 'model/VideoLinks', 'model/VideoList', 'model/VideoQualityOptions', 'model/VideoUploadDetails', 'api/SearchApi', 'api/UserApi', 'api/VideosApi'], factory);
+    define(['ApiClient', 'model/Category', 'model/Comment', 'model/ErrorInfo', 'model/InlineResponse200', 'model/SearchResult', 'model/SearchTypes', 'model/SortCriteria', 'model/User', 'model/UserAuth', 'model/UserList', 'model/Video', 'model/VideoDetail', 'model/VideoImageOptions', 'model/VideoLinks', 'model/VideoList', 'model/VideoQualityOptions', 'model/VideoUploadDetails', 'api/CategoriesApi', 'api/SearchApi', 'api/UserApi', 'api/VideosApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/Comment'), require('./model/ErrorInfo'), require('./model/SearchResult'), require('./model/SearchTypes'), require('./model/SortCriteria'), require('./model/User'), require('./model/UserAuth'), require('./model/UserList'), require('./model/Video'), require('./model/VideoDetail'), require('./model/VideoImageOptions'), require('./model/VideoLinks'), require('./model/VideoList'), require('./model/VideoQualityOptions'), require('./model/VideoUploadDetails'), require('./api/SearchApi'), require('./api/UserApi'), require('./api/VideosApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/Category'), require('./model/Comment'), require('./model/ErrorInfo'), require('./model/InlineResponse200'), require('./model/SearchResult'), require('./model/SearchTypes'), require('./model/SortCriteria'), require('./model/User'), require('./model/UserAuth'), require('./model/UserList'), require('./model/Video'), require('./model/VideoDetail'), require('./model/VideoImageOptions'), require('./model/VideoLinks'), require('./model/VideoList'), require('./model/VideoQualityOptions'), require('./model/VideoUploadDetails'), require('./api/CategoriesApi'), require('./api/SearchApi'), require('./api/UserApi'), require('./api/VideosApi'));
   }
-}(function(ApiClient, Comment, ErrorInfo, SearchResult, SearchTypes, SortCriteria, User, UserAuth, UserList, Video, VideoDetail, VideoImageOptions, VideoLinks, VideoList, VideoQualityOptions, VideoUploadDetails, SearchApi, UserApi, VideosApi) {
+}(function(ApiClient, Category, Comment, ErrorInfo, InlineResponse200, SearchResult, SearchTypes, SortCriteria, User, UserAuth, UserList, Video, VideoDetail, VideoImageOptions, VideoLinks, VideoList, VideoQualityOptions, VideoUploadDetails, CategoriesApi, SearchApi, UserApi, VideosApi) {
   'use strict';
 
   /**
@@ -60,6 +60,11 @@
      */
     ApiClient: ApiClient,
     /**
+     * The Category model constructor.
+     * @property {module:model/Category}
+     */
+    Category: Category,
+    /**
      * The Comment model constructor.
      * @property {module:model/Comment}
      */
@@ -69,6 +74,11 @@
      * @property {module:model/ErrorInfo}
      */
     ErrorInfo: ErrorInfo,
+    /**
+     * The InlineResponse200 model constructor.
+     * @property {module:model/InlineResponse200}
+     */
+    InlineResponse200: InlineResponse200,
     /**
      * The SearchResult model constructor.
      * @property {module:model/SearchResult}
@@ -134,6 +144,11 @@
      * @property {module:model/VideoUploadDetails}
      */
     VideoUploadDetails: VideoUploadDetails,
+    /**
+     * The CategoriesApi service constructor.
+     * @property {module:api/CategoriesApi}
+     */
+    CategoriesApi: CategoriesApi,
     /**
      * The SearchApi service constructor.
      * @property {module:api/SearchApi}

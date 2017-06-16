@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 <a name="addVideoRank"></a>
 # **addVideoRank**
-> addVideoRank(authorization, videoId)
+> addVideoRank(authorization, videoId, rankAmount)
 
 &#39;Like&#39; or rank a given video
 
@@ -35,6 +35,8 @@ var authorization = "authorization_example"; // String | Required Authorization 
 
 var videoId = 56; // Number | Video ID to be ranked
 
+var rankAmount = 56; // Number | Rank value between 1-10
+
 
 var callback = function(error, data, response) {
   if (error) {
@@ -43,7 +45,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-apiInstance.addVideoRank(authorization, videoId, callback);
+apiInstance.addVideoRank(authorization, videoId, rankAmount, callback);
 ```
 
 ### Parameters
@@ -52,6 +54,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **videoId** | **Number**| Video ID to be ranked | 
+ **rankAmount** | **Number**| Rank value between 1-10 | 
 
 ### Return type
 

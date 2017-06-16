@@ -57,6 +57,7 @@ REST_FRAMEWORK = {
     # )
 }
 
+# FILTHY!! Must go before demo
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'dev.goranked.com'

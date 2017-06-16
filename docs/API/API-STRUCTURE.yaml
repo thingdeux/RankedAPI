@@ -25,6 +25,9 @@ tags:
   - Search:
     name: "Search"
     description: "Everything related to Searching"
+  - Categories:
+    name: "Categories"
+    description: "Everything related to categories"
 
 securityDefinitions:
   ranked_auth:
@@ -278,6 +281,25 @@ definitions:
         items:
           type: "string"
           example: "username"
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+        description: "ID of category"
+      name:
+        type: "string"
+        example: "Music"
+        description: "Category Name"
+      parent_category:
+        type: "string"
+        example: "Food"
+        description: "If a sub-category - name of parent category"
+      is_sub_category:
+        type: "boolean"
+        description: "Boolean that denotes whether or not this is a sub-category"
+        example: true
 
 paths:
   /users/register:
@@ -392,9 +414,20 @@ paths:
           description: "Required Authorization Bearer Token for OAuth2"
       responses:
         200:
-          description: "Success"
+          description: "Success - User Object"
           schema:
-            $ref: "#/definitions/User"
+            type: "object"
+            properties:
+              profile:
+                type: "object"
+                name: "profile"
+                $ref: "#/definitions/User"
+              videos:
+                type: "array"
+                name: "videos"
+                description: "The authorized users uploaded videos"
+                items:
+                  $ref: "#/definitions/Video"
         401:
           description: "Unauthorized"
         403:
@@ -936,6 +969,11 @@ paths:
           required: true
           type: "integer"
           description: "Video ID to be ranked"
+        - in: "formData"
+          name: "rank_amount"
+          required: true
+          type: "integer"
+          description: "Rank value between 1-10"
       responses:
         200:
           description: "Success"
@@ -1037,3 +1075,31 @@ paths:
           description: "Unauthorized"
         404:
           description: "Error During Search"
+
+  /categories:
+    get:
+      summary: "List of available categories / sub-categories"
+      operationId: "list_categories"
+      tags:
+        - "Categories"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
+      responses:
+        200:
+          description: "Success"
+          type: "array"
+          items:
+            $ref: '#/definitions/Category'
+        401:
+          description: "Unauthorized"

@@ -58,16 +58,10 @@ var defaultClient = RankedApi.ApiClient.instance;
 var ranked_auth = defaultClient.authentications['ranked_auth'];
 ranked_auth.accessToken = "YOUR ACCESS TOKEN"
 
-var api = new RankedApi.SearchApi()
+var api = new RankedApi.CategoriesApi()
 
 var authorization = "authorization_example"; // {String} Required Authorization Bearer Token for OAuth2
 
-var opts = { 
-  'category': "category_example", // {String} Search by specific category. ex: \"Food\"
-  'subCategory': "subCategory_example", // {String} Search by specific sub-category. ex: Latin
-  'types': "types_example", // {String} Comma delimited list of search result types (see models re: Search Types). ex: Video,Users
-  'sort': "sort_example" // {String} NOTE: Ignored for Alpha - always top - sort order (see models re: Sort Criteria)
-};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -76,7 +70,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.getSearchResults(authorization, opts, callback);
+api.listCategories(authorization, callback);
 
 ```
 
@@ -86,6 +80,7 @@ All URIs are relative to *http://dev.goranked.com/api/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*RankedApi.CategoriesApi* | [**listCategories**](docs/CategoriesApi.md#listCategories) | **GET** /categories | List of available categories / sub-categories
 *RankedApi.SearchApi* | [**getSearchResults**](docs/SearchApi.md#getSearchResults) | **GET** /search | Search for Content
 *RankedApi.UserApi* | [**addNewFollowers**](docs/UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends | Follow a user
 *RankedApi.UserApi* | [**authorizeUser**](docs/UserApi.md#authorizeUser) | **POST** /users/auth/token | OAuth Authorization Endpoint for already registered users.
@@ -109,8 +104,10 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [RankedApi.Category](docs/Category.md)
  - [RankedApi.Comment](docs/Comment.md)
  - [RankedApi.ErrorInfo](docs/ErrorInfo.md)
+ - [RankedApi.InlineResponse200](docs/InlineResponse200.md)
  - [RankedApi.SearchResult](docs/SearchResult.md)
  - [RankedApi.SearchTypes](docs/SearchTypes.md)
  - [RankedApi.SortCriteria](docs/SortCriteria.md)
