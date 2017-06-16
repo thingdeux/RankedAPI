@@ -228,7 +228,7 @@ Name | Type | Description  | Notes
 
 <a name="initVideoUpload"></a>
 # **initVideoUpload**
-> VideoUploadDetails initVideoUpload(authorization, filename)
+> VideoUploadDetails initVideoUpload(authorization, filename, fileType)
 
 Endpoint to handle video uploads
 
@@ -247,6 +247,8 @@ var authorization = "authorization_example"; // String | Required Authorization 
 
 var filename = "filename_example"; // String | name of file being uploaded
 
+var fileType = "fileType_example"; // String | File type of uploading video
+
 
 var callback = function(error, data, response) {
   if (error) {
@@ -255,7 +257,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.initVideoUpload(authorization, filename, callback);
+apiInstance.initVideoUpload(authorization, filename, fileType, callback);
 ```
 
 ### Parameters
@@ -264,6 +266,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authorization** | **String**| Required Authorization Bearer Token for OAuth2 | 
  **filename** | **String**| name of file being uploaded | 
+ **fileType** | **String**| File type of uploading video | 
 
 ### Return type
 

@@ -267,10 +267,11 @@
      * Endpoint to handle video uploads
      * @param {String} authorization Required Authorization Bearer Token for OAuth2
      * @param {String} filename name of file being uploaded
+     * @param {String} fileType File type of uploading video
      * @param {module:api/VideosApi~initVideoUploadCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/VideoUploadDetails}
      */
-    this.initVideoUpload = function(authorization, filename, callback) {
+    this.initVideoUpload = function(authorization, filename, fileType, callback) {
       var postBody = null;
 
       // verify the required parameter 'authorization' is set
@@ -283,6 +284,11 @@
         throw new Error("Missing the required parameter 'filename' when calling initVideoUpload");
       }
 
+      // verify the required parameter 'fileType' is set
+      if (fileType == undefined || fileType == null) {
+        throw new Error("Missing the required parameter 'fileType' when calling initVideoUpload");
+      }
+
 
       var pathParams = {
       };
@@ -292,7 +298,8 @@
         'Authorization': authorization
       };
       var formParams = {
-        'filename': filename
+        'filename': filename,
+        'file_type': fileType
       };
 
       var authNames = ['ranked_auth'];

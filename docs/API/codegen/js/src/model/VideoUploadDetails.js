@@ -47,6 +47,10 @@
 
 
 
+
+
+
+
   };
 
   /**
@@ -66,6 +70,18 @@
       if (data.hasOwnProperty('video_id')) {
         obj['video_id'] = ApiClient.convertToType(data['video_id'], 'Number');
       }
+      if (data.hasOwnProperty('final_url')) {
+        obj['final_url'] = ApiClient.convertToType(data['final_url'], 'String');
+      }
+      if (data.hasOwnProperty('AWSAccessKey')) {
+        obj['AWSAccessKey'] = ApiClient.convertToType(data['AWSAccessKey'], 'String');
+      }
+      if (data.hasOwnProperty('Policy')) {
+        obj['Policy'] = ApiClient.convertToType(data['Policy'], 'String');
+      }
+      if (data.hasOwnProperty('Signature')) {
+        obj['Signature'] = ApiClient.convertToType(data['Signature'], 'String');
+      }
     }
     return obj;
   }
@@ -79,6 +95,25 @@
    * @member {Number} video_id
    */
   exports.prototype['video_id'] = undefined;
+  /**
+   * @member {String} final_url
+   */
+  exports.prototype['final_url'] = undefined;
+  /**
+   * AWS Access Key
+   * @member {String} AWSAccessKey
+   */
+  exports.prototype['AWSAccessKey'] = undefined;
+  /**
+   * AWS Policy Generation
+   * @member {String} Policy
+   */
+  exports.prototype['Policy'] = undefined;
+  /**
+   * AWS Signing Signature for the request
+   * @member {String} Signature
+   */
+  exports.prototype['Signature'] = undefined;
 
 
 

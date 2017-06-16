@@ -9,20 +9,29 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 # Project Imports
 from .models import Profile
+from src.video.models import Video
+from src.video.serializers import VideoSerializer
 from .viewsets import ProfileSerializer
+
+
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 import boto3
-
 
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticated, TokenHasReadWriteScope))
 def me(request):
     try:
-        instance = Profile.objects.get(pk=request.user.id)
-        return Response(ProfileSerializer(instance=instance,
-                                          context={"request": request}).data, status=200)
+        # TODO: JJ - Performance Gains from query optimization on this reverse lookup.
+        profile = Profile.objects.get(pk=request.user.id)
+        videos = Video.objects.filter(related_profile=profile)
+
+        response_dict = {
+            'me': ProfileSerializer(instance=profile, context={"request": request}).data,
+            'videos': VideoSerializer(instance=videos, many=True).data
+        }
+        return Response(data=response_dict, status=200)
     except ObjectDoesNotExist:
         Response(status=404)
 

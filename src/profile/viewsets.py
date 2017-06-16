@@ -50,6 +50,7 @@ class RegisterViewSet(viewsets.ModelViewSet):
                 new_profile = serialized_profile.save()
                 new_profile.save()
                 serialized_new_profile = ProfileSerializer(new_profile)
+
                 return Response(status=201, data=serialized_new_profile.data)
             else:
                 # TODO: If 'email' or 'username' is in the errors dict then 408 otherwise 400

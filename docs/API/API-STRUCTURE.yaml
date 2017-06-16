@@ -236,6 +236,26 @@ definitions:
         type: "integer"
         name: "video_id"
         description: "Generated Video ID that can be used to check status and update any values on /videos"
+      final_url:
+        type: "string"
+        name: "final_url"
+        example: "https://videos.goranked.com/3234234.mp4"
+      AWSAccessKey:
+        type: "string"
+        name: "AWSAccessKeyId"
+        example: "123fsdfsFFJL:J3234"
+        description: "AWS Access Key"
+      Policy:
+        type: "string"
+        name: "policy"
+        example: "12313fsdfsdf32234234:J3234"
+        description: "AWS Policy Generation"
+      Signature:
+        type: "string"
+        name: "signature"
+        example: "132RSKFF/g"
+        description: "AWS Signing Signature for the request"
+
   # Comments Definitions
   Comment:
     type: "object"

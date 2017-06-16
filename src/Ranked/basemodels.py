@@ -23,21 +23,36 @@ class Hashtagable(models.Model):
 
 
 class ThumbnailDisplayable(models.Model):
-    thumbnail_large = models.URLField(default=None)
-    thumbnail_small = models.URLField(default=None)
+    thumbnail_large = models.URLField(default=None, null=True)
+    thumbnail_small = models.URLField(default=None, null=True)
 
     class Meta:
         abstract = True
 
 
 class MultipleQualityLinkable(models.Model):
-    mobile = models.URLField(default=None)
-    low = models.URLField(default=None)
-    high = models.URLField(default=None)
-    hd = models.URLField(default=None)
+    mobile = models.URLField(default=None, null=True)
+    low = models.URLField(default=None, null=True)
+    high = models.URLField(default=None, null=True)
+    hd = models.URLField(default=None, null=True)
 
     class Meta:
         abstract = True
+
+
+class Activatable(models.Model):
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+
+    def deactivate(self):
+        self.is_active = False
+        self.save()
+
+    def activate(self):
+        self.is_active = True
+        self.save()
 
 
 class UploadProcessable(models.Model):
@@ -66,7 +81,7 @@ class UploadProcessable(models.Model):
             ExpiresIn=3600
         )
 
-        return json.dumps({
+        return {
             'data': pre_signed_post,
-            'url': 'https://%s/%s' % ("videos.goranked.com", generated_filename)
-        })
+            'final_url': 'https://%s/%s' % ("videos.goranked.com", generated_filename)
+        }
