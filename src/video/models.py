@@ -19,6 +19,5 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Thumbn
     title = models.CharField(max_length=256, blank=False, null=False)
     ranking = models.IntegerField(default=0)
     is_featured = models.BooleanField(default=False)
-    is_processing = models.BooleanField(default=False)
     category = models.ForeignKey(Category, null=False)
     sub_category = models.ForeignKey(Category, related_name='sub_category')

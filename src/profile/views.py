@@ -1,7 +1,7 @@
 # Django Imports
 from django.core.exceptions import ObjectDoesNotExist
 # DRF Imports
-from rest_framework.parsers import DjangoMultiPartParser, MultiPartParser
+from rest_framework.parsers import MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.decorators import parser_classes
 from rest_framework.response import Response

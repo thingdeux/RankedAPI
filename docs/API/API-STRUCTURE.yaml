@@ -888,6 +888,12 @@ paths:
           description: "name of file being uploaded"
           required: true
           type: "string"
+        - in: "formData"
+          name: "file_type"
+          description: "File type of uploading video"
+          required: true
+          type: "string"
+          example: "video/mp4"
       security:
           - ranked_auth:
              - write:user
