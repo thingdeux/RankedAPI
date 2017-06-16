@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ranked Registration Example</title>
+
+    <!-- *Ignore* - Some quick library imports -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- *End Ignore* -->
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="text-center">Register Now</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="email">E-Mail</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <p class="help-block">At least 3 characters</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone_number" placeholder="Phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="unlock_key">Alpha Access Code</label>
+                        <input type="text" class="form-control" id="unlock_key" placeholder="Alpha Access Code">
+                    </div>
+                    <button class="submit_button btn btn-default" type="submit">Submit</button>
+                </form>
+            </div>
+         </div>
+    </div>
+
+    <!-- *JS* - Javascript form handling -->
+    <script>
+        $(document).ready(function() {
+            var submission_form = $("#register-form");
+
+            $(".submit_button").click(function (event) {
+                // Prevent normal submit button logic
+                // Retrieve values from form elements.
+                event.preventDefault();
+                var formData = {
+                    'username': $('#username').val(),
+                    'email': $('#email').val(),
+                    'password': $('#password').val(),
+                    'phone_number': $('#phone_number').val(),
+                    'unlock_key': $('#unlock_key').val()
+                };
+
+                var request = $.ajax({
+                    method: "POST",
+                    url: "http://dev.goranked.com/api/v1/users/register/", // Note: The Url from the documentation
+                    crossDomain: true,
+                    data: formData,
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+
+                request.done(function (data) {
+                    console.log(data);
+                });
+                request.fail(function (data) {
+                    console.log(data);
+                });
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
