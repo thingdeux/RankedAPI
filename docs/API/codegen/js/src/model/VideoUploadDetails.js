@@ -14,18 +14,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient'], factory);
+    define(['ApiClient', 'model/VideoUploadAWSDetails'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'));
+    module.exports = factory(require('../ApiClient'), require('./VideoUploadAWSDetails'));
   } else {
     // Browser globals (root is window)
     if (!root.RankedApi) {
       root.RankedApi = {};
     }
-    root.RankedApi.VideoUploadDetails = factory(root.RankedApi.ApiClient);
+    root.RankedApi.VideoUploadDetails = factory(root.RankedApi.ApiClient, root.RankedApi.VideoUploadAWSDetails);
   }
-}(this, function(ApiClient) {
+}(this, function(ApiClient, VideoUploadAWSDetails) {
   'use strict';
 
 
@@ -44,8 +44,6 @@
    */
   var exports = function() {
     var _this = this;
-
-
 
 
 
@@ -73,14 +71,8 @@
       if (data.hasOwnProperty('final_url')) {
         obj['final_url'] = ApiClient.convertToType(data['final_url'], 'String');
       }
-      if (data.hasOwnProperty('AWSAccessKey')) {
-        obj['AWSAccessKey'] = ApiClient.convertToType(data['AWSAccessKey'], 'String');
-      }
-      if (data.hasOwnProperty('Policy')) {
-        obj['Policy'] = ApiClient.convertToType(data['Policy'], 'String');
-      }
-      if (data.hasOwnProperty('Signature')) {
-        obj['Signature'] = ApiClient.convertToType(data['Signature'], 'String');
+      if (data.hasOwnProperty('aws_fields')) {
+        obj['aws_fields'] = VideoUploadAWSDetails.constructFromObject(data['aws_fields']);
       }
     }
     return obj;
@@ -100,20 +92,10 @@
    */
   exports.prototype['final_url'] = undefined;
   /**
-   * AWS Access Key
-   * @member {String} AWSAccessKey
+   * These fields should all be attached to the upload post via form-data along w/ file
+   * @member {module:model/VideoUploadAWSDetails} aws_fields
    */
-  exports.prototype['AWSAccessKey'] = undefined;
-  /**
-   * AWS Policy Generation
-   * @member {String} Policy
-   */
-  exports.prototype['Policy'] = undefined;
-  /**
-   * AWS Signing Signature for the request
-   * @member {String} Signature
-   */
-  exports.prototype['Signature'] = undefined;
+  exports.prototype['aws_fields'] = undefined;
 
 
 

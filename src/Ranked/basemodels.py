@@ -80,6 +80,7 @@ class UploadProcessable(models.Model):
             ],
             ExpiresIn=3600
         )
+        print(pre_signed_post)
 
         return {
             'data': pre_signed_post,

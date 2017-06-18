@@ -225,7 +225,7 @@ definitions:
         type: "array"
         items:
           $ref: '#/definitions/Video'
-  VideoUploadDetails:
+  VideoUploadAWSDetails:
     type: "object"
     properties:
       pre_signed_upload_url:
@@ -255,6 +255,27 @@ definitions:
         name: "signature"
         example: "132RSKFF/g"
         description: "AWS Signing Signature for the request"
+
+  VideoUploadDetails:
+    type: "object"
+    properties:
+      pre_signed_upload_url:
+        type: "string"
+        name: "pre_signed_upload_url"
+        example: "https://aws.pre-sign/324234"
+      video_id:
+        type: "integer"
+        name: "video_id"
+        description: "Generated Video ID that can be used to check status and update any values on /videos"
+      final_url:
+        type: "string"
+        name: "final_url"
+        example: "https://videos.goranked.com/3234234.mp4"
+      aws_fields:
+        type: "object"
+        description: "These fields should all be attached to the upload post via form-data along w/ file"
+        $ref: '#/definitions/VideoUploadAWSDetails'
+
 
   # Comments Definitions
   Comment:

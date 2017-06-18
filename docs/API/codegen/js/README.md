@@ -120,6 +120,7 @@ Class | Method | HTTP request | Description
  - [RankedApi.VideoLinks](docs/VideoLinks.md)
  - [RankedApi.VideoList](docs/VideoList.md)
  - [RankedApi.VideoQualityOptions](docs/VideoQualityOptions.md)
+ - [RankedApi.VideoUploadAWSDetails](docs/VideoUploadAWSDetails.md)
  - [RankedApi.VideoUploadDetails](docs/VideoUploadDetails.md)
 
 
