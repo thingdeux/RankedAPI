@@ -83,5 +83,6 @@ class UploadProcessable(models.Model):
 
         return {
             'data': pre_signed_post,
-            'final_url': 'https://%s/%s' % ("videos.goranked.com", generated_filename)
+            'final_url': 'http://{}/{}'.format("videos.goranked.com", generated_filename),
+            'low_url': 'http://{}/{}.webm'.format("videos.goranked.com", generated_filename.split('.')[0])
         }

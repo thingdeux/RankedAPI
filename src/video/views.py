@@ -11,7 +11,6 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 # Standard Library Imports
 import json
 
-
 #Generate Video Presigned Note
 class GenerateUploadView(APIView):
     permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
@@ -23,7 +22,11 @@ class GenerateUploadView(APIView):
             profile = Profile.objects.get(pk=request.user.id)
             video = Video.objects.create(related_profile=profile, title="", is_processing=True, is_active=False)
             pre_signed_details = video.generate_pre_signed_upload_url(profile.id, filename, file_type)
+            # Setup
+            video.low = pre_signed_details['low_url']
+            video.high = pre_signed_details['final_url']
             video.s3_filename = pre_signed_details['data']['fields']['key']
+            video.thumbnail_large, video.thumbnail_small = self.generate_thumbnail_links(filename)
             video.save()
 
             response_dict = {
@@ -34,10 +37,10 @@ class GenerateUploadView(APIView):
             aws_fields = {
                 'key': pre_signed_details['data']['fields']['key'],
                 'AWSAccessKeyId': pre_signed_details['data']['fields']['AWSAccessKeyId'],
+                'Content-Type': file_type,
                 'acl': pre_signed_details['data']['fields']['acl'],
                 'policy': pre_signed_details['data']['fields']['policy'],
-                'signature': pre_signed_details['data']['fields']['signature'],
-                'Content-Type': file_type
+                'signature': pre_signed_details['data']['fields']['signature']
             }
             response_dict['aws_fields'] = aws_fields
 
@@ -49,3 +52,13 @@ class GenerateUploadView(APIView):
         # User doesn't exist
         except ObjectDoesNotExist:
             return Response(data={"description": "Profile not found"}, status=404)
+
+
+    def generate_thumbnail_links(self, filename):
+        STATIC_URL = "https://static.goranked.com"
+        try:
+            filename_parsed = filename.split('.')[0]
+            return ("{}/{}-00001.jpg".format(STATIC_URL, filename_parsed),
+                    "{}/{}-00002.jpg".format(STATIC_URL, filename_parsed))
+        except IndexError:
+            return ("", "")

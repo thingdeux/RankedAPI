@@ -11,7 +11,7 @@ var eltr = new AWS.ElasticTranscoder({
 });
 
 exports.handler = function(event, context) {
- console.log("Executing Elastic Transcoder Orchestrator");
+ console.log("Generating Elastic Transcoder Job");
  var bucket = event.Records[0].s3.bucket.name;
  var key = event.Records[0].s3.object.key;
  var pipelineId = "1496812035419-5s3jr8";
@@ -23,7 +23,6 @@ exports.handler = function(event, context) {
  var newKey = key.split(".")[0];
  var params = {
   PipelineId: pipelineId,
-  OutputKeyPrefix: newKey + "/",
   Input: {
    Key: srcKey,
    FrameRate: "auto",
@@ -33,13 +32,13 @@ exports.handler = function(event, context) {
    Container: "auto"
   },
   Outputs: [{
-   Key: "mp4-" + newKey + ".mp4",
-   ThumbnailPattern: "thumbs-" + newKey + "-{count}",
-   PresetId: "1351620000001-000010", //Generic 720p
+   Key: newKey + ".mp4",
+   ThumbnailPattern: newKey + "-{count}",
+   PresetId: "1351620000001-000010" //Generic 720p
   },{
-   Key: "webm-" + newKey + ".webm",
+   Key: newKey + ".webm",
    ThumbnailPattern: "",
-   PresetId: "1351620000001-100240", //Webm 720p
+   PresetId: "1351620000001-100240" //Webm 720p
   }]
  };
  console.log("Starting Job");
