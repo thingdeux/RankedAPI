@@ -4,6 +4,11 @@
     {
       "type": "markdown",
       "data": "- [x] Generate Pre-Signed Upload URL for S3\n- [x] Link filename from /videos/upload to videos object.\n- [x] Pre-Signed URLs for AWS Posts (Check Boto)\n- [ ] Implement naming convention / account linking for processing and completed jobs.\n- [ ] Setup Celery processing job to poll video upload bucket for new videos\n- [ ] Implement ability to generate transcoding jobs in a celery task\n- [ ] Listen to AWS SNS for - 'RankedEncodingDone' and 'RankedEncodingFailed'\n- [ ] Clean up old, non finished uploading files on S3 and video relations locally."
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "data": "{\n    \"pre_signed_upload_url\": \"https://ranked-video-upload.s3.amazonaws.com/\",\n    \"video_id\": 13,\n    \"final_url\": \"https://videos.goranked.com/1-2b3247fb-2572-4134-b899-3b7935426ea7-somenew_vid.mp4\",\n    \"aws_fields\": {\n        \"key\": \"1-2b3247fb-2572-4134-b899-3b7935426ea7-somenew_vid.mp4\",\n        \"AWSAccessKeyId\": \"AKIAJ22P4I23PARW7FIA\",\n        \"acl\": \"bucket-owner-full-control\",\n        \"policy\": \"eyJleHBpcmF0aW9uIjogIjIwMTctMDYtMThUMjA6MzI6NTVaIiwgImNvbmRpdGlvbnMiOiBbeyJhY2wiOiAiYnVja2V0LW93bmVyLWZ1bGwtY29udHJvbCJ9LCB7IkNvbnRlbnQtVHlwZSI6ICJ2aWRlby9tcDQifSwgeyJidWNrZXQiOiAicmFua2VkLXZpZGVvLXVwbG9hZCJ9LCB7ImtleSI6ICIxLTJiMzI0N2ZiLTI1NzItNDEzNC1iODk5LTNiNzkzNTQyNmVhNy1zb21lbmV3X3ZpZC5tcDQifV19\",\n        \"signature\": \"HxOoGcDPmxILKuzDkgNoDlUV5Y4=\",\n        \"Content-Type\": \"video/mp4\"\n    }\n}"
     }
   ]
 }
