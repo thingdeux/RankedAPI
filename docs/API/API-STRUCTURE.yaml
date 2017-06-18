@@ -343,7 +343,7 @@ definitions:
         example: true
 
 paths:
-  /users/register:
+  /users/register/:
     post:
       summary: "User Registration Endpoint"
       operationId: "register_user"
@@ -393,7 +393,7 @@ paths:
         408:
           description: "Account already exists"
 
-  /users/auth/token:
+  /users/auth/token/:
     post:
       summary: "OAuth Authorization Endpoint for already registered users."
       operationId: "authorize_user"
@@ -434,7 +434,7 @@ paths:
         403:
           description: "Access Denied or account deleted"
 
-  /users/me:
+  /users/me/:
     get:
       summary: "Returns authorized users information"
       operationId: "get_current_user_details"
@@ -476,7 +476,7 @@ paths:
         404:
           description: "No account found"
 
-  /users/{user_id}:
+  /users/{user_id}/:
     get:
       summary: "Returns a user queried by id"
       operationId: "get_user_details"
@@ -626,7 +626,7 @@ paths:
         403:
           "description": "Access Denied"
 
-  /users/{user_id}/friends:
+  /users/{user_id}/friends/:
     get:
       summary: "List a given users' followed friends"
       operationId: "get_friends"
@@ -728,7 +728,7 @@ paths:
           404:
             description: "Not currently following this user"
 
-  /users/{user_id}/avatar:
+  /users/{user_id}/avatar/:
      put:
        summary: Upload an avatar image file.
        operationId: "upload_avatar"
@@ -760,7 +760,7 @@ paths:
             "description": "Access Denied"
 
   # Videos
-  /videos:
+  /videos/:
     get:
       summary: "List of top 20 most popular videos"
       operationId: "get_top_videos"
@@ -789,7 +789,7 @@ paths:
         403:
           description: "Access Denied"
 
-  /videos/{video_id}:
+  /videos/{video_id}/:
     get:
       summary: "Detailed information about one video"
       operationId: "get_video_details"
@@ -909,7 +909,7 @@ paths:
         404:
           description: "Video Not Found"
 
-  /videos/upload:
+  /videos/upload/:
     post:
       summary: "Endpoint to handle video uploads"
       operationId: "init_video_upload"
@@ -1068,7 +1068,7 @@ paths:
         404:
           description: "No Ranking Found for user"
 
-  /search:
+  /search/:
     get:
       summary: "Search for Content"
       operationId: "get_search_results"
@@ -1123,7 +1123,7 @@ paths:
         404:
           description: "Error During Search"
 
-  /categories:
+  /categories/:
     get:
       summary: "List of available categories / sub-categories"
       operationId: "list_categories"

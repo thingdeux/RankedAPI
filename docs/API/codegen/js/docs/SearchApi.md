@@ -4,7 +4,7 @@ All URIs are relative to *http://dev.goranked.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getSearchResults**](SearchApi.md#getSearchResults) | **GET** /search | Search for Content
+[**getSearchResults**](SearchApi.md#getSearchResults) | **GET** /search/ | Search for Content
 
 
 <a name="getSearchResults"></a>

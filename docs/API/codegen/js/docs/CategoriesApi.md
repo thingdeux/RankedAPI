@@ -4,7 +4,7 @@ All URIs are relative to *http://dev.goranked.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**listCategories**](CategoriesApi.md#listCategories) | **GET** /categories | List of available categories / sub-categories
+[**listCategories**](CategoriesApi.md#listCategories) | **GET** /categories/ | List of available categories / sub-categories
 
 
 <a name="listCategories"></a>

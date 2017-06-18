@@ -83,7 +83,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/categories', 'GET',
+        '/categories/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

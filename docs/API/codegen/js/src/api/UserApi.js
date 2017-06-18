@@ -90,7 +90,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/users/{user_id}/friends', 'POST',
+        '/users/{user_id}/friends/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -156,7 +156,7 @@
       var returnType = UserAuth;
 
       return this.apiClient.callApi(
-        '/users/auth/token', 'POST',
+        '/users/auth/token/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -201,7 +201,7 @@
       var returnType = InlineResponse200;
 
       return this.apiClient.callApi(
-        '/users/me', 'GET',
+        '/users/me/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -246,7 +246,7 @@
       var returnType = UserList;
 
       return this.apiClient.callApi(
-        '/users/{user_id}/friends', 'GET',
+        '/users/{user_id}/friends/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -298,7 +298,7 @@
       var returnType = User;
 
       return this.apiClient.callApi(
-        '/users/{user_id}', 'GET',
+        '/users/{user_id}/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -368,7 +368,7 @@
       var returnType = User;
 
       return this.apiClient.callApi(
-        '/users/register', 'POST',
+        '/users/register/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -419,7 +419,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/users/{user_id}/friends', 'DELETE',
+        '/users/{user_id}/friends/', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -481,7 +481,7 @@
       var returnType = User;
 
       return this.apiClient.callApi(
-        '/users/{user_id}', 'PATCH',
+        '/users/{user_id}/', 'PATCH',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -547,7 +547,7 @@
       var returnType = User;
 
       return this.apiClient.callApi(
-        '/users/{user_id}', 'PUT',
+        '/users/{user_id}/', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -589,7 +589,7 @@
       var returnType = User;
 
       return this.apiClient.callApi(
-        '/users/{user_id}/avatar', 'PUT',
+        '/users/{user_id}/avatar/', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

@@ -6,12 +6,12 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addVideoRank**](VideosApi.md#addVideoRank) | **POST** /videos/{video_id}/rank/ | &#39;Like&#39; or rank a given video
 [**createVideoComment**](VideosApi.md#createVideoComment) | **POST** /videos/{video_id}/comments/ | Comment on a given video
-[**getTopVideos**](VideosApi.md#getTopVideos) | **GET** /videos | List of top 20 most popular videos
-[**getVideoDetails**](VideosApi.md#getVideoDetails) | **GET** /videos/{video_id} | Detailed information about one video
-[**initVideoUpload**](VideosApi.md#initVideoUpload) | **POST** /videos/upload | Endpoint to handle video uploads
+[**getTopVideos**](VideosApi.md#getTopVideos) | **GET** /videos/ | List of top 20 most popular videos
+[**getVideoDetails**](VideosApi.md#getVideoDetails) | **GET** /videos/{video_id}/ | Detailed information about one video
+[**initVideoUpload**](VideosApi.md#initVideoUpload) | **POST** /videos/upload/ | Endpoint to handle video uploads
 [**removeVideRank**](VideosApi.md#removeVideRank) | **DELETE** /videos/{video_id}/rank/ | &#39;Dislike&#39; or de-rank a given video
-[**removeVideo**](VideosApi.md#removeVideo) | **DELETE** /videos/{video_id} | Delete personal videos from Ranked
-[**updateVideoDetails**](VideosApi.md#updateVideoDetails) | **PUT** /videos/{video_id} | Update an existing Video
+[**removeVideo**](VideosApi.md#removeVideo) | **DELETE** /videos/{video_id}/ | Delete personal videos from Ranked
+[**updateVideoDetails**](VideosApi.md#updateVideoDetails) | **PUT** /videos/{video_id}/ | Update an existing Video
 
 
 <a name="addVideoRank"></a>

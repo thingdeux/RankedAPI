@@ -197,7 +197,7 @@
       var returnType = VideoList;
 
       return this.apiClient.callApi(
-        '/videos', 'GET',
+        '/videos/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -249,7 +249,7 @@
       var returnType = VideoDetail;
 
       return this.apiClient.callApi(
-        '/videos/{video_id}', 'GET',
+        '/videos/{video_id}/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -308,7 +308,7 @@
       var returnType = VideoUploadDetails;
 
       return this.apiClient.callApi(
-        '/videos/upload', 'POST',
+        '/videos/upload/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -410,7 +410,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/videos/{video_id}', 'DELETE',
+        '/videos/{video_id}/', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -470,7 +470,7 @@
       var returnType = Video;
 
       return this.apiClient.callApi(
-        '/videos/{video_id}', 'PUT',
+        '/videos/{video_id}/', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

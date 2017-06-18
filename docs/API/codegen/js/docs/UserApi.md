@@ -4,16 +4,16 @@ All URIs are relative to *http://dev.goranked.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addNewFollowers**](UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends | Follow a user
-[**authorizeUser**](UserApi.md#authorizeUser) | **POST** /users/auth/token | OAuth Authorization Endpoint for already registered users.
-[**getCurrentUserDetails**](UserApi.md#getCurrentUserDetails) | **GET** /users/me | Returns authorized users information
-[**getFriends**](UserApi.md#getFriends) | **GET** /users/{user_id}/friends | List a given users&#39; followed friends
-[**getUserDetails**](UserApi.md#getUserDetails) | **GET** /users/{user_id} | Returns a user queried by id
-[**registerUser**](UserApi.md#registerUser) | **POST** /users/register | User Registration Endpoint
-[**stopFollowingUser**](UserApi.md#stopFollowingUser) | **DELETE** /users/{user_id}/friends | Stop Following a user
-[**updateUserDetailPatch**](UserApi.md#updateUserDetailPatch) | **PATCH** /users/{user_id} | Update one or more fields of a Users&#39; profile
-[**updateUserDetails**](UserApi.md#updateUserDetails) | **PUT** /users/{user_id} | Update a Users information
-[**uploadAvatar**](UserApi.md#uploadAvatar) | **PUT** /users/{user_id}/avatar | Upload an avatar image file.
+[**addNewFollowers**](UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends/ | Follow a user
+[**authorizeUser**](UserApi.md#authorizeUser) | **POST** /users/auth/token/ | OAuth Authorization Endpoint for already registered users.
+[**getCurrentUserDetails**](UserApi.md#getCurrentUserDetails) | **GET** /users/me/ | Returns authorized users information
+[**getFriends**](UserApi.md#getFriends) | **GET** /users/{user_id}/friends/ | List a given users&#39; followed friends
+[**getUserDetails**](UserApi.md#getUserDetails) | **GET** /users/{user_id}/ | Returns a user queried by id
+[**registerUser**](UserApi.md#registerUser) | **POST** /users/register/ | User Registration Endpoint
+[**stopFollowingUser**](UserApi.md#stopFollowingUser) | **DELETE** /users/{user_id}/friends/ | Stop Following a user
+[**updateUserDetailPatch**](UserApi.md#updateUserDetailPatch) | **PATCH** /users/{user_id}/ | Update one or more fields of a Users&#39; profile
+[**updateUserDetails**](UserApi.md#updateUserDetails) | **PUT** /users/{user_id}/ | Update a Users information
+[**uploadAvatar**](UserApi.md#uploadAvatar) | **PUT** /users/{user_id}/avatar/ | Upload an avatar image file.
 
 
 <a name="addNewFollowers"></a>

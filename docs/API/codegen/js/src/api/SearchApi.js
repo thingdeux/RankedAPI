@@ -93,7 +93,7 @@
       var returnType = null;
 
       return this.apiClient.callApi(
-        '/search', 'GET',
+        '/search/', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

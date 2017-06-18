@@ -80,26 +80,26 @@ All URIs are relative to *http://dev.goranked.com/api/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*RankedApi.CategoriesApi* | [**listCategories**](docs/CategoriesApi.md#listCategories) | **GET** /categories | List of available categories / sub-categories
-*RankedApi.SearchApi* | [**getSearchResults**](docs/SearchApi.md#getSearchResults) | **GET** /search | Search for Content
-*RankedApi.UserApi* | [**addNewFollowers**](docs/UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends | Follow a user
-*RankedApi.UserApi* | [**authorizeUser**](docs/UserApi.md#authorizeUser) | **POST** /users/auth/token | OAuth Authorization Endpoint for already registered users.
-*RankedApi.UserApi* | [**getCurrentUserDetails**](docs/UserApi.md#getCurrentUserDetails) | **GET** /users/me | Returns authorized users information
-*RankedApi.UserApi* | [**getFriends**](docs/UserApi.md#getFriends) | **GET** /users/{user_id}/friends | List a given users&#39; followed friends
-*RankedApi.UserApi* | [**getUserDetails**](docs/UserApi.md#getUserDetails) | **GET** /users/{user_id} | Returns a user queried by id
-*RankedApi.UserApi* | [**registerUser**](docs/UserApi.md#registerUser) | **POST** /users/register | User Registration Endpoint
-*RankedApi.UserApi* | [**stopFollowingUser**](docs/UserApi.md#stopFollowingUser) | **DELETE** /users/{user_id}/friends | Stop Following a user
-*RankedApi.UserApi* | [**updateUserDetailPatch**](docs/UserApi.md#updateUserDetailPatch) | **PATCH** /users/{user_id} | Update one or more fields of a Users&#39; profile
-*RankedApi.UserApi* | [**updateUserDetails**](docs/UserApi.md#updateUserDetails) | **PUT** /users/{user_id} | Update a Users information
-*RankedApi.UserApi* | [**uploadAvatar**](docs/UserApi.md#uploadAvatar) | **PUT** /users/{user_id}/avatar | Upload an avatar image file.
+*RankedApi.CategoriesApi* | [**listCategories**](docs/CategoriesApi.md#listCategories) | **GET** /categories/ | List of available categories / sub-categories
+*RankedApi.SearchApi* | [**getSearchResults**](docs/SearchApi.md#getSearchResults) | **GET** /search/ | Search for Content
+*RankedApi.UserApi* | [**addNewFollowers**](docs/UserApi.md#addNewFollowers) | **POST** /users/{user_id}/friends/ | Follow a user
+*RankedApi.UserApi* | [**authorizeUser**](docs/UserApi.md#authorizeUser) | **POST** /users/auth/token/ | OAuth Authorization Endpoint for already registered users.
+*RankedApi.UserApi* | [**getCurrentUserDetails**](docs/UserApi.md#getCurrentUserDetails) | **GET** /users/me/ | Returns authorized users information
+*RankedApi.UserApi* | [**getFriends**](docs/UserApi.md#getFriends) | **GET** /users/{user_id}/friends/ | List a given users&#39; followed friends
+*RankedApi.UserApi* | [**getUserDetails**](docs/UserApi.md#getUserDetails) | **GET** /users/{user_id}/ | Returns a user queried by id
+*RankedApi.UserApi* | [**registerUser**](docs/UserApi.md#registerUser) | **POST** /users/register/ | User Registration Endpoint
+*RankedApi.UserApi* | [**stopFollowingUser**](docs/UserApi.md#stopFollowingUser) | **DELETE** /users/{user_id}/friends/ | Stop Following a user
+*RankedApi.UserApi* | [**updateUserDetailPatch**](docs/UserApi.md#updateUserDetailPatch) | **PATCH** /users/{user_id}/ | Update one or more fields of a Users&#39; profile
+*RankedApi.UserApi* | [**updateUserDetails**](docs/UserApi.md#updateUserDetails) | **PUT** /users/{user_id}/ | Update a Users information
+*RankedApi.UserApi* | [**uploadAvatar**](docs/UserApi.md#uploadAvatar) | **PUT** /users/{user_id}/avatar/ | Upload an avatar image file.
 *RankedApi.VideosApi* | [**addVideoRank**](docs/VideosApi.md#addVideoRank) | **POST** /videos/{video_id}/rank/ | &#39;Like&#39; or rank a given video
 *RankedApi.VideosApi* | [**createVideoComment**](docs/VideosApi.md#createVideoComment) | **POST** /videos/{video_id}/comments/ | Comment on a given video
-*RankedApi.VideosApi* | [**getTopVideos**](docs/VideosApi.md#getTopVideos) | **GET** /videos | List of top 20 most popular videos
-*RankedApi.VideosApi* | [**getVideoDetails**](docs/VideosApi.md#getVideoDetails) | **GET** /videos/{video_id} | Detailed information about one video
-*RankedApi.VideosApi* | [**initVideoUpload**](docs/VideosApi.md#initVideoUpload) | **POST** /videos/upload | Endpoint to handle video uploads
+*RankedApi.VideosApi* | [**getTopVideos**](docs/VideosApi.md#getTopVideos) | **GET** /videos/ | List of top 20 most popular videos
+*RankedApi.VideosApi* | [**getVideoDetails**](docs/VideosApi.md#getVideoDetails) | **GET** /videos/{video_id}/ | Detailed information about one video
+*RankedApi.VideosApi* | [**initVideoUpload**](docs/VideosApi.md#initVideoUpload) | **POST** /videos/upload/ | Endpoint to handle video uploads
 *RankedApi.VideosApi* | [**removeVideRank**](docs/VideosApi.md#removeVideRank) | **DELETE** /videos/{video_id}/rank/ | &#39;Dislike&#39; or de-rank a given video
-*RankedApi.VideosApi* | [**removeVideo**](docs/VideosApi.md#removeVideo) | **DELETE** /videos/{video_id} | Delete personal videos from Ranked
-*RankedApi.VideosApi* | [**updateVideoDetails**](docs/VideosApi.md#updateVideoDetails) | **PUT** /videos/{video_id} | Update an existing Video
+*RankedApi.VideosApi* | [**removeVideo**](docs/VideosApi.md#removeVideo) | **DELETE** /videos/{video_id}/ | Delete personal videos from Ranked
+*RankedApi.VideosApi* | [**updateVideoDetails**](docs/VideosApi.md#updateVideoDetails) | **PUT** /videos/{video_id}/ | Update an existing Video
 
 
 ## Documentation for Models
