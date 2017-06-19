@@ -18,6 +18,7 @@ from rest_framework import routers
 from src.profile.viewsets import RegisterViewSet, ProfileViewSet
 from src.profile.views import me, AvatarUploadView
 from src.video.views import GenerateUploadView
+from src.video.views import sns_error, sns_success
 
 router = routers.DefaultRouter()
 router.register(r'users/register', RegisterViewSet)
@@ -27,6 +28,8 @@ urlpatterns = [
     url(r'^users/auth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^users/me/$', me),
     url(r'^users/me/avatar/$', AvatarUploadView.as_view()),
+    url(r'^videos/processing/done/$', sns_success),
+    url(r'^videos/processing/error/$', sns_error),
     url(r'^videos/upload/$', GenerateUploadView.as_view()),
     url(r'^', include(router.urls)),
 ]
