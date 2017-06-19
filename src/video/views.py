@@ -12,8 +12,19 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 # Standard Library Imports
 import boto3
 
-#Generate Video Presigned Note
+
 class GenerateUploadView(APIView):
+    """
+    Generate Upload Link and create new video.  The process for this is:
+     1. This endpoint is hit
+     2. A Video Entry is created and associated with the authenticated user.
+     3. An AWS Pre-Signed URL is generated that will allow the consumer of the endpoint to
+        post an upload directly to the ranked S3 Upload Bucket.
+     4. Final links for fully processed videos are generated.
+     [ Outside of the scope of this class - the video will be processed via AWS transcoder and made
+       available along with thumbnails ]
+
+    """
     permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
 
     def post(self, request, format=None):
@@ -76,7 +87,6 @@ def sns_error(request):
 
 @api_view(['POST',])
 def sns_success(request):
-    print(request.META)
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
         _process_sns_subscription(request)
@@ -99,5 +109,6 @@ def _process_sns_subscription(request):
             Token=token,
             AuthenticateOnUnsubscribe='false'
         )
+
     except KeyError as e:
         print("Subscription missing key: {}".format(e))
