@@ -94,20 +94,24 @@ class GenerateUploadView(APIView):
 @api_view(['POST',])
 @parser_classes([PlainTextParser,])
 def sns_error(request):
+    print("RAW HEADERS {}".format(request.META))
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
+        print("RAW DATA".format(request.data))
         json_data = json.loads(str(request.data, 'utf-8'))
         _process_sns_subscription(json_data)
         return Response(status=200)
     else:
-        return 200
+        return Response(status=200)
 
 
 @api_view(['POST',])
 @parser_classes([PlainTextParser,])
 def sns_success(request):
+    print("RAW HEADERS {}".format(request.META))
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
+        print("RAW DATA".format(request.data))
         json_data = json.loads(str(request.data, 'utf-8'))
         _process_sns_subscription(json_data)
         return Response(status=200)
@@ -119,7 +123,7 @@ def _process_sns_subscription(json_data):
     try:
         token = json_data['Token']
         topic = json_data['TopicArn']
-
+        print("Received JSON DATA: {}".format(json_data))
         sns_client = boto3.client('sns', region_name='us-west-2')
 
         response = sns_client.confirm_subscription(
