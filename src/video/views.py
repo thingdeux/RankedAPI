@@ -14,6 +14,7 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 import boto3
 import json
 
+
 class PlainTextParser(BaseParser):
     """
     Plain text parser.
@@ -97,7 +98,7 @@ def sns_error(request):
     if sns_type == "SubscriptionConfirmation":
         json_data = json.loads(str(request.data, 'utf-8'))
         _process_sns_subscription(json_data)
-        return 200
+        return Response(status=200)
     else:
         return 200
 
@@ -109,9 +110,9 @@ def sns_success(request):
     if sns_type == "SubscriptionConfirmation":
         json_data = json.loads(str(request.data, 'utf-8'))
         _process_sns_subscription(json_data)
-        return 200
+        return Response(status=200)
     else:
-        return 200
+        return Response(status=200)
 
 
 def _process_sns_subscription(json_data):
