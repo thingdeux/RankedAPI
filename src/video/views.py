@@ -6,11 +6,25 @@ from ..video.models import Video
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import BaseParser
 # 3rd Party Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 # Standard Library Imports
 import boto3
+import json
+
+class PlainTextParser(BaseParser):
+    """
+    Plain text parser.
+    """
+    media_type = 'text/plain'
+
+    def parse(self, stream, media_type=None, parser_context=None):
+        """
+        Simply return a string representing the body of the request.
+        """
+        return stream.read()
 
 
 class GenerateUploadView(APIView):
@@ -77,30 +91,33 @@ class GenerateUploadView(APIView):
 
 
 @api_view(['POST',])
+@parser_classes([PlainTextParser,])
 def sns_error(request):
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
-        _process_sns_subscription(request)
+        json_data = json.loads(str(request.data, 'utf-8'))
+        _process_sns_subscription(json_data)
         return 200
     else:
         return 200
 
+
 @api_view(['POST',])
+@parser_classes([PlainTextParser,])
 def sns_success(request):
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
-        _process_sns_subscription(request)
+        json_data = json.loads(str(request.data, 'utf-8'))
+        _process_sns_subscription(json_data)
         return 200
     else:
-
-
         return 200
 
 
-def _process_sns_subscription(request):
+def _process_sns_subscription(json_data):
     try:
-        token = request.data['Token']
-        topic = request.data['TopicArn']
+        token = json_data['Token']
+        topic = json_data['TopicArn']
 
         sns_client = boto3.client('sns', region_name='us-west-2')
 
@@ -112,3 +129,7 @@ def _process_sns_subscription(request):
 
     except KeyError as e:
         print("Subscription missing key: {}".format(e))
+
+
+
+
