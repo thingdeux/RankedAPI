@@ -52,12 +52,14 @@ class GenerateUploadView(APIView):
             filename = request.data["filename"]
             file_type = request.data["file_type"]
             profile = Profile.objects.get(pk=request.user.id)
-            video = Video.objects.create(related_profile=profile, title="", is_processing=True, is_active=False)
-            pre_signed_details = video.generate_pre_signed_upload_url(profile.id, filename, file_type)
-            # Setup
+            pre_signed_details = Video.generate_pre_signed_upload_url(profile.id, filename, file_type)
+
+            # Setup Video DB Entry
+            video = Video.objects.create(related_profile=profile, title="", is_processing=True,
+                                         is_active=False, s3_filename=pre_signed_details['data']['fields']['key'])
+
             video.low = pre_signed_details['low_url']
             video.high = pre_signed_details['final_url']
-            video.s3_filename = pre_signed_details['data']['fields']['key']
             video.thumbnail_large, video.thumbnail_small = self.generate_thumbnail_links(video.s3_filename)
             video.save()
 
