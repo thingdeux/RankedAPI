@@ -53,6 +53,7 @@ class GenerateUploadView(APIView):
             file_type = request.data["file_type"]
             profile = Profile.objects.get(pk=request.user.id)
             pre_signed_details = Video.generate_pre_signed_upload_url(profile.id, filename, file_type)
+            logger.debug(pre_signed_details)
 
             # Setup Video DB Entry
             video = Video.objects.create(related_profile=profile, title="", is_processing=True,
