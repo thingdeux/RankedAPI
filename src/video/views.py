@@ -53,7 +53,6 @@ class GenerateUploadView(APIView):
             file_type = request.data["file_type"]
             profile = Profile.objects.get(pk=request.user.id)
             pre_signed_details = Video.generate_pre_signed_upload_url(profile.id, filename, file_type)
-            logger.debug(pre_signed_details)
 
             # Setup Video DB Entry
             video = Video.objects.create(related_profile=profile, title="", is_processing=True,
@@ -69,15 +68,15 @@ class GenerateUploadView(APIView):
                 'video_id': video.id,
                 'final_url': pre_signed_details['final_url']
             }
-            aws_fields = {
-                'key': pre_signed_details['data']['fields']['key'],
-                'AWSAccessKeyId': pre_signed_details['data']['fields']['AWSAccessKeyId'],
-                'Content-Type': file_type,
-                'acl': pre_signed_details['data']['fields']['acl'],
-                'policy': pre_signed_details['data']['fields']['policy'],
-                'signature': pre_signed_details['data']['fields']['signature']
-            }
-            response_dict['aws_fields'] = aws_fields
+            # aws_fields = {
+            #     'key': pre_signed_details['data']['fields']['key'],
+            #     'AWSAccessKeyId': pre_signed_details['data']['fields']['AWSAccessKeyId'],
+            #     'Content-Type': file_type,
+            #     'acl': pre_signed_details['data']['fields']['acl'],
+            #     'policy': pre_signed_details['data']['fields']['policy'],
+            #     'signature': pre_signed_details['data']['fields']['signature']
+            # }
+            response_dict['aws_fields'] = pre_signed_details['data']['fields']
 
             return Response(data=response_dict, status=200)
 
