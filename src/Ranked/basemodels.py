@@ -78,7 +78,7 @@ class UploadProcessable(models.Model):
 
     @classmethod
     def generate_pre_signed_upload_url(self, profile_id, filename, file_type):
-        s3 = boto3.client('s3')
+        s3 = boto3.client('s3', region_name = 'us-west-2')
         generated_filename = "{}-{}-{}".format(profile_id, uuid.uuid4(), filename)
 
         pre_signed_post = s3.generate_presigned_post(

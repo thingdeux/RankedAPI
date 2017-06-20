@@ -1,12 +1,7 @@
-# Django Imports
-from django.core.exceptions import ObjectDoesNotExist
 # DRF Imports
 from rest_framework import permissions, routers, serializers, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import JSONParser, FormParser
-
 # Project Imports
 from .models import Profile
 # Library Imports
@@ -53,7 +48,6 @@ class RegisterViewSet(viewsets.ModelViewSet):
 
                 return Response(status=201, data=serialized_new_profile.data)
             else:
-                # TODO: If 'email' or 'username' is in the errors dict then 408 otherwise 400
                 errors = []
                 for error in serialized_profile.errors:
                     errors.append(error)
