@@ -5,3 +5,10 @@ Code Deploy Instances:
         VirtualEnv Location: /home/ec2-user/.virtualenvs
         App Location: /home/ec2-user/src/ranked
         CodeDeploy Log: /opt/codedeploy-agent/deployment-root/deployment-logs
+
+
+[AWS INFO]
+
+Upload-Process: ranked-video-upload  -- Any file that is uploaded into this bucket will kickoff a lambda job that
+initiates a transcoding.  After the transcoding is complete an SQS event fires and notifies this server which then
+pushes the video to available
