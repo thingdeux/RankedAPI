@@ -164,24 +164,18 @@ import sys
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s'
-        }
-    },
     'handlers': {
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
-            'formatter': 'verbose'
         },
         'stream': {
             'level': 'INFO',
             'class': 'logging.StreamHandler'
         },
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'debug.log'),
         },
@@ -189,12 +183,12 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file', 'stream', 'console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         'video': {
             'handlers': ['file', 'stream', 'console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         }
     },
