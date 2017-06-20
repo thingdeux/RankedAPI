@@ -158,12 +158,24 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+import sys
 
 # Logging Setup
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s'
+        }
+    },
     'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'formatter': 'verbose'
+        },
         'stream': {
             'level': 'INFO',
             'class': 'logging.StreamHandler'
@@ -176,7 +188,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'stream'],
+            'handlers': ['file', 'stream', 'console'],
             'level': 'DEBUG',
             'propagate': True,
         },

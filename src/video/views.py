@@ -125,7 +125,6 @@ def _process_sns_subscription(json_data):
     try:
         token = json_data['Token']
         topic = json_data['TopicArn']
-        print("Received JSON DATA: {}".format(json_data))
         sns_client = boto3.client('sns', region_name='us-west-2')
 
         sns_client.confirm_subscription(
