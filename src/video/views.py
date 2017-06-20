@@ -97,7 +97,6 @@ class GenerateUploadView(APIView):
 @api_view(['POST',])
 @parser_classes([PlainTextParser,])
 def sns_error(request):
-    logger.debug("RAW HEADERS {}".format(request.META))
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
         json_data = json.loads(str(request.data, 'utf-8'))
@@ -105,21 +104,20 @@ def sns_error(request):
         return Response(status=200)
     else:
         # Normal SNS handling
-        logger.debug("RAW DATA".format(request.data))
+        logger.debug("RAW DATA: {}".format(request.data))
         return Response(status=200)
 
 
 @api_view(['POST',])
 @parser_classes([PlainTextParser,])
 def sns_success(request):
-    logger.debug("RAW HEADERS {}".format(request.META))
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
         json_data = json.loads(str(request.data, 'utf-8'))
         _process_sns_subscription(json_data)
         return Response(status=200)
     else:
-        logger.debug("RAW DATA".format(request.data))
+        logger.debug("RAW DATA: {}".format(request.data))
         return Response(status=200)
 
 
