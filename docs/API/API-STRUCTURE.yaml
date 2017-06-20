@@ -32,7 +32,7 @@ tags:
 securityDefinitions:
   ranked_auth:
       type: "oauth2"
-      tokenUrl: "http://dev.goranked.com/api/v1/users/auth/token"
+      tokenUrl: "http://dev.goranked.com/api/v1/users/auth/token/"
       flow: "password"
       scopes:
         write:user: "Modify User profile"
@@ -410,7 +410,7 @@ paths:
           required: true
           example: "SaraDean245"
         - in: "formData"
-          name: "Username"
+          name: "username"
           type: "string"
           required: true
           example: "Timmy2"
