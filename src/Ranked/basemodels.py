@@ -69,7 +69,7 @@ class UploadProcessable(models.Model):
 
     def remove_uploaded_file_from_s3(self):
         if self.s3_filename:
-            s3 = boto3.client('s3', region_name="us-west-2")
+            s3 = boto3.resource('s3', region_name="us-west-2")
             bucket = s3.Bucket(name=UploadProcessable.S3_BUCKET)
             bucket.delete_objects(
                 Delete={
