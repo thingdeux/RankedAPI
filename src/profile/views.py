@@ -12,8 +12,6 @@ from .models import Profile
 from src.video.models import Video
 from src.video.serializers import VideoSerializer
 from .viewsets import ProfileSerializer
-
-
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 import boto3

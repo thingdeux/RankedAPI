@@ -13,6 +13,7 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 # Standard Library Imports
 import boto3
 import json
+import logging
 
 
 class PlainTextParser(BaseParser):
@@ -94,28 +95,29 @@ class GenerateUploadView(APIView):
 @api_view(['POST',])
 @parser_classes([PlainTextParser,])
 def sns_error(request):
-    print("RAW HEADERS {}".format(request.META))
+    logging.log(level=logging.DEBUG, msg="RAW HEADERS {}".format(request.META))
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
-        print("RAW DATA".format(request.data))
         json_data = json.loads(str(request.data, 'utf-8'))
         _process_sns_subscription(json_data)
         return Response(status=200)
     else:
+        # Normal SNS handling
+        logging.log(level=logging.DEBUG, msg="RAW DATA".format(request.data))
         return Response(status=200)
 
 
 @api_view(['POST',])
 @parser_classes([PlainTextParser,])
 def sns_success(request):
-    print("RAW HEADERS {}".format(request.META))
+    logging.log(level=logging.DEBUG, msg="RAW HEADERS {}".format(request.META))
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
-        print("RAW DATA".format(request.data))
         json_data = json.loads(str(request.data, 'utf-8'))
         _process_sns_subscription(json_data)
         return Response(status=200)
     else:
+        logging.log(level=logging.DEBUG, msg="RAW DATA".format(request.data))
         return Response(status=200)
 
 
@@ -126,7 +128,7 @@ def _process_sns_subscription(json_data):
         print("Received JSON DATA: {}".format(json_data))
         sns_client = boto3.client('sns', region_name='us-west-2')
 
-        response = sns_client.confirm_subscription(
+        sns_client.confirm_subscription(
             TopicArn=topic,
             Token=token,
             AuthenticateOnUnsubscribe='false'
