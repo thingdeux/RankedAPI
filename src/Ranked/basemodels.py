@@ -4,6 +4,7 @@ import json
 import uuid
 import boto3
 
+
 class Base(models.Model):
     """
     a base object for all ORM database models to inherit from, for extra metadata
@@ -56,22 +57,32 @@ class Activatable(models.Model):
 
 
 class UploadProcessable(models.Model):
+    S3_BUCKET = "ranked-video-upload"
+
     pre_signed_upload_url = models.URLField(default=None, null=True)
     is_processing = models.BooleanField(default=False, db_index=True)
     processing_progress = models.IntegerField(default=0)
-    s3_filename = models.CharField(max_length=1024,default=None, null=True)
+    s3_filename = models.CharField(max_length=1024, db_index=True)
 
     class Meta:
         abstract = True
 
+    def remove_uploaded_file_from_s3(self):
+        if self.s3_filename:
+            bucket = boto3.resource('s3')
+            response = bucket.delete_objects(
+                Delete={
+                    'Key': self.s3_filename
+                }
+            )
+
     @classmethod
     def generate_pre_signed_upload_url(self, profile_id, filename, file_type):
-        S3_BUCKET = "ranked-video-upload"
         s3 = boto3.client('s3')
         generated_filename = "{}-{}-{}".format(profile_id, uuid.uuid4(), filename)
 
         pre_signed_post = s3.generate_presigned_post(
-            Bucket=S3_BUCKET,
+            Bucket=UploadProcessable.S3_BUCKET,
             Key=generated_filename,
             Fields={"acl": "bucket-owner-full-control", "Content-Type": file_type},
             Conditions=[

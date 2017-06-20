@@ -2,6 +2,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from src.profile.models import Profile
 from ..video.models import Video
+from ..video.sns import SNSResponse
+
 # DRF Imports
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -103,8 +105,14 @@ def sns_error(request):
         _process_sns_subscription(json_data)
         return Response(status=200)
     else:
-        # Normal SNS handling
-        logger.debug("RAW DATA: {}".format(request.data))
+        response = SNSResponse(request.data)
+        logger.error("AWS Error processing job id: {}", response.job_id)
+        # TODO: Should probably put this on celery
+        related_video = Video.objects.get(s3_filename=response.processed_filename)
+        related_video.is_processing = False
+        related_video.deactivate()
+        # TODO: Maybe try re-doing the transcode at a later time - for now fail.
+
         return Response(status=200)
 
 
@@ -117,8 +125,23 @@ def sns_success(request):
         _process_sns_subscription(json_data)
         return Response(status=200)
     else:
-        logger.debug("RAW DATA: {}".format(request.data))
-        return Response(status=200)
+        response = SNSResponse(request.data)
+        logger.info("AWS Successfully processed job id: {}", response.job_id)
+        # TODO: Should probably put this on celery
+        try:
+            related_video = Video.objects.get(s3_filename=response.processed_filename)
+            related_video.is_processing = False
+            related_video.activate()
+
+            try:
+                related_video.remove_uploaded_file_from_s3()
+            except Exception as error:
+                logger.error("Error Deleting S3 File: {}".format(error))
+
+            return Response(status=200)
+        except ObjectDoesNotExist:
+            logger.error("Unable to find video for key: {}".format(response.processed_filename))
+            return Response(status=200)
 
 
 def _process_sns_subscription(json_data):
