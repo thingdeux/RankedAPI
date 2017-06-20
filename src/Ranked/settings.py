@@ -192,5 +192,10 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'video': {
+            'handlers': ['file', 'stream', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
     },
 }
