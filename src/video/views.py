@@ -68,14 +68,6 @@ class GenerateUploadView(APIView):
                 'video_id': video.id,
                 'final_url': pre_signed_details['final_url']
             }
-            # aws_fields = {
-            #     'key': pre_signed_details['data']['fields']['key'],
-            #     'AWSAccessKeyId': pre_signed_details['data']['fields']['AWSAccessKeyId'],
-            #     'Content-Type': file_type,
-            #     'acl': pre_signed_details['data']['fields']['acl'],
-            #     'policy': pre_signed_details['data']['fields']['policy'],
-            #     'signature': pre_signed_details['data']['fields']['signature']
-            # }
             response_dict['aws_fields'] = pre_signed_details['data']['fields']
 
             return Response(data=response_dict, status=200)

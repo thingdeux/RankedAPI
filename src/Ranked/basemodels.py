@@ -69,16 +69,13 @@ class UploadProcessable(models.Model):
 
     def remove_uploaded_file_from_s3(self):
         if self.s3_filename:
-            bucket = boto3.resource('s3')
-            response = bucket.delete_objects(
-                Delete={
-                    'Key': self.s3_filename
-                }
-            )
+            s3 = boto3.client('s3', region_name="us-west-2")
+            bucket = s3.Bucket(name=UploadProcessable.S3_BUCKET)
+            bucket.delete(self.s3_filename)
 
     @classmethod
     def generate_pre_signed_upload_url(self, profile_id, filename, file_type):
-        s3 = boto3.client('s3', region_name = 'us-west-2')
+        s3 = boto3.client('s3', region_name="us-west-2")
         generated_filename = "{}-{}-{}".format(profile_id, uuid.uuid4(), filename)
 
         pre_signed_post = s3.generate_presigned_post(
