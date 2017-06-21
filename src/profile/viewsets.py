@@ -22,7 +22,7 @@ class RegisterViewSet(viewsets.ModelViewSet):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    parser_classes = (FormParser,)
+    parser_classes = (FormParser, JSONParser)
 
     def create(self, request, *args, **kwargs):
         try:

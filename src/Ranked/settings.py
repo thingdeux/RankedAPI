@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'src.profile',
     'src.comment',
     'src.video',
-    'src.api'
+    'src.api',
+    'debug_toolbar',
 ]
 
 REST_FRAMEWORK = {
@@ -79,6 +80,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
