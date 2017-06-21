@@ -1,19 +1,12 @@
 # DRF Imports
-from rest_framework import permissions, routers, serializers, viewsets
+from rest_framework import permissions, routers, viewsets
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FormParser
+from .serializers import ProfileSerializer
 # Project Imports
 from .models import Profile
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
-
-
-class ProfileSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        fields = ['id', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'username']
-        read_only_fields = ('id','is_partner', 'is_featured')
-        model = Profile
 
 
 class ProfileViewSet(viewsets.ModelViewSet):

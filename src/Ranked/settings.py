@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'rest_framework',
     'src.profile',
+    'src.comment',
     'src.video',
     'src.api'
 ]

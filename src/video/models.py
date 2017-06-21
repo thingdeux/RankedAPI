@@ -16,8 +16,9 @@ class Category(Base, Hashtagable):
     parent_category = models.ForeignKey('self', default=None, related_name='parent')
 
 
-class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, ThumbnailDisplayable, UploadProcessable,
-            Activatable):
+class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable,
+            ThumbnailDisplayable, UploadProcessable, Activatable):
+
     title = models.CharField(max_length=256, blank=False, null=False)
     ranking = models.IntegerField(default=0)
     is_featured = models.BooleanField(default=False)
