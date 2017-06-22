@@ -14,7 +14,7 @@ class RegistrationTestCase(TestCase):
             'username': 'ishouldwork',
             'password': 'mo3435re',
             'email': 'shouldwork@user.com',
-            'access_code': '123123'
+            'unlock_key': '123123'
         }, format='json')
 
         self.assertEqual(response.status_code, 201)
@@ -30,7 +30,7 @@ class RegistrationTestCase(TestCase):
             'username': 'test_use23232r',
             'password': 'mo3435re',
             'email': 'test@user.com',
-            'access_code': '123123'
+            'unlock_key': '123123'
         }, format='json')
 
         self.assertEqual(response.status_code, 408)
@@ -44,7 +44,7 @@ class RegistrationTestCase(TestCase):
             'username': 'test_user',
             'password': 'mo3435re',
             'email': 'myunique1231231email@email.com',
-            'access_code': '123123'
+            'unlock_key': '123123'
         }, format='json')
 
         self.assertEqual(response.status_code, 400)
@@ -57,7 +57,7 @@ class RegistrationTestCase(TestCase):
         """
         response = self.client.post('/api/v1/users/register/', {
             'email': 'myuni1queema2il@email.com',
-            'access_code': '123123'
+            'unlock_key': '123123'
         }, format='json')
 
         self.assertEqual(response.status_code, 400)
@@ -73,7 +73,7 @@ class RegistrationTestCase(TestCase):
 
             'email': 'myuni1queema2il@email.com',
             'password': 'IbetThisDoesntWork',
-            'access_code': '123123'
+            'unlock_key': '123123'
         }, format='json')
 
         self.assertEqual(response.status_code, 400)
