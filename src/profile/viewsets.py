@@ -62,5 +62,5 @@ class RegisterViewSet(viewsets.ModelViewSet):
 def _validate_registration_fields(data):
     validate_password(data['password'])
     username = data['username']
-    access_code = data['access_code']
+    access_code = data['unlock_key']
     email = data['email']
