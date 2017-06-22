@@ -7,6 +7,9 @@ from .serializers import ProfileSerializer
 from .models import Profile
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
+# Django Imports
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -30,6 +33,7 @@ class RegisterViewSet(viewsets.ModelViewSet):
             # Make sure e-mail doesn't already exist
             serialized_profile = ProfileSerializer(data=request.data)
             if serialized_profile.is_valid():
+                validate_password(request.data['password'])
                 existing_account = list(Profile.objects.filter(email=serialized_profile.validated_data['email']))
                 if len(existing_account) > 0:
                     error = {"description": "E-Mail already exists"}
@@ -50,4 +54,6 @@ class RegisterViewSet(viewsets.ModelViewSet):
         except KeyError as e:
             error = {"description": "Not sending over proper values {}".format(e)}
             return Response(status=400, data=error)
-
+        except ValidationError:
+            error = { "description": "Password does not meet standards. At least 6 characters.", "errors": ["password"]}
+            return Response(status=400, data=error)
