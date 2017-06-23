@@ -1,0 +1,5 @@
+DEBUG = False
+SECRET_KEY = "962)!uu2&-s9t=^t7hh^0lk-l9mh$@-pss4#a0ru#(laiq+j%x"
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_SSL_REDIRECT = False
+X_FRAME_OPTIONS = "DENY"
