@@ -47,7 +47,7 @@ class VideoViewSet(viewsets.ModelViewSet):
         return Response(status=404)
 
     def list(self, request, *args, **kwargs):
-        queryset = Video.objects.order_by('ranking')[:25]
+        queryset = Video.objects.order_by('rank_total')[:25]
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)
 

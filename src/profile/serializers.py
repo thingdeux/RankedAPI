@@ -11,6 +11,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class LightProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['id', 'avatar_url', 'is_partner', 'is_featured', 'username']
+        fields = ['id', 'avatar_url', 'username']
         read_only_fields = ('id', 'avatar_url', 'is_partner', 'is_featured', 'username')
         model = Profile
