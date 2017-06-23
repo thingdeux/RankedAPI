@@ -2,6 +2,7 @@
 mkdir /tmp/docs -p
 rm -rf /home/ec2-user/src/*
 rm -rf /tmp/docs/*
+rm -rf /var/log/gunicorn.debug
 
 chown -R ec2-user:ec2-user /home/ec2-user/src
 chown -R nginx:nginx /tmp/docs
