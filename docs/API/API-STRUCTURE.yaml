@@ -982,6 +982,8 @@ paths:
       responses:
         200:
           description: "Success"
+        400:
+          description: "Comment text not acceptable"
         401:
           description: "Unauthorized"
         403:

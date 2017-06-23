@@ -7,7 +7,7 @@ from rest_framework.decorators import detail_route
 from src.comment.serializers import CommentSerializer
 from .models import Video
 from src.ranking.models import Ranking
-from src.profile.models import Profile
+from src.comment.models import Comment
 
 from src.profile.serializers import ProfileSerializer
 from .serializers import VideoSerializer
@@ -52,7 +52,7 @@ class VideoViewSet(viewsets.ModelViewSet):
         return Response(serialized.data)
 
     def create(self, request, *args, **kwargs):
-        error = {"Description":  "POST to /videos/ is not how videos are created. Please see documentation."}
+        error = {"description":  "POST to /videos/ is not how videos are created. Please see documentation."}
         return Response(status=505, data=error)
 
     @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
@@ -81,11 +81,10 @@ class VideoViewSet(viewsets.ModelViewSet):
                 else:
                     return Response(status=304, data={'description': 'This video has already been ranked'})
             except ObjectDoesNotExist:
-                error = {"Description": "Video Not Found"}
+                error = {"description": "Video Not Found"}
                 return Response(status=404, data=error)
         elif request.method == "DELETE":
             return self.__delete_ranking(self.request.user, pk)
-
 
     def __delete_ranking(self, profile, video_id):
         try:
@@ -95,5 +94,30 @@ class VideoViewSet(viewsets.ModelViewSet):
             latest_ranking.delete()
             return Response(status=200, data={'description': 'Success'})
         except ObjectDoesNotExist:
-            error = {"Description": "No Ranking Found for Profile"}
+            error = {"description": "No Ranking Found for Profile"}
             return Response(status=404, data=error)
+
+    @detail_route(methods=['post'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
+    def comments(self, request, pk=None):
+        """
+        Handle Video Commenting
+        POST: Comment on a video
+        """
+        try:
+            comment = request.data['comment']
+
+            if len(comment) > 512:
+                return Response(status=400, data={'description': 'Comment Length exceeds 512 characters'})
+            elif len(comment) < 1:
+                raise ValueError
+            else:
+                video = Video.objects.get(id=pk)
+                profile = self.request.user
+                new_comment = Comment.objects.create(related_profile=profile, video=video, text=comment)
+                new_comment.save()
+                return Response(status=200, data={'description': 'Success'})
+
+        except ObjectDoesNotExist:
+            return Response(status=404, data={"description": "Video Not Found"})
+        except (KeyError, ValueError):
+            return Response(status=400, data={'description': 'Comment Length too short'})
