@@ -62,20 +62,38 @@ class VideoViewSet(viewsets.ModelViewSet):
         POST: Rank a video on a scale between 1-10
         DELETE: Remove Ranking for authorized user
         """
+        if request.method == "POST":
+            try:
+                video = Video.objects.get(id=pk)
+                profile = self.request.user
+                rank_amount = request.data.get('rank_amount', 1)
+
+                if rank_amount > 10:
+                    rank_amount = 10
+                elif rank_amount < 1:
+                    rank_amount = 1
+
+                new_rank, was_created = Ranking.objects.get_or_create(related_profile=profile, video=video)
+                if was_created:
+                    new_rank.rank_amount = rank_amount
+                    new_rank.save()
+                    return Response(status=200, data={'description': 'Success'})
+                else:
+                    return Response(status=304, data={'description': 'This video has already been ranked'})
+            except ObjectDoesNotExist:
+                error = {"Description": "Video Not Found"}
+                return Response(status=404, data=error)
+        elif request.method == "DELETE":
+            return self.__delete_ranking(self.request.user, pk)
+
+
+    def __delete_ranking(self, profile, video_id):
         try:
-            video = Video.objects.get(id=pk)
             profile = self.request.user
-
-            rank_amount = request.data.get('rank_amount', 1)
-            if rank_amount > 10:
-                rank_amount = 10
-
-            new_rank, was_created = Ranking.objects.get_or_create(related_profile=profile, video=video, rank_amount=rank_amount)
-            if was_created:
-                new_rank.save()
-                return Response(status=200)
-            else:
-                return Response(status=304)
+            video = Video.objects.get(id=video_id)
+            latest_ranking = Ranking.objects.get(video=video, related_profile=profile)
+            latest_ranking.delete()
+            return Response(status=200, data={'description': 'Success'})
         except ObjectDoesNotExist:
-            error = {"Description": "Video Not Found"}
+            error = {"Description": "No Ranking Found for Profile"}
             return Response(status=404, data=error)
