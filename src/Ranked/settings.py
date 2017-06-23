@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'src.profile',
     'src.comment',
     'src.video',
+    'src.ranking',
     'src.api',
     'debug_toolbar',
 ]
@@ -63,7 +64,8 @@ REST_FRAMEWORK = {
 # FILTHY!! Must go before demo
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'dev.goranked.com'
+    'dev.goranked.com',
+    'demo.goranked.com'
 )
 
 

@@ -27,5 +27,5 @@ import debug_toolbar
 urlpatterns = [
     #url(r'^debug/', include(debug_toolbar.urls)),
     url(r'^api/v1/', include(api_urls)),
-    url(r'^admin/', admin.site.urls)
+    url(r'^josh/', admin.site.urls)
 ]

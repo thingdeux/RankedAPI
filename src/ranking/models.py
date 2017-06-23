@@ -4,10 +4,15 @@ from src.profile.mixins import ProfileRelatable
 
 
 class Ranking(Base, ProfileRelatable):
-    video = models.ForeignKey('video.Video')
+    video = models.ForeignKey('video.Video', related_name="rankings")
+    rank_amount = models.IntegerField(default=1)
     # Picture here ... can be either or ... maybe
 
     def remove_ranking(self):
         # Re-Process the ranking count on the associated item.
         # OnDelete
+        pass
+
+    def add_ranking(self):
+        # Re-Process the ranking count on the associated video (or pic)
         pass

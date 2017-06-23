@@ -98,3 +98,17 @@ class UploadProcessable(models.Model):
             'final_url': 'http://{}/{}'.format("videos.goranked.com", generated_filename),
             'low_url': 'http://{}/{}.webm'.format("videos.goranked.com", generated_filename.split('.')[0])
         }
+
+
+class Rankable(models.Model):
+    """
+    Rankable content can have a rating
+    """
+    rank_total = models.IntegerField(default=0)
+    is_top_10 = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+    def update_ranking_count(self):
+        pass

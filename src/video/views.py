@@ -60,7 +60,7 @@ class GenerateUploadView(APIView):
 
             video.low = pre_signed_details['low_url']
             video.high = pre_signed_details['final_url']
-            video.thumbnail_large, video.thumbnail_small = self.generate_thumbnail_links(video.s3_filename)
+            video.thumbnail_large, video.thumbnail_small = self.__generate_thumbnail_links(video.s3_filename)
             video.save()
 
             response_dict = {
@@ -79,8 +79,7 @@ class GenerateUploadView(APIView):
         except ObjectDoesNotExist:
             return Response(data={"description": "Profile not found"}, status=404)
 
-
-    def generate_thumbnail_links(self, filename):
+    def __generate_thumbnail_links(self, filename):
         STATIC_URL = "https://static.goranked.com"
         try:
             filename_parsed = filename.split('.')[0]
@@ -90,13 +89,14 @@ class GenerateUploadView(APIView):
             return ("", "")
 
 
+# SNS Handlers
 @api_view(['POST',])
 @parser_classes([PlainTextParser,])
 def sns_error(request):
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
         json_data = json.loads(str(request.data, 'utf-8'))
-        _process_sns_subscription(json_data)
+        __process_sns_subscription(json_data)
         return Response(status=200)
     else:
         response = SNSResponse(request.data)
@@ -116,7 +116,7 @@ def sns_success(request):
     sns_type = request.META['HTTP_X_AMZ_SNS_MESSAGE_TYPE']
     if sns_type == "SubscriptionConfirmation":
         json_data = json.loads(str(request.data, 'utf-8'))
-        _process_sns_subscription(json_data)
+        __process_sns_subscription(json_data)
         return Response(status=200)
     else:
         response = SNSResponse(request.data)
@@ -138,7 +138,9 @@ def sns_success(request):
             return Response(status=200)
 
 
-def _process_sns_subscription(json_data):
+
+# PRIVATE HELPERS
+def __process_sns_subscription(json_data):
     try:
         token = json_data['Token']
         topic = json_data['TopicArn']

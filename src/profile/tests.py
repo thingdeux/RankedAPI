@@ -4,6 +4,16 @@ from rest_framework.test import APIClient
 from django.test import TestCase
 # Project Imports
 from .models import Profile
+# Django Imports
+from django.test import TestCase
+from django.utils import timezone
+# 3rd Party Imports
+from oauthlib.common import generate_token
+from oauth2_provider.models import Application, AccessToken
+# Standard Imports
+from datetime import timedelta
+
+
 
 class RegistrationTestCase(TestCase):
     def test_successful_account_creation(self):
@@ -131,3 +141,58 @@ class RegistrationTestCase(TestCase):
 #         self.access_token = self.get_access_token()
 #
 #         self.client.credentials(HTTP_AUTHORIZATION="Bearer {}".format(self.access_token))
+
+class UsersMeTestCase(TestCase):
+    def test_me_success(self):
+        """
+        Profile /me test
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/users/me/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data,
+             {
+                'me': {
+                    'id': 1,
+                    'email': 'test@user.com',
+                    'avatar_url': None,
+                    'is_partner': False,
+                    'is_featured': False,
+                    'phone_number': None,
+                    'username': 'test_user'},
+                'videos': []
+              })
+
+    def setUp(self):
+        self.client = APIClient()
+
+        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
+        self.test_profile.save()
+        self.__create_auth_tokens()
+
+
+    # TODO: Create generic version of this for sharing.
+    def __create_auth_tokens(self):
+        self.application = Application.objects.create(
+            client_type='Resource owner password-based',
+            authorization_grant_type=Application.CLIENT_PUBLIC,
+            client_secret='121212',
+            client_id='123123123',
+            redirect_uris='',
+            name='testAuth',
+            user=self.test_profile
+        )
+        self.application.save()
+
+        self.test_profile_token = AccessToken.objects.create(
+            user=self.test_profile,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile_token.save()

@@ -2,9 +2,12 @@
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FormParser
+from rest_framework.decorators import detail_route
 # Project Imports
 from src.comment.serializers import CommentSerializer
 from .models import Video
+from src.ranking.models import Ranking
+from src.profile.models import Profile
 
 from src.profile.serializers import ProfileSerializer
 from .serializers import VideoSerializer
@@ -52,4 +55,27 @@ class VideoViewSet(viewsets.ModelViewSet):
         error = {"Description":  "POST to /videos/ is not how videos are created. Please see documentation."}
         return Response(status=505, data=error)
 
+    @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
+    def rank(self, request, pk=None):
+        """
+        Handle Video Ranking
+        POST: Rank a video on a scale between 1-10
+        DELETE: Remove Ranking for authorized user
+        """
+        try:
+            video = Video.objects.get(id=pk)
+            profile = self.request.user
 
+            rank_amount = request.data.get('rank_amount', 1)
+            if rank_amount > 10:
+                rank_amount = 10
+
+            new_rank, was_created = Ranking.objects.get_or_create(related_profile=profile, video=video, rank_amount=rank_amount)
+            if was_created:
+                new_rank.save()
+                return Response(status=200)
+            else:
+                return Response(status=304)
+        except ObjectDoesNotExist:
+            error = {"Description": "Video Not Found"}
+            return Response(status=404, data=error)
