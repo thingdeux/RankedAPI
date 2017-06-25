@@ -1,15 +1,16 @@
-from rest_framework import permissions, routers, serializers, viewsets
+from rest_framework import serializers
 # Project Imports
 from .models import Video
 from src.categorization.serializers import CategorySerializer
+from src.profile.serializers import LightProfileSerializer
 
 class VideoSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(read_only=True)
     title = serializers.CharField()
-    rank_total = serializers.IntegerField()
-    is_featured = serializers.BooleanField()
-    is_processing = serializers.BooleanField()
-    is_active = serializers.BooleanField()
+    rank_total = serializers.IntegerField(read_only=True)
+    is_featured = serializers.BooleanField(read_only=True)
+    is_processing = serializers.BooleanField(read_only=True)
+    is_active = serializers.BooleanField(read_only=True)
 
     category = serializers.SerializerMethodField()
     sub_category = serializers.SerializerMethodField()
@@ -17,6 +18,10 @@ class VideoSerializer(serializers.Serializer):
     hashtag = serializers.CharField()
     image_links = serializers.SerializerMethodField()
     video_urls = serializers.SerializerMethodField()
+    uploaded_by = serializers.SerializerMethodField(read_only=True)
+
+    def get_uploaded_by(self, model):
+        return LightProfileSerializer(model.related_profile).data
 
     def get_category(self, model):
         if model.category:
@@ -24,7 +29,7 @@ class VideoSerializer(serializers.Serializer):
         return None
 
     def get_sub_category(self, model):
-        if model.category:
+        if model.sub_category:
             return CategorySerializer(model.sub_category).data
         return None
 
