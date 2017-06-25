@@ -8,10 +8,10 @@ image: python:3.6.0
 pipelines:
   default:
     - step:
-      script:
-        - apt-get update # required to install zip
-        - pip install -r requirements.txt
-        - python manage.py test # Always run tests for every branch.
+        script:
+          - apt-get update # required to install zip
+          - pip install -r requirements.txt
+          - python manage.py test # Always run tests for every branch.
 
   branches:
     master: # Deployment pipeline for Ranked CodeDeploy
