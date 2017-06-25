@@ -2,14 +2,14 @@ from django.db import models
 from .exceptions import ParentCategoryMissingError, SubCategorySameAsParentError
 
 class ParentCategoryRelatable(models.Model):
-    parent_category = models.OneToOneField("categorization.Category", null=True, default=None)
+    parent_category = models.ForeignKey("categorization.Category", null=True, default=None)
 
     class Meta:
         abstract = True
 
 
 class SubCategoryRelatable(models.Model):
-    sub_category = models.OneToOneField("categorization.Category", related_name="sub_category", null=True, default=None)
+    sub_category = models.ForeignKey("categorization.Category", related_name="sub_category", null=True, default=None)
 
     class Meta:
         abstract = True

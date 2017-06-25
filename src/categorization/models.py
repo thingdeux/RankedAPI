@@ -4,4 +4,4 @@ from .mixins import ParentCategoryRelatable
 
 
 class Category(Base, Hashtagable, ThumbnailDisplayable, Activatable, ParentCategoryRelatable):
-    name = models.CharField(max_length=255, null=False, blank=False, db_index=True)
+    name = models.CharField(max_length=255, null=False, blank=False, db_index=True, unique=True)

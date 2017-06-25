@@ -331,14 +331,22 @@ class VideoAPICase(TestCase):
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1.id), {
-            'comment': 'I love her voice, lyrics though, no good'
-        }, format='json')
+        response = self.client.get('/api/v1/videos/', format='json')
 
         self.assertEqual(response.status_code, 200)
 
         comments_from_response = response.data
         self.assertEqual(len(comments_from_response), 2)
+
+    def test_empty_videos(self):
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        all_videos = Video.objects.all()
+        all_videos.delete()
+
+        response = self.client.get('/api/v1/videos/', format='json')
+        self.assertEqual(len(response.data), 0)
 
     def setUp(self):
         self.client = APIClient()
