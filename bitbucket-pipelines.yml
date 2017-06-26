@@ -9,7 +9,7 @@ pipelines:
   default:
     - step:
         script:
-          - apt-get update # required to install zip
+          - apt-get update
           - pip install -r requirements.txt
           - python manage.py test # Always run tests for every branch.
 
@@ -17,6 +17,9 @@ pipelines:
     master: # Deployment pipeline for Ranked CodeDeploy
       - step:
           script:
+            - apt-get update # required to install zip
+            - pip install -r requirements.txt
+            - python manage.py test
             - apt-get install -y zip # required for packaging up the application
             - zip -r /tmp/artifact.zip * # package up the application for deployment
             - python codedeploy_deploy.py # run the deployment script
