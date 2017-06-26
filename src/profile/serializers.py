@@ -2,6 +2,14 @@ from rest_framework import permissions, viewsets,serializers
 from .models import Profile
 
 class ProfileSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        new_profile = Profile.objects.create(**validated_data)
+        if validated_data.get('password', False):
+            new_profile.set_password(validated_data['password'])
+        return new_profile
+
+
+
     def update(self, instance, validated_data):
         """
         Update and return profile instance

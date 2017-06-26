@@ -7,6 +7,7 @@ from .models import Profile
 # Django Imports
 from django.test import TestCase
 from django.utils import timezone
+from django.contrib.auth.hashers import check_password, make_password
 # 3rd Party Imports
 from oauthlib.common import generate_token
 from oauth2_provider.models import Application, AccessToken
@@ -34,6 +35,14 @@ class RegistrationTestCase(TestCase):
         new_account = Profile.objects.get(id=2)
         self.assertIsNot(new_account.password, None)
         self.assertIsNot(new_account.password, "")
+
+        # self.assertEqual(check_password('mo343re', new_account.password), True)
+
+        # auth_response = self.client.post('/api/v1/users/auth/token/', {
+        #     "username": "ishouldwork", "password": "mo3435re", "client_id": self.application.client_id,
+        #     "grant_type": "password"})
+        #
+        # self.assertEqual(auth_response.status_code, 200)
 
     def test_registration_email_exists(self):
         """
@@ -124,13 +133,36 @@ class RegistrationTestCase(TestCase):
 
     def setUp(self):
         self.client = APIClient()
-        test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
-        test_profile.save()
+        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
+        self.test_profile.save()
+        self.__create_auth_tokens()
+
+    # TODO: Create generic version of this for sharing.
+    def __create_auth_tokens(self):
+        self.application = Application.objects.create(
+            client_type='Resource owner password-based',
+            authorization_grant_type=Application.CLIENT_PUBLIC,
+            client_secret='121212',
+            client_id='123123123',
+            redirect_uris='',
+            name='testAuth',
+            user=self.test_profile
+        )
+        self.application.save()
+
+        # self.test_profile_token = AccessToken.objects.create(
+        #     user=self.test_profile,
+        #     scope='read write',
+        #     expires=timezone.now() + timedelta(seconds=600),
+        #     token=generate_token(),
+        #     application=self.application
+        # )
+        # self.test_profile_token.save()
 
 
 # class ProfileAuthTestCase(TestCase):
 #     def get_access_token(self):
-#         response = self.client.post('/api/v1/users/auth/token/',
+#         auth_response = self.client.post('/api/v1/users/auth/token/',
 #                                     {"username": "testme", "password": "test",
 #                                      "client_id": self.application.client_id,
 #                                      "grant_type": "password"})
@@ -143,7 +175,7 @@ class RegistrationTestCase(TestCase):
 #         self.user = self.create_user()
 #         self.access_token = self.get_access_token()
 #
-#         self.client.credentials(HTTP_AUTHORIZATION="Bearer {}".format(self.access_token))
+# #         self.client.credentials(HTTP_AUTHORIZATION="Bearer {}".format(self.access_token))
 
 class UsersMeTestCase(TestCase):
     def test_me_success(self):
