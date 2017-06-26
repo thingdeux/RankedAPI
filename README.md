@@ -4,9 +4,10 @@ Ranked API - A Backend platform for providing services to the Ranked Mobile apps
 
 ### What is this repository for? ###
 
-* Ranked API
-* 0.1
-* Django / Python
+This repository holds the backend API for GoRanked.com. For complete functionality during development
+you will need access to AWS credentials for our S3 Video Uploads buckets.  Please contact
+Josh (me@josh.land) for details.
+
 
 ### How do I get set up? ###
 

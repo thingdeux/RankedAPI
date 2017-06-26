@@ -47,13 +47,17 @@ class VideoViewSet(viewsets.ModelViewSet):
         return Response(status=404)
 
     def list(self, request, *args, **kwargs):
-        queryset = Video.objects.order_by('rank_total')[:25]
+        queryset = Video.objects.order_by('rank_total').select_related('related_profile')[:25]
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)
 
     def create(self, request, *args, **kwargs):
         error = {"description":  "POST to /videos/ is not how videos are created. Please see documentation."}
         return Response(status=505, data=error)
+
+    def update(self, request, *args, **kwargs):
+
+        return Response(status=200)
 
     @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
     def rank(self, request, pk=None):

@@ -16,7 +16,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
-
+    # TODO: Password update - should hash.
 
 # Viewset for /users/register endpoint.
 class RegisterViewSet(viewsets.ModelViewSet):
@@ -41,6 +41,7 @@ class RegisterViewSet(viewsets.ModelViewSet):
                     return Response(status=408, data=error)
 
                 new_profile = serialized_profile.save()
+                new_profile.set_password(serialized_profile['password'])
                 new_profile.save()
                 serialized_new_profile = ProfileSerializer(new_profile)
 
@@ -61,6 +62,6 @@ class RegisterViewSet(viewsets.ModelViewSet):
 
 def _validate_registration_fields(data):
     validate_password(data['password'])
-    username = data['username']
-    access_code = data['unlock_key']
-    email = data['email']
+    _ = data['username']
+    _ = data['unlock_key']
+    _ = data['email']

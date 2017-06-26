@@ -2,6 +2,7 @@ from django.db import models
 from src.Ranked.basemodels import Base, Hashtagable, MultipleQualityLinkable, ThumbnailDisplayable, UploadProcessable
 from src.Ranked.basemodels import Activatable, Rankable
 from src.profile.mixins import ProfileRelatable
+from src.categorization.mixins import MultiCategoryRelatable
 
 
 class Category(Base, Hashtagable):
@@ -17,11 +18,7 @@ class Category(Base, Hashtagable):
 
 
 class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable,
-            ThumbnailDisplayable, UploadProcessable, Activatable, Rankable):
+            ThumbnailDisplayable, UploadProcessable, Activatable, Rankable, MultiCategoryRelatable):
 
     title = models.CharField(default="", max_length=256, blank=False, null=False)
     is_featured = models.BooleanField(default=False)
-    category = models.ForeignKey(Category, null=True)
-    sub_category = models.ForeignKey(Category, related_name='sub_category', null=True)
-
-    # TODO: Make sure you can't have a sub_category without first having a category

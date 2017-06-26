@@ -42,7 +42,7 @@ class MultipleQualityLinkable(models.Model):
 
 
 class Activatable(models.Model):
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True, db_index=True)
 
     class Meta:
         abstract = True

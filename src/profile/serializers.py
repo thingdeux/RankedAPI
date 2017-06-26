@@ -2,9 +2,24 @@ from rest_framework import permissions, viewsets,serializers
 from .models import Profile
 
 class ProfileSerializer(serializers.ModelSerializer):
+    def update(self, instance, validated_data):
+        """
+        Update and return profile instance
+        """
+        # Can't update your username
+        instance.email = validated_data.get('email', instance.email)
+        instance.avatar_url = validated_data.get('avatar_url', instance.avatar_url)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+
+        if validated_data.get('password', False):
+            instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
+
 
     class Meta:
-        fields = ['id', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'username']
+        fields = ['id', 'username', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
         read_only_fields = ('id','is_partner', 'is_featured')
         model = Profile
 

@@ -10,6 +10,7 @@ from src.video.models import Video
 from src.profile.models import Profile
 from src.ranking.models import Ranking
 from src.comment.models import Comment
+from src.categorization.models import Category
 from oauth2_provider.models import Application, AccessToken
 # Standard Library Imports
 from datetime import timedelta
@@ -326,19 +327,64 @@ class VideoCommentAPICase(TestCase):
         self.test_profile2.save()
 
 
-class VideoAPICase(TestCase):
-    def test_comment_serialized_in_video_response(self):
+class VideoAPICaseList(TestCase):
+    def test_image_links_in_video_list_response(self):
+        """
+        For Video List API Responses image_links should be available
+        """
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1.id), {
-            'comment': 'I love her voice, lyrics though, no good'
-        }, format='json')
+        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data[0]['image_links']['thumbnail'], "http://MyThumb.jpg")
+        self.assertEqual(response.data[0]['image_links']['large'], "http://MyLargeThumb.jpg")
+
+    def test_uploaded_by_in_video_list_response(self):
+        """
+        For Video List API Responses uploaded_by should be available
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
 
         self.assertEqual(response.status_code, 200)
 
-        comments_from_response = response.data
-        self.assertEqual(len(comments_from_response), 2)
+        self.assertEqual(response.data[0]['uploaded_by']['id'], 1)
+        self.assertEqual(response.data[0]['uploaded_by']['avatar_url'], None)
+        self.assertEqual(response.data[0]['uploaded_by']['username'], "test_user")
+
+        should_not_be_serialized = response.data[0]['uploaded_by'].get('phone_number', None)
+        self.assertEqual(should_not_be_serialized, None)
+        should_not_be_serialized = response.data[0]['uploaded_by'].get('email', None)
+        self.assertEqual(should_not_be_serialized, None)
+
+    def test_categories_in_video_list_response(self):
+        """
+        Category and Sub-Category should be serialized
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.data[0]['category']['id'], 1)
+        self.assertEqual(response.data[0]['category']['name'], "Dance")
+        self.assertEqual(response.data[0]['sub_category']['id'], 2)
+        self.assertEqual(response.data[0]['sub_category']['name'], "Breakdance")
+
+    def test_empty_videos(self):
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        all_videos = Video.objects.all()
+        all_videos.delete()
+
+        response = self.client.get('/api/v1/videos/', format='json')
+        self.assertEqual(len(response.data), 0)
 
     def setUp(self):
         self.client = APIClient()
@@ -349,9 +395,130 @@ class VideoAPICase(TestCase):
         self.test_profile2.save()
         self.__create_auth_tokens()
 
-        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True)
+        self.primary_category = Category(name="Dance")
+        self.primary_category.save()
+        self.sub_category = Category(name="Breakdance", is_active=True, parent_category=self.primary_category)
+        self.sub_category.save()
+
+
+        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            category=self.primary_category, sub_category=self.sub_category)
         self.video1.save()
-        self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True)
+        self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
+                            category=self.primary_category)
+        self.video2.save()
+
+    def __create_auth_tokens(self):
+        self.application = Application.objects.create(
+            client_type='Resource owner password-based',
+            authorization_grant_type=Application.CLIENT_PUBLIC,
+            client_secret='121212',
+            client_id='123123123',
+            redirect_uris='',
+            name='testAuth',
+            user=self.test_profile
+        )
+        self.application.save()
+
+        self.test_profile_token = AccessToken.objects.create(
+            user=self.test_profile,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile_token.save()
+
+        self.test_profile2_token = AccessToken.objects.create(
+            user=self.test_profile2,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile2.save()
+
+class VideoAPICasePatch(TestCase):
+    def test_image_links_in_video_list_response(self):
+        """
+        For Video List API Responses image_links should be available
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data[0]['image_links']['thumbnail'], "http://MyThumb.jpg")
+        self.assertEqual(response.data[0]['image_links']['large'], "http://MyLargeThumb.jpg")
+
+    def test_uploaded_by_in_video_list_response(self):
+        """
+        For Video List API Responses uploaded_by should be available
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.data[0]['uploaded_by']['id'], 1)
+        self.assertEqual(response.data[0]['uploaded_by']['avatar_url'], None)
+        self.assertEqual(response.data[0]['uploaded_by']['username'], "test_user")
+
+        should_not_be_serialized = response.data[0]['uploaded_by'].get('phone_number', None)
+        self.assertEqual(should_not_be_serialized, None)
+        should_not_be_serialized = response.data[0]['uploaded_by'].get('email', None)
+        self.assertEqual(should_not_be_serialized, None)
+
+    def test_categories_in_video_list_response(self):
+        """
+        Category and Sub-Category should be serialized
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.data[0]['category']['id'], 1)
+        self.assertEqual(response.data[0]['category']['name'], "Dance")
+        self.assertEqual(response.data[0]['sub_category']['id'], 2)
+        self.assertEqual(response.data[0]['sub_category']['name'], "Breakdance")
+
+    def test_empty_videos(self):
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        all_videos = Video.objects.all()
+        all_videos.delete()
+
+        response = self.client.get('/api/v1/videos/', format='json')
+        self.assertEqual(len(response.data), 0)
+
+    def setUp(self):
+        self.client = APIClient()
+
+        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
+        self.test_profile.save()
+        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
+        self.test_profile2.save()
+        self.__create_auth_tokens()
+
+        self.primary_category = Category(name="Dance")
+        self.primary_category.save()
+        self.sub_category = Category(name="Breakdance", is_active=True, parent_category=self.primary_category)
+        self.sub_category.save()
+
+
+        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            category=self.primary_category, sub_category=self.sub_category)
+        self.video1.save()
+        self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
+                            category=self.primary_category)
         self.video2.save()
 
     def __create_auth_tokens(self):

@@ -19,11 +19,13 @@ from src.profile.viewsets import RegisterViewSet, ProfileViewSet
 from src.profile.views import me, AvatarUploadView
 from src.video.views import GenerateUploadView, sns_error, sns_success
 from src.video.viewsets import VideoViewSet
+from src.categorization.viewsets import CategoryViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users/register', RegisterViewSet)
 router.register(r'users', ProfileViewSet)
 router.register(r'videos', VideoViewSet)
+router.register(r'categories', CategoryViewSet)
 
 urlpatterns = [
     url(r'^users/auth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
