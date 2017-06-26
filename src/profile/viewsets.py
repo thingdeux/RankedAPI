@@ -41,6 +41,7 @@ class RegisterViewSet(viewsets.ModelViewSet):
                     return Response(status=408, data=error)
 
                 new_profile = serialized_profile.save()
+                new_profile.set_password(serialized_profile['password'])
                 new_profile.save()
                 serialized_new_profile = ProfileSerializer(new_profile)
 
