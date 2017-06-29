@@ -22,8 +22,6 @@ DATABASES = {
 }
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = '/home/ec2-user/static/'
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, 'static')
-    '/home/ec2-user/static'
 ]

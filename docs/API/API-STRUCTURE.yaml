@@ -121,25 +121,29 @@ definitions:
       title:
         type: "string"
         example: "When you've got it - flaunt it"
-      rank:
+      rank_total:
         type: "integer"
         format: "int32"
         example: 34
       is_featured:
         type: "boolean"
         example: false
+      is_processing:
+        type: "boolean"
+        example: true
       category:
+        $ref: "#/definitions/Category"
+      hashtag:
         type: "string"
-        example: "Music"
-      sub_category:
-        type: "string"
-        example: "Acapella"
+        example: "Peace"
       likes:
         type: integer
         format: "int32"
         example: 12
       image_links:
         $ref: "#/definitions/VideoImageOptions"
+      video_urls:
+        $ref: "#/definitions/VideoQualityOptions"
       uploaded_by:
         $ref: "#/definitions/User"
   VideoDetail:
