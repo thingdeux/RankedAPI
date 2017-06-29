@@ -5,3 +5,4 @@ chown ec2-user:ec2-user /home/ec2-user/.virtualenvs/ranked-venv*
 source /home/ec2-user/.virtualenvs/ranked-venv/bin/activate
 pip install -r /home/ec2-user/src/ranked/requirements.txt
 pip install gunicorn
+pip install psycopg2
