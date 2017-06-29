@@ -1,0 +1,61 @@
+name,parent_category,hashtag,banner_url
+Dance,,ranked-move,http://static.goranked.com/images/category-dance.jpg
+Latest Trend,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-latestTrend.jpg
+Ballet,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-ballet.jpg
+Breakdance,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-breakdance.jpg
+Hip-Hop,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-hipHop.jpg
+Jazz,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-jazz.jpg
+Juju On Dat Beat,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-jujuOnDatBeat.jpg
+Latin Ballroom,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-latinBallroom.jpg
+Pop Lock & Krump,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-popLockKrump.jpg
+Music,,ranked-tunes,http://static.goranked.com/images/category-music.jpg
+Acapella,Music,ranked-tunes,http://static.goranked.com/images/category-acapella.jpg
+DJ's & Beat Makers,Music,ranked-tunes,http://static.goranked.com/images/twocol-music-djs.jpg
+Group,Music,ranked-tunes,http://static.goranked.com/images/twocol-music-group.jpg
+Instrumental,Music,ranked-tunes,http://static.goranked.com/images/two-col-music-instrumental.jpg
+Lip Sync,Music,ranked-tunes,http://static.goranked.com/images/two-col-music-lipSync.jpg
+Opera,Music,ranked-tunes,http://static.goranked.com/images/two-col-music-opera.jpg
+Rappers,Music,ranked-tunes,http://static.goranked.com/images/two-col-music-rappers.jpg
+Singers: Cover Songs,Music,ranked-tunes,http://static.goranked.com/images/two-col-music-singersCovers.jpg
+Singers: Original Songs,Music,ranked-tunes,http://static.goranked.com/images/two-col-music-singersOriginals.jpg
+Shuffle/EDM,Dance,ranked-tunes,http://static.goranked.com/images/twocol-music-djs.jpg
+Sports,,ranked-sweat,http://static.goranked.com/images/category-sports.jpg
+Latest Trend,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-sportsLatestTrend.jpg
+Action Sports,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-sports-action.jpg
+Baseball,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-baseball.jpg
+Basketball,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-basketball.jpg
+Boxing,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-boxing.jpg
+eSports,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-eSports.jpg
+Olympic,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-olympic.jpg
+Football,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-football.jpg
+MMA,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-mma.jpg
+Soccer,Sports,ranked-sweat,http://static.goranked.com/images/two-col-sports-soccer.jpg
+Lifestyle,,ranked-lifestyle,http://static.goranked.com/images/category-lifestyle.jpg
+Car Builds,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-carBuilds.jpg
+Food,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-cooking.jpg
+Cosplay,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-cosplay.jpg
+Workouts/Fitness,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-fitness.jpg
+Boss Defeats/Gaming,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-gaming.jpg
+Art,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-painting.jpg
+Photography,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-photography.jpg
+TV/Film,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-shortFilms.jpg
+STreet Art,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-streetArt.jpg
+Yoga,Lifestyle,ranked-lifestyle,http://static.goranked.com/images/two-col-lifestyle-yoga.jpg
+Style,,ranked-style,http://static.goranked.com/images/category-style.jpg
+Hair,Style,ranked-style,http://static.goranked.com/images/two-col-style-hair.jpg
+Jewelry,Style,ranked-style,http://static.goranked.com/images/two-col-style-jewelry.jpg
+Makeup,Style,ranked-style,http://static.goranked.com/images/two-col-style-makeup.jpg
+Men's Fashion & Modeling,Style,ranked-style,http://static.goranked.com/images/two-col-style-mensFashion.jpg
+Men's Shoes,Style,ranked-style,http://static.goranked.com/images/two-col-style-mensShoes.jpg
+Nails,Style,ranked-style,http://static.goranked.com/images/two-col-style-nails.jpg
+Women's Fashion & Modeling,Style,ranked-style,http://static.goranked.com/images/two-col-style-womensFashion.jpg
+Women's Shoes,Style,ranked-style,http://static.goranked.com/images/two-col-style-womensShoes.jpg
+Tech,,ranked-tech,http://static.goranked.com/images/category-tech.jpg
+Science,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-science.jpg
+Inventions,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-inventions.jpg
+Robotics,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-robotics.jpg
+Superhero Powers,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-superheropowers.jpg
+Magic,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-magic.jpg
+Physics,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-physics.jpg
+Experiments,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-experiments.jpg
+Virtual Reality,Tech,ranked-tech,http://static.goranked.com/images/two-col-tech-virtualreality.jpg

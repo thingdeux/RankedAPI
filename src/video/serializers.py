@@ -13,7 +13,7 @@ class VideoSerializer(serializers.Serializer):
     is_active = serializers.BooleanField(read_only=True)
 
     category = serializers.SerializerMethodField()
-    sub_category = serializers.SerializerMethodField()
+    # sub_category = serializers.SerializerMethodField()
 
     hashtag = serializers.CharField()
     image_links = serializers.SerializerMethodField()
@@ -28,10 +28,11 @@ class VideoSerializer(serializers.Serializer):
             return CategorySerializer(model.category).data
         return None
 
-    def get_sub_category(self, model):
-        if model.sub_category:
-            return CategorySerializer(model.sub_category).data
-        return None
+    # Categories now have nested parents. No need for this.
+    # def get_sub_category(self, model):
+    #     if model.sub_category:
+    #         return CategorySerializer(model.sub_category).data
+    #     return None
 
     def get_video_urls(self, model):
         return {

@@ -22,6 +22,6 @@ DATABASES = {
 }
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/ec2-user/static/'
+STATIC_ROOT = '/tmp/static/'
 STATICFILES_DIRS = [
 ]
