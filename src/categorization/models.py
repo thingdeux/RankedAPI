@@ -6,6 +6,9 @@ from .mixins import ParentCategoryRelatable
 class Category(Base, Hashtagable, ThumbnailDisplayable, Activatable, ParentCategoryRelatable):
     name = models.CharField(max_length=255, null=False, blank=False, db_index=True, unique=True)
 
+    class Meta:
+        verbose_name_plural = "categories"
+
     def __str__(self):
         try:
             return "({})-{}".format(self.parent_category.name, self.name)

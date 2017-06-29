@@ -22,8 +22,8 @@ DATABASES = {
 }
 
 STATIC_URL = '/static/'
-# STATIC_URL = "https://static.goranked.com"
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    # os.path.join(BASE_DIR, 'static')
+    '/home/ec2-user/static'
 ]

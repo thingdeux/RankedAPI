@@ -15,6 +15,7 @@ from .viewsets import ProfileSerializer
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 import boto3
+import uuid
 
 
 @api_view(('GET',))
@@ -37,7 +38,7 @@ def me(request):
 # Avatar upload View
 class AvatarUploadView(APIView):
     permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
-    parser_classes = (MultiPartParser,FormParser)
+    parser_classes = (MultiPartParser, FormParser)
 
     def put(self, request, format=None):
         try:
@@ -47,9 +48,8 @@ class AvatarUploadView(APIView):
             if filesize_in_kilobytes < 1000:
                 s3 = boto3.resource('s3')
                 profile = Profile.objects.get(pk=request.user.id)
-                # TODO: Obviously don't use this naming scheme for production
-                s3.Bucket('static.goranked.com').put_object(Key='ava{id}.{ext}'.format(id=profile.id, ext=file_extension),
-                                                      Body=file_obj, ACL='public-read')
+                generated_s3_key = 'ava{id}-{uuid}.{ext}'.format(id=profile.id, uuid=uuid.uuid4(), ext=file_extension)
+                s3.Bucket('static.goranked.com').put_object(Key=generated_s3_key, Body=file_obj, ACL='public-read')
 
                 # TODO: Hacky - Better way to find extension in production
                 profile.avatar_url = "http://static.goranked.com/ava{id}.{ext}".format(id=profile.id, ext=file_extension)
