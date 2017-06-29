@@ -371,10 +371,10 @@ class VideoAPICaseList(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.data[0]['category']['id'], 1)
-        self.assertEqual(response.data[0]['category']['name'], "Dance")
-        self.assertEqual(response.data[0]['sub_category']['id'], 2)
-        self.assertEqual(response.data[0]['sub_category']['name'], "Breakdance")
+        self.assertEqual(response.data[0]['category']['id'], 2)
+        self.assertEqual(response.data[0]['category']['name'], "Breakdance")
+        self.assertEqual(response.data[0]['category']['parent_category']['id'], 1)
+        self.assertEqual(response.data[0]['category']['parent_category']['name'], "Dance")
 
     def test_empty_videos(self):
         auth_token = "Bearer {}".format(self.test_profile2_token)
@@ -403,7 +403,7 @@ class VideoAPICaseList(TestCase):
 
         self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
                             thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
-                            category=self.primary_category, sub_category=self.sub_category)
+                            category=self.sub_category)
         self.video1.save()
         self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
                             category=self.primary_category)
@@ -479,14 +479,14 @@ class VideoAPICasePatch(TestCase):
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        response = self.client.get('/api/v1/videos/')
 
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.data[0]['category']['id'], 1)
-        self.assertEqual(response.data[0]['category']['name'], "Dance")
-        self.assertEqual(response.data[0]['sub_category']['id'], 2)
-        self.assertEqual(response.data[0]['sub_category']['name'], "Breakdance")
+        self.assertEqual(response.data[0]['category']['id'], 2)
+        self.assertEqual(response.data[0]['category']['name'], "Breakdance")
+        self.assertEqual(response.data[0]['category']['parent_category']['id'], 1)
+        self.assertEqual(response.data[0]['category']['parent_category']['name'], "Dance")
 
     def test_empty_videos(self):
         auth_token = "Bearer {}".format(self.test_profile2_token)
@@ -515,7 +515,7 @@ class VideoAPICasePatch(TestCase):
 
         self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
                             thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
-                            category=self.primary_category, sub_category=self.sub_category)
+                            category=self.sub_category, rank_total=300)
         self.video1.save()
         self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
                             category=self.primary_category)
