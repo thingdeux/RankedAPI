@@ -655,10 +655,10 @@ paths:
         403:
           "description": "Access Denied"
 
-  /users/{user_id}/friends/:
+  /users/{user_id}/followers/:
     get:
-      summary: "List a given users' followed friends"
-      operationId: "get_friends"
+      summary: "List a given users' followed profiles"
+      operationId: "get_followers"
       tags:
         - "User"
       consumes:
