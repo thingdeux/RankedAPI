@@ -32,10 +32,10 @@ class ThumbnailDisplayable(models.Model):
 
 
 class MultipleQualityLinkable(models.Model):
-    mobile = models.URLField(default=None, null=True)
-    low = models.URLField(default=None, null=True)
-    high = models.URLField(default=None, null=True)
-    hd = models.URLField(default=None, null=True)
+    mobile = models.URLField(default=None, blank=True, null=True)
+    low = models.URLField(default=None, blank=True, null=True)
+    high = models.URLField(default=None, blank=True, null=True)
+    hd = models.URLField(default=None, blank=True, null=True)
 
     class Meta:
         abstract = True

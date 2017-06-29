@@ -61,6 +61,7 @@ class GenerateUploadView(APIView):
             video.low = pre_signed_details['low_url']
             video.high = pre_signed_details['final_url']
             video.thumbnail_large, video.thumbnail_small = self.__generate_thumbnail_links(video.s3_filename)
+            video.pre_signed_upload_url = pre_signed_details['data']['url']
             video.save()
 
             response_dict = {

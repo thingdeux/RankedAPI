@@ -1,3 +1,8 @@
+import os
+import platform
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 DEBUG = False
 SECRET_KEY = "962)!uu2&-s9t=^t7hh^0lk-l9mh$@-pss4#a0ru#(laiq+j%x"
 SECURE_BROWSER_XSS_FILTER = True
@@ -15,3 +20,10 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
+STATIC_URL = '/static/'
+# STATIC_URL = "https://static.goranked.com"
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]

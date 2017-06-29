@@ -22,3 +22,6 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable,
 
     title = models.CharField(default="", max_length=256, blank=False, null=False)
     is_featured = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "{}'s video {}".format(self.related_profile, self.id)

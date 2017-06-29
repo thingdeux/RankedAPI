@@ -2,7 +2,7 @@ from django.db import models
 from .exceptions import ParentCategoryMissingError, SubCategorySameAsParentError
 
 class ParentCategoryRelatable(models.Model):
-    parent_category = models.ForeignKey("categorization.Category", null=True, default=None)
+    parent_category = models.ForeignKey("categorization.Category", blank=True, null=True, default=None)
 
     class Meta:
         abstract = True

@@ -321,6 +321,30 @@ definitions:
         items:
           type: "string"
           example: "username"
+
+  ParentCategory:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+        description: "ID of category"
+      name:
+        type: "string"
+        example: "Music"
+        description: "Category Name"
+      banner:
+        type: "string"
+        example: "http://mybannerimage.jpg"
+        description: "URL for Category Banner Image"
+      hashtag:
+        type: "string"
+        example: "Blessed"
+        description: "Category Hashtag"
+      is_sub_category:
+        type: "boolean"
+        description: "Boolean that denotes whether or not this is a sub-category"
+        example: true
   Category:
     type: "object"
     properties:
@@ -332,14 +356,24 @@ definitions:
         type: "string"
         example: "Music"
         description: "Category Name"
-      parent_category:
+      banner:
         type: "string"
-        example: "Food"
-        description: "If a sub-category - name of parent category"
+        example: "http://mybannerimage.jpg"
+        description: "URL for Category Banner Image"
+      hashtag:
+        type: "string"
+        example: "Blessed"
+        description: "Category Hashtag"
       is_sub_category:
         type: "boolean"
         description: "Boolean that denotes whether or not this is a sub-category"
         example: true
+      parent_category:
+        type: "object"
+        description: "If a sub-category - name of parent category if not, null"
+        $ref: '#/definitions/ParentCategory'
+
+
 
 paths:
   /users/register/:
