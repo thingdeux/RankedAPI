@@ -204,5 +204,13 @@ LOGGING = {
     },
 }
 
+# Disable caching for Unit Tests and Development
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
 if 'amzn' in platform.uname()[2]:
     from .dev_settings import *
