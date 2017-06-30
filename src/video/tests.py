@@ -335,7 +335,7 @@ class VideoAPICaseList(TestCase):
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        response = self.client.get('/api/v1/videos/top/', format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data[0]['image_links']['thumbnail'], "http://MyThumb.jpg")
         self.assertEqual(response.data[0]['image_links']['large'], "http://MyLargeThumb.jpg")
@@ -347,7 +347,7 @@ class VideoAPICaseList(TestCase):
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        response = self.client.get('/api/v1/videos/top/', format='json')
 
         self.assertEqual(response.status_code, 200)
 
@@ -367,7 +367,7 @@ class VideoAPICaseList(TestCase):
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        response = self.client.get('/api/v1/videos/top/'.format(self.video1), format='json')
 
         self.assertEqual(response.status_code, 200)
 
@@ -386,7 +386,7 @@ class VideoAPICaseList(TestCase):
         all_videos = Video.objects.all()
         all_videos.delete()
 
-        response = self.client.get('/api/v1/videos/', format='json')
+        response = self.client.get('/api/v1/videos/top/', format='json')
         self.assertEqual(len(response.data), 0)
 
     def setUp(self):

@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "Ranked API"
   description: "API for mobile and/or Web Clients"
-  version: "0.0.8"
+  version: "0.7.5"
   contact:
     email: "me@josh.land"
 
@@ -830,6 +830,35 @@ paths:
 
   # Videos
   /videos/:
+    get:
+      summary: "List of videos from the profiles the authenticated user is following"
+      operationId: "get_followed_videos"
+      tags:
+        - "Videos"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - read:videos
+           - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/VideoList"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Access Denied"
+
+  /videos/top/:
     get:
       summary: "List of top 20 most popular videos"
       operationId: "get_top_videos"

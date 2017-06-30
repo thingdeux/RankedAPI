@@ -9,7 +9,7 @@ from .models import Video
 from src.ranking.models import Ranking
 from src.comment.models import Comment
 from src.categorization.models import Category
-from src.profile.serializers import ProfileSerializer
+from src.profile.serializers import LightProfileSerializer
 from .serializers import VideoSerializer
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
@@ -34,7 +34,7 @@ class VideoViewSet(viewsets.ModelViewSet):
                 .select_related('related_profile').first()
 
             video_serialized = VideoSerializer(video)
-            profile_serialized = ProfileSerializer(video.related_profile)
+            profile_serialized = LightProfileSerializer(video.related_profile)
             comments_serialized = CommentSerializer(video.comments, many=True)
 
             # TODO: Profile this query - gonna be gnarly
@@ -47,9 +47,10 @@ class VideoViewSet(viewsets.ModelViewSet):
         return Response(status=404)
 
     def list(self, request, *args, **kwargs):
-        queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
-        serialized = VideoSerializer(queryset, many=True)
-        return Response(serialized.data)
+        # queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
+        # serialized = VideoSerializer(queryset, many=True)
+        # return Response(serialized.data)
+        return Response(status=501)
 
     def create(self, request, *args, **kwargs):
         error = {"description":  "POST to /videos/ is not how videos are created. Please see documentation."}
@@ -64,6 +65,11 @@ class VideoViewSet(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             return Response(status=404)
 
+    @detail_route(methods=['post', 'delete'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
+    def top(self, request, pk=None):
+        queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
+        serialized = VideoSerializer(queryset, many=True)
+        return Response(serialized.data)
 
     @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
     def rank(self, request, pk=None):
