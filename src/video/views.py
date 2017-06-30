@@ -81,7 +81,7 @@ class GenerateUploadView(APIView):
             return Response(data={"description": "Profile not found"}, status=404)
 
     def __generate_thumbnail_links(self, filename):
-        STATIC_URL = "https://static.goranked.com"
+        STATIC_URL = "http://static.goranked.com"
         try:
             filename_parsed = filename.split('.')[0]
             return ("{}/{}-00001.png".format(STATIC_URL, filename_parsed),
