@@ -297,43 +297,44 @@ class UsersFollowersTestCase(TestCase):
         self.assertEqual(profile.followed_profiles.all().count(), 0)
         self.assertEqual(len(response.data['users']), 0)
 
-    # def test_profile_list_followers(self):
-    #     """
-    #     /followers GET should return a list of the profiles followers.
-    #     """
-    #     auth_token = "Bearer {}".format(self.test_profile_token)
-    #     self.client.credentials(HTTP_AUTHORIZATION=auth_token)
-    #     # 2 Profiles should follow the same profile.
-    #     profile = Profile.objects.get(id=self.test_profile2.id)
-    #     profile.follow_user(self.test_profile.id)
-    #     profile.save()
-    #     profile2 = Profile.objects.get(id=self.test_profile3.id)
-    #     profile2.follow_user(self.test_profile.id)
-    #     profile2.save()
-    #
-    #     response = self.client.get('/api/v1/users/{}/followers/'.format(self.test_profile.id), format="json")
-    #
-    #     # Give me all Profiles
-    #     # Who have a given profile
-    #     # In their following set
-    #
-    #
-    #
-    #
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(len(response.data['users']), 2)
-    #
-    # def test_profile_list_followers_empty(self):
-    #     """
-    #     /followers GET should return a list of profiles whom are following the user.
-    #     """
-    #     auth_token = "Bearer {}".format(self.test_profile_token)
-    #     self.client.credentials(HTTP_AUTHORIZATION=auth_token)
-    #
-    #     response = self.client.get('/api/v1/users/{}/followers/'.format(self.test_profile.id), format="json")
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(len(response.data['users']), 0)
+    def test_profile_list_followers(self):
+        """
+        /followers GET should return a list of the profiles followers.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+        # 2 Profiles should follow the same profile.
+        profile = Profile.objects.get(id=self.test_profile2.id)
+        profile.follow_user(self.test_profile.id)
+        profile.save()
+        profile2 = Profile.objects.get(id=self.test_profile3.id)
+        profile2.follow_user(self.test_profile.id)
+        profile2.save()
+
+        response = self.client.get('/api/v1/users/{}/followers/'.format(self.test_profile.id), format="json")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['users']), 2)
+        self.assertEqual(response.data['users'][0]['id'], profile.id)
+        self.assertEqual(response.data['users'][1]['id'], profile2.id)
+
+        profile2.followed_profiles.clear()
+        profile2.save()
+
+        response = self.client.get('/api/v1/users/{}/followers/'.format(self.test_profile.id), format="json")
+        self.assertEqual(len(response.data['users']), 1)
+        self.assertEqual(response.data['users'][0]['id'], profile.id)
+
+    def test_profile_list_followers_empty(self):
+        """
+        /followers GET should return a list of profiles whom are following the user.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/users/{}/followers/'.format(self.test_profile.id), format="json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['users']), 0)
 
 
 

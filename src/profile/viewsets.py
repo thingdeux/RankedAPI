@@ -95,17 +95,17 @@ class ProfileViewSet(viewsets.ModelViewSet):
                 error = {"description": "Profile not found {}".format(e)}
                 return Response(status=404, data=error)
 
-    # @detail_route(methods=['get'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
-    # def followers(self, request, pk=None):
-    #     """
-    #     Follow a user
-    #     GET: List profiles following a given user
-    #     """
-    #     try:
-    #         return _get_profiles_user_is_following(pk)
-    #     except ObjectDoesNotExist as e:
-    #         error = {"description": "Profile not found {}".format(e)}
-    #         Response(status=404, data=error)
+    @detail_route(methods=['get'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
+    def followers(self, request, pk=None):
+        """
+        Follow a user
+        GET: List profiles following a given user
+        """
+        try:
+            return _get_profiles_following_user(pk)
+        except ObjectDoesNotExist as e:
+            error = {"description": "Profile not found {}".format(e)}
+            Response(status=404, data=error)
 
 
 # Viewset for /users/register endpoint.
@@ -168,7 +168,7 @@ def _get_profiles_user_is_following(profile_id):
         return Response(status=200, data={'users': []})
 
 def _get_profiles_following_user(profile_id):
-    followers = Profile.objects.filter(profile__followed_profiles__id=profile_id).prefetch_related('followed_profiles')
+    followers = Profile.objects.filter(followed_profiles__id=profile_id).prefetch_related('followed_profiles')
     followed_profiles = list(followers)
 
     if len(followed_profiles) > 0:

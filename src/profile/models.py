@@ -13,8 +13,10 @@ class Profile(AbstractUser, Base):
     followed_profiles = models.ManyToManyField("profile.Profile", related_name='following')
 
     def follow_user(self, user_id):
-        profile_to_follow = Profile.objects.get(id=user_id)
-        self.followed_profiles.add(profile_to_follow)
+        # Can't follow yourself
+        if int(user_id) != self.id:
+            profile_to_follow = Profile.objects.get(id=user_id)
+            self.followed_profiles.add(profile_to_follow)
 
     def stop_following_user(self, user_id):
         profile_to_stop_following = Profile.objects.get(id=user_id)

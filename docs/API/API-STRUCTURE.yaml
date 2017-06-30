@@ -984,6 +984,9 @@ paths:
       operationId: "init_video_upload"
       tags:
           - "Videos"
+      consumes:
+        - "application/json"
+        - "application/x-www-form-urlencoded"
       produces:
         - "application/json"
       parameters:
