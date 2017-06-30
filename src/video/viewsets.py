@@ -3,6 +3,8 @@ from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FormParser
 from rest_framework.decorators import detail_route
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 # Project Imports
 from src.comment.serializers import CommentSerializer
 from .models import Video
@@ -65,11 +67,6 @@ class VideoViewSet(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             return Response(status=404)
 
-    @detail_route(methods=['post', 'delete'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
-    def top(self, request, pk=None):
-        queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
-        serialized = VideoSerializer(queryset, many=True)
-        return Response(serialized.data)
 
     @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
     def rank(self, request, pk=None):
@@ -149,3 +146,13 @@ class VideoViewSet(viewsets.ModelViewSet):
             video.category = new_category
 
         video.save()
+
+
+# Avatar upload View
+class VideoTopView(APIView):
+    permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
+
+    def get(self, request, format=None):
+        queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
+        serialized = VideoSerializer(queryset, many=True)
+        return Response(serialized.data)

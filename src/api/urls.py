@@ -18,7 +18,7 @@ from rest_framework import routers
 from src.profile.viewsets import RegisterViewSet, ProfileViewSet
 from src.profile.views import me, AvatarUploadView
 from src.video.views import GenerateUploadView, sns_error, sns_success
-from src.video.viewsets import VideoViewSet
+from src.video.viewsets import VideoViewSet, VideoTopView
 from src.categorization.viewsets import CategoryViewSet
 
 router = routers.DefaultRouter()
@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^videos/processing/done/$', sns_success),
     url(r'^videos/processing/error/$', sns_error),
     url(r'^videos/upload/$', GenerateUploadView.as_view()),
+    url(r'^videos/top/$', VideoTopView.as_view()),
     url(r'^', include(router.urls)),
 ]
