@@ -59,7 +59,7 @@ class VideoViewSet(viewsets.ModelViewSet):
         try:
             self.__update_video(kwargs['pk'], request.data)
             return Response(status=200)
-        except KeyError:
+        except KeyError as e:
             return Response(status=400)
         except ObjectDoesNotExist:
             return Response(status=404)

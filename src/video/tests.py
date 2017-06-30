@@ -377,6 +377,9 @@ class VideoAPICaseList(TestCase):
         self.assertEqual(response.data[0]['category']['parent_category']['name'], "Dance")
 
     def test_empty_videos(self):
+        """
+        /Videos should return an empty array if there are no videos
+        """
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
@@ -440,63 +443,64 @@ class VideoAPICaseList(TestCase):
         self.test_profile2.save()
 
 class VideoAPICasePatch(TestCase):
-    def test_image_links_in_video_list_response(self):
+    def test_video_patch_should_accept_title(self):
         """
-        For Video List API Responses image_links should be available
+        You should be able to set 'title' via /videos/<id>/ PATCH
         """
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+           'title': "My Bologna has a first name"
+        }, format='json')
+
+        updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data[0]['image_links']['thumbnail'], "http://MyThumb.jpg")
-        self.assertEqual(response.data[0]['image_links']['large'], "http://MyLargeThumb.jpg")
+        self.assertEqual(updated_video.title, "My Bologna has a first name")
 
-    def test_uploaded_by_in_video_list_response(self):
+    def test_video_patch_should_accept_hashtag(self):
         """
-        For Video List API Responses uploaded_by should be available
+        You should be able to set 'hashtag' via /videos/<id>/ PATCH
         """
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/'.format(self.video1), format='json')
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+           'hashtag': "Bunny"
+        }, format='json')
 
+        updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_video.hashtag, "Bunny")
 
-        self.assertEqual(response.data[0]['uploaded_by']['id'], 1)
-        self.assertEqual(response.data[0]['uploaded_by']['avatar_url'], None)
-        self.assertEqual(response.data[0]['uploaded_by']['username'], "test_user")
-
-        should_not_be_serialized = response.data[0]['uploaded_by'].get('phone_number', None)
-        self.assertEqual(should_not_be_serialized, None)
-        should_not_be_serialized = response.data[0]['uploaded_by'].get('email', None)
-        self.assertEqual(should_not_be_serialized, None)
-
-    def test_categories_in_video_list_response(self):
+    def test_video_patch_should_accept_category(self):
         """
-        Category and Sub-Category should be serialized
+        You should be able to set 'category' via /videos/<id>/ PATCH
         """
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/videos/')
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+           'category': 1
+        }, format='json')
 
+        updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_video.category.id, 1)
 
-        self.assertEqual(response.data[0]['category']['id'], 2)
-        self.assertEqual(response.data[0]['category']['name'], "Breakdance")
-        self.assertEqual(response.data[0]['category']['parent_category']['id'], 1)
-        self.assertEqual(response.data[0]['category']['parent_category']['name'], "Dance")
-
-    def test_empty_videos(self):
+    def test_video_patch_should_fail_on_invalid_category(self):
+        """
+        You should not be able to set an incorrect category via /videos/<id>/ PATCH
+        """
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        all_videos = Video.objects.all()
-        all_videos.delete()
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+           'category': 1555
+        }, format='json')
 
-        response = self.client.get('/api/v1/videos/', format='json')
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(response.status_code, 404)
+
 
     def setUp(self):
         self.client = APIClient()
