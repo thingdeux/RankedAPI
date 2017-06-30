@@ -31,7 +31,7 @@ class VideoViewSet(viewsets.ModelViewSet):
         if video_id:
             video = Video.objects.filter(id=video_id)\
                 .prefetch_related('comments')\
-                .select_related('related_profile')[0]
+                .select_related('related_profile').first()
 
             video_serialized = VideoSerializer(video)
             profile_serialized = ProfileSerializer(video.related_profile)

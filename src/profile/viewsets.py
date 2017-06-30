@@ -3,6 +3,7 @@ from rest_framework import permissions, routers, viewsets
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FormParser
 from .serializers import ProfileSerializer, LightProfileSerializer
+from rest_framework.decorators import detail_route
 # Project Imports
 from .models import Profile
 from src.video.models import Video
@@ -50,9 +51,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         except KeyError:
             return Response(status=404)
 
-
-
-
     def retrieve(self, request, *args, **kwargs):
         try:
             # TODO: JJ - Performance Gains from query optimization on this reverse lookup.
@@ -69,6 +67,45 @@ class ProfileViewSet(viewsets.ModelViewSet):
         except KeyError:
             Response(status=404)
 
+    @detail_route(methods=['post', 'delete', 'get'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
+    def following(self, request, pk=None):
+        """
+        Follow a user
+        GET: List profiles user is following
+        POST: Follow the user passed in {pk} with the currently authenticated account.
+        DELETE: Stop following the user passed in {pk} with the currently authenticated account.
+        """
+        if request.method == "GET":
+            try:
+                return _get_profiles_user_is_following(pk)
+            except ObjectDoesNotExist as e:
+                error = {"description": "Profile not found {}".format(e)}
+                Response(status=404, data=error)
+        else:
+            profile = Profile.objects.get(id=request.user.id)
+            try:
+                if request.method == "POST":
+                    profile.follow_user(pk)
+                    profile.save()
+                    return Response(status=200)
+                elif request.method == "DELETE":
+                    profile.stop_following_user(pk)
+                    return Response(status=200)
+            except ObjectDoesNotExist as e:
+                error = {"description": "Profile not found {}".format(e)}
+                return Response(status=404, data=error)
+
+    # @detail_route(methods=['get'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
+    # def followers(self, request, pk=None):
+    #     """
+    #     Follow a user
+    #     GET: List profiles following a given user
+    #     """
+    #     try:
+    #         return _get_profiles_user_is_following(pk)
+    #     except ObjectDoesNotExist as e:
+    #         error = {"description": "Profile not found {}".format(e)}
+    #         Response(status=404, data=error)
 
 
 # Viewset for /users/register endpoint.
@@ -112,8 +149,31 @@ class RegisterViewSet(viewsets.ModelViewSet):
             error = { "description": "Password does not meet standards. At least 6 characters.", "errors": ["password"]}
             return Response(status=400, data=error)
 
+
 def _validate_registration_fields(data):
     validate_password(data['password'])
     _ = data['username']
     _ = data['unlock_key']
     _ = data['email']
+
+def _get_profiles_user_is_following(profile_id):
+    profile = Profile.objects.filter(id=profile_id).prefetch_related('followed_profiles').first()
+    followed_profiles = list(profile.followed_profiles.all())
+
+    if len(followed_profiles) > 0:
+        return Response(status=200, data={
+            'users': LightProfileSerializer(followed_profiles, many=True).data
+        })
+    else:
+        return Response(status=200, data={'users': []})
+
+def _get_profiles_following_user(profile_id):
+    followers = Profile.objects.filter(profile__followed_profiles__id=profile_id).prefetch_related('followed_profiles')
+    followed_profiles = list(followers)
+
+    if len(followed_profiles) > 0:
+        return Response(status=200, data={
+            'users': LightProfileSerializer(followed_profiles, many=True).data
+        })
+    else:
+        return Response(status=200, data={'users': []})

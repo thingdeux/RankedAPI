@@ -10,4 +10,12 @@ class Profile(AbstractUser, Base):
     is_featured = models.BooleanField(default=False)
     last_logged_in = models.DateField(auto_now_add=True)
     phone_number = models.CharField(max_length=25, default=None, null=True)
-    followed_profiles = models.ManyToManyField("profile.Profile")
+    followed_profiles = models.ManyToManyField("profile.Profile", related_name='following')
+
+    def follow_user(self, user_id):
+        profile_to_follow = Profile.objects.get(id=user_id)
+        self.followed_profiles.add(profile_to_follow)
+
+    def stop_following_user(self, user_id):
+        profile_to_stop_following = Profile.objects.get(id=user_id)
+        self.followed_profiles.remove(profile_to_stop_following)

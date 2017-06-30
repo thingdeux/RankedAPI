@@ -15,7 +15,6 @@ from oauth2_provider.models import Application, AccessToken
 from datetime import timedelta
 
 
-
 class RegistrationTestCase(TestCase):
     def test_successful_account_creation(self):
         """
@@ -150,15 +149,6 @@ class RegistrationTestCase(TestCase):
         )
         self.application.save()
 
-        # self.test_profile_token = AccessToken.objects.create(
-        #     user=self.test_profile,
-        #     scope='read write',
-        #     expires=timezone.now() + timedelta(seconds=600),
-        #     token=generate_token(),
-        #     application=self.application
-        # )
-        # self.test_profile_token.save()
-
 
 # class ProfileAuthTestCase(TestCase):
 #     def get_access_token(self):
@@ -231,3 +221,169 @@ class UsersMeTestCase(TestCase):
             application=self.application
         )
         self.test_profile_token.save()
+
+class UsersFollowersTestCase(TestCase):
+
+    def test_profile_follow_success(self):
+        """
+        /Followers should allow one profile to follow another.
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.post('/api/v1/users/{}/following/'.format(self.test_profile2.id), format="json")
+        profile = Profile.objects.get(id=self.test_profile.id)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(profile.followed_profiles.all().count(), 1)
+
+    def test_profile_stop_following_success(self):
+        """
+        /Followers should allow one profile to stop following another.
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+        profile = Profile.objects.get(id=self.test_profile.id)
+        profile.follow_user(self.test_profile2.id)
+        profile.save()
+
+
+        response = self.client.delete('/api/v1/users/{}/following/'.format(self.test_profile2.id), format="json")
+
+        profile = Profile.objects.get(id=self.test_profile.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(profile.followed_profiles.all().count(), 0)
+
+    def test_profile_list_following(self):
+        """
+        /Followers GET should return a list of users followed profiles
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        profile = Profile.objects.get(id=self.test_profile.id)
+        profile.follow_user(self.test_profile2.id)
+        profile.follow_user(self.test_profile3.id)
+        profile.save()
+
+        response = self.client.get('/api/v1/users/{}/following/'.format(self.test_profile.id), format="json")
+
+        profile = Profile.objects.get(id=self.test_profile.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(profile.followed_profiles.all().count(), 2)
+        self.assertEqual(len(response.data['users']), 2)
+
+        response = self.client.get('/api/v1/users/{}/following/'.format(self.test_profile2.id), format="json")
+        profile = Profile.objects.get(id=self.test_profile2.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(profile.followed_profiles.all().count(), 0)
+        self.assertEqual(len(response.data['users']), 0)
+
+    def test_profile_list_following_empty(self):
+        """
+        /following GET should return an empty list of users followed profiles when there are no followers.
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/users/{}/following/'.format(self.test_profile.id), format="json")
+
+        profile = Profile.objects.get(id=self.test_profile.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(profile.followed_profiles.all().count(), 0)
+        self.assertEqual(len(response.data['users']), 0)
+
+    def test_profile_list_followers(self):
+        """
+        /followers GET should return a list of the profiles followers.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+        # 2 Profiles should follow the same profile.
+        profile = Profile.objects.get(id=self.test_profile2.id)
+        profile.follow_user(self.test_profile.id)
+        profile.save()
+        profile2 = Profile.objects.get(id=self.test_profile3.id)
+        profile2.follow_user(self.test_profile.id)
+        profile2.save()
+
+        response = self.client.get('/api/v1/users/{}/followers/'.format(self.test_profile.id), format="json")
+
+        # Give me all Profiles
+        # Who have a given profile
+        # In their following set
+
+
+
+
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['users']), 2)
+
+    def test_profile_list_followers_empty(self):
+        """
+        /followers GET should return a list of profiles whom are following the user.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/users/{}/followers/'.format(self.test_profile.id), format="json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['users']), 0)
+
+
+
+
+    def setUp(self):
+        self.client = APIClient()
+
+        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
+        self.test_profile.save()
+        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
+        self.test_profile2.save()
+        self.test_profile3 = Profile(username="test_user3", password="testpass", email="test3@user.com")
+        self.test_profile3.save()
+        self.__create_auth_tokens()
+
+    def __create_auth_tokens(self):
+        self.application = Application.objects.create(
+            client_type='Resource owner password-based',
+            authorization_grant_type=Application.CLIENT_PUBLIC,
+            client_secret='121212',
+            client_id='123123123',
+            redirect_uris='',
+            name='testAuth',
+            user=self.test_profile
+        )
+        self.application.save()
+
+        self.test_profile_token = AccessToken.objects.create(
+            user=self.test_profile,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile_token.save()
+
+        self.test_profile2_token = AccessToken.objects.create(
+            user=self.test_profile2,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile2.save()
+
+        self.test_profile3_token = AccessToken.objects.create(
+            user=self.test_profile2,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile3.save()

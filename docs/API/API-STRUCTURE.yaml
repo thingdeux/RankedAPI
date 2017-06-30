@@ -693,7 +693,7 @@ paths:
         403:
           "description": "Access Denied"
 
-  /users/{user_id}/followers/:
+  /users/{user_id}/following/:
     get:
       summary: "List a given users' followed profiles"
       operationId: "get_followers"
@@ -794,6 +794,39 @@ paths:
             "description": "Access Denied"
           404:
             description: "Not currently following this user"
+
+  /users/{user_id}/followers/:
+    get:
+      summary: "List of profiles following a given user"
+      operationId: "get_following"
+      tags:
+        - "User"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - write:user
+           - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
+      responses:
+          200:
+            description: "Success"
+            schema:
+              $ref: "#/definitions/UserList"
+          401:
+            description: "Unauthorized"
+          404:
+            description: "Account does not exist"
+          403:
+            "description": "Access Denied"
 
   # Videos
   /videos/:
