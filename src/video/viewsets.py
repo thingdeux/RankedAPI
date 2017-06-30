@@ -8,7 +8,7 @@ from src.comment.serializers import CommentSerializer
 from .models import Video
 from src.ranking.models import Ranking
 from src.comment.models import Comment
-
+from src.categorization.models import Category
 from src.profile.serializers import ProfileSerializer
 from .serializers import VideoSerializer
 # Library Imports
@@ -56,8 +56,14 @@ class VideoViewSet(viewsets.ModelViewSet):
         return Response(status=505, data=error)
 
     def update(self, request, *args, **kwargs):
+        try:
+            self.__update_video(kwargs['pk'], request.data)
+            return Response(status=200)
+        except KeyError:
+            return Response(status=400)
+        except ObjectDoesNotExist:
+            return Response(status=404)
 
-        return Response(status=200)
 
     @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
     def rank(self, request, pk=None):
@@ -125,3 +131,15 @@ class VideoViewSet(viewsets.ModelViewSet):
             return Response(status=404, data={"description": "Video Not Found"})
         except (KeyError, ValueError):
             return Response(status=400, data={'description': 'Comment Length too short'})
+
+    def __update_video(self, video_id, request_data):
+        video = Video.objects.get(pk=video_id)
+        video.title = request_data.get('title', video.title)
+        video.hashtag = request_data.get('hashtag', video.hashtag)
+        category = request_data.get('category', False)
+
+        if category:
+            new_category = Category.objects.get(id=category)
+            video.category = new_category
+
+        video.save()
