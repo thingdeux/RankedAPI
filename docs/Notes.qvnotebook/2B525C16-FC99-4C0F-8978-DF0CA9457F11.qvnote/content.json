@@ -7,7 +7,7 @@
     },
     {
       "type": "text",
-      "data": ""
+      "data": "curl -X POST \"<a href=\"http://dev.goranked.com/api/v1/videos/upload/\">http://127.0.0.1:8000/api/v1/videos/upload/</a>\" -H &nbsp;\"accept: application/json\" -H &nbsp;\"Authorization: F#55344F\" -H &nbsp;\"content-type: application/x-www-form-urlencoded\" -d \"filename=sds.mp4&amp;file_type=video%2Fmp4\""
     },
     {
       "type": "text",

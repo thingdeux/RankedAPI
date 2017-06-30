@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import BaseParser
+from rest_framework.parsers import JSONParser, FormParser
 # 3rd Party Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 # Standard Library Imports
@@ -46,6 +47,7 @@ class GenerateUploadView(APIView):
 
     """
     permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
+    parser_classes = ([JSONParser, FormParser])
 
     def post(self, request, format=None):
         try:
