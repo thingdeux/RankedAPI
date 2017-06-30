@@ -21,6 +21,38 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     # TODO: Password update - should hash.
 
+    def update(self, request, *args, **kwargs):
+        try:
+            if int(kwargs['pk']) == request.user.id:
+                # Only a couple of fields are editable - the following can be updated.
+                # phone_number | email | password
+                profile = Profile.objects.get(pk=request.user.id)
+                profile.email = request.data.get('email', profile.email)
+                profile.phone_number = request.data.get('phone_number', profile.phone_number)
+
+                new_password = request.data.get('password', False)
+                # Make sure password can be saved before attempting to even save it.
+                # Make sure to read the method description for validate_password - none == A-Ok
+                if new_password and not validate_password(new_password):
+                    profile.set_password(new_password)
+
+                profile.save()
+                return Response(status=200)
+            else:
+                error = {"description": "You do not have access to edit this account."}
+                return Response(status=401, data=error)
+        except ObjectDoesNotExist:
+            return Response(status=404)
+        except ValidationError:
+            error = {"description": "Password does not meet standards. At least 6 characters.",
+                     "errors": ["password"]}
+            return Response(status=400, data=error)
+        except KeyError:
+            return Response(status=404)
+
+
+
+
     def retrieve(self, request, *args, **kwargs):
         try:
             # TODO: JJ - Performance Gains from query optimization on this reverse lookup.
@@ -28,7 +60,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
             videos = Video.objects.filter(related_profile=profile)
 
             response_dict = {
-                'me': LightProfileSerializer(instance=profile, context={"request": request}).data,
+                'user': LightProfileSerializer(instance=profile, context={"request": request}).data,
                 'videos': VideoSerializer(instance=videos, many=True).data
             }
             return Response(data=response_dict, status=200)
