@@ -2,14 +2,17 @@
 from rest_framework import permissions, routers, viewsets
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FormParser
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, LightProfileSerializer
 # Project Imports
 from .models import Profile
+from src.video.models import Video
+from src.video.serializers import VideoSerializer
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 # Django Imports
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -17,6 +20,24 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
     # TODO: Password update - should hash.
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            # TODO: JJ - Performance Gains from query optimization on this reverse lookup.
+            profile = Profile.objects.get(pk=kwargs['pk'])
+            videos = Video.objects.filter(related_profile=profile)
+
+            response_dict = {
+                'me': LightProfileSerializer(instance=profile, context={"request": request}).data,
+                'videos': VideoSerializer(instance=videos, many=True).data
+            }
+            return Response(data=response_dict, status=200)
+        except ObjectDoesNotExist:
+            Response(status=404)
+        except KeyError:
+            Response(status=404)
+
+
 
 # Viewset for /users/register endpoint.
 class RegisterViewSet(viewsets.ModelViewSet):
