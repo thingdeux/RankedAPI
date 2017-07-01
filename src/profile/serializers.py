@@ -9,7 +9,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         return new_profile
 
 
-
     def update(self, instance, validated_data):
         """
         Update and return profile instance
@@ -27,9 +26,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ['id', 'username', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'password',
-                  'following_count', 'followers_count', 'ranked_10_count']
+                  'following_count', 'followers_count', 'ranked_ten_count']
         extra_kwargs = {'password': {'write_only': True}}
-        read_only_fields = ('id','is_partner', 'is_featured', 'following_count', 'followers_count', 'ranked_10_count')
+        read_only_fields = ('id','is_partner', 'is_featured', 'following_count', 'followers_count', 'ranked_ten_count')
         model = Profile
 
 

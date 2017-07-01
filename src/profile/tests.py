@@ -28,9 +28,18 @@ class RegistrationTestCase(TestCase):
         }, format='json')
 
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data, {'username': 'ishouldwork', 'id': 2, 'is_featured': False,
-                                         'email': 'shouldwork@user.com', 'phone_number': None, 'is_partner': False,
-                                         'avatar_url': None, 'following_count': 0, 'followers_count': 0})
+        self.assertEqual(response.data, {
+            'id': 2,
+            'username': 'ishouldwork',
+            'is_featured': False,
+            'email': 'shouldwork@user.com',
+            'phone_number': None,
+            'is_partner': False,
+            'avatar_url': None,
+            'following_count': 0,
+            'followers_count': 0,
+            'ranked_ten_count': 0
+        })
         new_account = Profile.objects.get(id=2)
         self.assertIsNot(new_account.password, None)
         self.assertIsNot(new_account.password, "")
@@ -190,7 +199,8 @@ class UsersMeTestCase(TestCase):
                     'phone_number': None,
                     'username': 'test_user',
                     'following_count': 0,
-                    'followers_count': 0
+                    'followers_count': 0,
+                    'ranked_ten_count': 0,
                 },
                 'videos': []
               })
