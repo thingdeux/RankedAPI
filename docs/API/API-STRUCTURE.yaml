@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "Ranked API"
   description: "API for mobile and/or Web Clients"
-  version: "0.7.5"
+  version: "0.8.25"
   contact:
     email: "me@josh.land"
 
@@ -109,6 +109,9 @@ definitions:
       followers_count:
         type: "integer"
         example: 123
+      ranked_ten_count:
+        type: "integer"
+        example: 2
 
   UserList:
     type: "object"
@@ -308,18 +311,14 @@ definitions:
   SearchResult:
     type: "object"
     properties:
-      id:
-        type: "integer"
-        example: 1234
-      name:
-        type: "string"
-        example: "I like my moves"
-      image_url:
-        type: "string"
-        example: "http://dev.ranked.com/images/thumbnails/fsdf25.jpg"
-      result_type:
-        type: "string"
-        enum: *SEARCHTYPES
+      videos:
+        type: "array"
+        items:
+          $ref: '#/definitions/Video'
+      profiles:
+        type: "array"
+        items:
+          $ref: '#/definitions/User'
   ErrorInfo:
     type: "object"
     properties:
@@ -1181,11 +1180,17 @@ paths:
   /search/:
     get:
       summary: "Search for Content"
+      description: "
+      # Search for Videos by Category.
+
+      Note: **category** and **name** are both optional query parameters but at least one must be filled out.
+
+      - If only category is populated - only videos will be returned.
+      - If only name is populated Profiles will be queried by username
+      "
       operationId: "get_search_results"
       tags:
         - "Search"
-      consumes:
-        - "application/json"
       produces:
         - "application/json"
       security:
@@ -1202,32 +1207,37 @@ paths:
         - in: "query"
           name: "category"
           required: false
-          type: "string"
-          description: 'Search by specific category. ex: "Food"'
-          example: "Music"
+          type: "integer"
+          description: 'Search by specific category id.'
+          example: 4
         - in: "query"
-          name: "sub_category"
+          name: "name"
           required: false
           type: "string"
-          description: "Search by specific sub-category. ex: Latin"
-          example: "Music"
-        - in: "query"
-          name: "types"
-          required: false
-          type: "string"
-          description: "Comma delimited list of search result types (see models re: Search Types). ex: Video,Users"
-          enum: *SEARCHTYPES
-        - in: "query"
-          name: "sort"
-          type: "string"
-          description: "NOTE: Ignored for Alpha - always top - sort order (see models re: Sort Criteria)"
-          enum: *SORTS
+          description: 'Search by specific category id.'
+          example: 4
+#        - in: "query"
+#          name: "sub_category"
+#          required: false
+#          type: "string"
+#          description: "Search by specific sub-category. ex: Latin"
+#          example: "Music"
+#        - in: "query"
+#          name: "types"
+#          required: false
+#          type: "string"
+#          description: "Comma delimited list of search result types (see models re: Search Types). ex: Video,Users"
+#          enum: *SEARCHTYPES
+#        - in: "query"
+#          name: "sort"
+#          type: "string"
+#          description: "NOTE: Ignored for Alpha - always top - sort order (see models re: Sort Criteria)"
+#          enum: *SORTS
       responses:
         200:
           description: "Success"
-          type: "array"
-          items:
-            $ref: '#/definitions/SearchResult'
+          type: "object"
+          $ref: '#/definitions/SearchResult'
         401:
           description: "Unauthorized"
         404:

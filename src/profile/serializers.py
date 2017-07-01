@@ -27,14 +27,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ['id', 'username', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'password',
-                  'following_count', 'followers_count']
+                  'following_count', 'followers_count', 'ranked_10_count']
         extra_kwargs = {'password': {'write_only': True}}
-        read_only_fields = ('id','is_partner', 'is_featured', 'following_count', 'followers_count')
+        read_only_fields = ('id','is_partner', 'is_featured', 'following_count', 'followers_count', 'ranked_10_count')
         model = Profile
 
 
 class LightProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['id', 'avatar_url', 'username']
+        fields = ['id', 'avatar_url', 'username', 'is_partner', 'is_featured']
         read_only_fields = ('id', 'avatar_url', 'is_partner', 'is_featured', 'username')
         model = Profile

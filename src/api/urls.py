@@ -20,6 +20,7 @@ from src.profile.views import me, AvatarUploadView
 from src.video.views import GenerateUploadView, sns_error, sns_success
 from src.video.viewsets import VideoViewSet, VideoTopView
 from src.categorization.viewsets import CategoryViewSet
+from .views import search
 
 router = routers.DefaultRouter()
 router.register(r'users/register', RegisterViewSet)
@@ -35,5 +36,6 @@ urlpatterns = [
     url(r'^videos/processing/error/$', sns_error),
     url(r'^videos/upload/$', GenerateUploadView.as_view()),
     url(r'^videos/top/$', VideoTopView.as_view()),
+    url(r'^search/$', search),
     url(r'^', include(router.urls)),
 ]

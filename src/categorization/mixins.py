@@ -16,7 +16,7 @@ class SubCategoryRelatable(models.Model):
 
 
 class MultiCategoryRelatable(models.Model):
-    category = models.ForeignKey("categorization.Category", related_name='primary_category', null=True)
+    category = models.ForeignKey("categorization.Category", related_name='primary_category', null=True, db_index=True)
     sub_category = models.ForeignKey("categorization.Category", related_name='sub_category', null=True)
 
     def add_sub_category(self, category):

@@ -157,6 +157,7 @@ def _validate_registration_fields(data):
     _ = data['email']
 
 def _get_profiles_user_is_following(profile_id):
+    # TODO: QUERY OPTIMIZATION
     profile = Profile.objects.filter(id=profile_id).prefetch_related('followed_profiles').first()
     followed_profiles = list(profile.followed_profiles.all())
 
@@ -168,6 +169,7 @@ def _get_profiles_user_is_following(profile_id):
         return Response(status=200, data={'users': []})
 
 def _get_profiles_following_user(profile_id):
+    # TODO: QUERY OPTIMIZATION
     followers = Profile.objects.filter(followed_profiles__id=profile_id).prefetch_related('followed_profiles')
     followed_profiles = list(followers)
 

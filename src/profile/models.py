@@ -12,6 +12,7 @@ class Profile(AbstractUser, Base):
     phone_number = models.CharField(max_length=25, default=None, null=True)
     following_count = models.IntegerField(default=0)
     followers_count = models.IntegerField(default=0)
+    ranked_ten_count = models.IntegerField(default=0)
 
     followed_profiles = models.ManyToManyField("profile.Profile", related_name='following')
 
