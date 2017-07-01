@@ -26,9 +26,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
     class Meta:
-        fields = ['id', 'username', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'password']
+        fields = ['id', 'username', 'email', 'avatar_url', 'is_partner', 'is_featured', 'phone_number', 'password',
+                  'following_count', 'followers_count']
         extra_kwargs = {'password': {'write_only': True}}
-        read_only_fields = ('id','is_partner', 'is_featured')
+        read_only_fields = ('id','is_partner', 'is_featured', 'following_count', 'followers_count')
         model = Profile
 
 

@@ -10,7 +10,11 @@ class Profile(AbstractUser, Base):
     is_featured = models.BooleanField(default=False)
     last_logged_in = models.DateField(auto_now_add=True)
     phone_number = models.CharField(max_length=25, default=None, null=True)
+    following_count = models.IntegerField(default=0)
+    followers_count = models.IntegerField(default=0)
+
     followed_profiles = models.ManyToManyField("profile.Profile", related_name='following')
+
 
     def follow_user(self, user_id):
         # Can't follow yourself

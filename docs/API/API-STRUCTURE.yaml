@@ -103,6 +103,13 @@ definitions:
       last_logged_in:
         type: "string"
         example: "2009-06-11 17:02:09+0000"
+      following_count:
+        type: "integer"
+        example: 455
+      followers_count:
+        type: "integer"
+        example: 123
+
   UserList:
     type: "object"
     properties:
