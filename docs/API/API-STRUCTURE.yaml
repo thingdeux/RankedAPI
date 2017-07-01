@@ -765,6 +765,7 @@ paths:
             "description": "Access Denied - Can't Follow this user."
           404:
             description: "Account does not exist"
+
     delete:
       summary: "Stop Following a user"
       operationId: "stop_following_user"
@@ -786,7 +787,7 @@ paths:
           example: "F#55344F"
           description: "Required Authorization Bearer Token for OAuth2"
         - in: path
-          name: user_id
+          name: user_id_to_stop_following
           required: true
           type: integer
           format: "int64"
@@ -1016,6 +1017,12 @@ paths:
   /videos/upload/:
     post:
       summary: "Endpoint to handle video uploads"
+      description: "
+      # Endpoint for initiating Video Creation process.
+
+      Returns **AWS Pre-Signed POST** Url payload - take all keys from the return json object and turn
+      them into form-data to be used when you post to the url defined 'in pre_signed_upload_url'.
+      "
       operationId: "init_video_upload"
       tags:
           - "Videos"

@@ -105,7 +105,7 @@ class Rankable(models.Model):
     Rankable content can have a rating
     """
     rank_total = models.IntegerField(default=0)
-    is_top_10 = models.BooleanField(default=False)
+    is_top_10 = models.BooleanField(default=False, db_index=True)
 
     class Meta:
         abstract = True

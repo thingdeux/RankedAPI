@@ -11,12 +11,12 @@
       "data": "curl -X POST -d \"grant_type=password&username=<user_name>&password=<password>\" -u\"<client_id>:<client_secret>\" http://localhost:8000/<TOKEN ENDPOINT>"
     },
     {
-      "type": "text",
-      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><a href=\"https://engineering.hipolabs.com/serverless-file-upload-with-aws-cognito-and-s3/\" style=\"font-size: 9pt; background-color: rgb(39, 40, 34);\">https://engineering.hipolabs.com/serverless-file-upload-with-aws-cognito-and-s3/</a><br></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><br></pre>"
+      "type": "markdown",
+      "data": "### Indexes\n\nTo speed up the search, PostgreSQL offers the use of indexes. It is worth noting that the index is not required for a full-text search. But if the search takes place in specific (constant) columns, the presence of the index is desirable.\n\nThere are 2 types of indexes:\n\nGiST (Generalized Search Tree) - a bit signature is assigned for each document, which contains information about all the tokens that are in this document. It is created with a command:\n\n```\nCREATE INDEX name ON table USING GIST (column);\n\n```\n\nGIN (Generalized Inverted Index) - in this type of index the key is a token and the value is an organized list of document identifiers which contain the token. It is created with a command:\n\n```\nCREATE INDEX name ON table USING GIN (column);\n```\n\nThere is a big difference in performance between these two types of indexes. Before you choose which one to use, I recommend you to study the documentation on them in detail. I would like to add that:\n\n* the creation of GIN index is 3 times faster than GiST\n* GIN index is 2-3 times bigger than GiST-index\n* Search for GIN index is 3 times faster than GiST index\n* GiN index updates 10 times slower\n\nIt is best to use GiST index for updated data, and GIN index suits well for static data."
     },
     {
       "type": "text",
-      "data": "ranked_dev_db<div>rankeddbadmin<br></div><div>40hff!9939fhhbvc</div><div><br></div><div>Database Name:&nbsp;RankedDev</div><div>Port: 5432</div>"
+      "data": ""
     }
   ]
 }
