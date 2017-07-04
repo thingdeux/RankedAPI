@@ -14,6 +14,9 @@ class Command(LabelCommand):
         try:
             self.stdout.write("Importing / Profiles and Videos", ending='\n')
             profile_importer = ProfileImporter()
-            profile_importer.run()
+            profile_importer.create_update_profiles()
+            # TODO: Allow args for this
+
+            # profile_importer.create_update_videos()
         except IndexError:
             self.stdout.write("No command provided, available options: 'import' / 'wipe'", ending='\n')

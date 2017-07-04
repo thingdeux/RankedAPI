@@ -51,8 +51,11 @@ class ProfileImporter:
         self.profiles = self.__get_profiles_from_csv()
         self.__add_videos_from_csv()
 
-    def run(self):
+    def create_update_profiles(self):
         self.__create_or_update_accounts()
+        self.__update_followed_profiles()
+
+    def create_update_videos(self):
         self.__create_or_update_videos()
 
     # CSV Interactions
@@ -86,7 +89,9 @@ class ProfileImporter:
     @transaction.atomic()
     def __create_or_update_accounts(self):
         # Speed up the creation process and limit the number of queries using atomic transaction.
-        self.django_profiles = [self.__add_or_update_profile_if_needed(profile) for profile in self.profiles.values()]
+        self.django_profiles = {
+            username: self.__add_or_update_profile_if_needed(profile) for username, profile in self.profiles.items()
+        }
 
     @transaction.atomic()
     def __create_or_update_videos(self):
@@ -129,7 +134,6 @@ class ProfileImporter:
         video.thumbnail_large = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)
         video.thumbnail_small = "{}/{}-00002.png".format(STATIC_URL, filename_parsed)
 
-
     def __add_category_to_video(self, category_string, video):
         # Make successive category acquisition faster by storing results in a local dictionary.
         category = None
@@ -146,7 +150,7 @@ class ProfileImporter:
             video.category = category
 
     # Profile Specific Helpers
-    def __add_or_update_profile_if_needed(self, profile_to_update):
+    def __add_or_update_profile_if_needed(self, profile_to_update: Profile):
         profile = None
         try:
             profile = Profile.objects.get(username=profile_to_update.username)
@@ -163,6 +167,14 @@ class ProfileImporter:
             profile.save()
 
         return profile
+
+    @transaction.atomic()
+    def __update_followed_profiles(self):
+        for username, profile in self.django_profiles.items():
+            imported_profile = self.profiles[username]
+            for profile_string in imported_profile.following_string_array:
+                profile.followed_profiles.add(self.django_profiles[profile_string])
+            profile.save()
 
     def __add_category_to_profile(self, category_string, profile, is_primary=True):
         # Make successive category acquisition faster by storing results in a local dictionary.
@@ -183,4 +195,4 @@ class ProfileImporter:
 
 if __name__ == "__main__":
     importer = ProfileImporter()
-    importer.run()
+    importer.create_update_profiles()
