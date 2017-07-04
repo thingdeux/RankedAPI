@@ -14,7 +14,11 @@ class Profile(AbstractUser, Base):
     followers_count = models.IntegerField(default=0)
     ranked_ten_count = models.IntegerField(default=0)
 
-    followed_profiles = models.ManyToManyField("profile.Profile", related_name='following')
+    primary_category = models.ForeignKey('categorization.Category', related_name='fav_category', null=True, db_index=True)
+    secondary_category = models.ForeignKey('categorization.Category', related_name='second_fav_category',
+                                           null=True, db_index=True)
+
+    followed_profiles = models.ManyToManyField("profile.Profile")
 
 
     def follow_user(self, user_id):

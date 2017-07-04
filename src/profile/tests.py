@@ -38,7 +38,9 @@ class RegistrationTestCase(TestCase):
             'avatar_url': None,
             'following_count': 0,
             'followers_count': 0,
-            'ranked_ten_count': 0
+            'ranked_ten_count': 0,
+            'primary_category': None,
+            'secondary_category': None
         })
         new_account = Profile.objects.get(id=2)
         self.assertIsNot(new_account.password, None)
@@ -201,6 +203,8 @@ class UsersMeTestCase(TestCase):
                     'following_count': 0,
                     'followers_count': 0,
                     'ranked_ten_count': 0,
+                    'primary_category': None,
+                    'secondary_category': None
                 },
                 'videos': []
               })
