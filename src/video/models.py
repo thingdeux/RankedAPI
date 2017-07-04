@@ -1,6 +1,6 @@
 from django.db import models
 from src.Ranked.basemodels import Base, Hashtagable, MultipleQualityLinkable, ThumbnailDisplayable, UploadProcessable
-from src.Ranked.basemodels import Activatable, Rankable
+from src.Ranked.basemodels import Activatable, Rankable, CustomFieldStorable
 from src.profile.mixins import ProfileRelatable
 from src.categorization.mixins import MultiCategoryRelatable
 
@@ -17,7 +17,7 @@ class Category(Base, Hashtagable):
     parent_category = models.ForeignKey('self', default=None, related_name='parent')
 
 
-class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable,
+class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, CustomFieldStorable,
             ThumbnailDisplayable, UploadProcessable, Activatable, Rankable, MultiCategoryRelatable):
 
     title = models.CharField(default="", max_length=256, blank=False, null=False)

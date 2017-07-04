@@ -1,6 +1,7 @@
 # Standard Library Imports
 import csv
 import os
+import uuid
 # Project Imports
 from src.categorization.models import Category
 from src.profile.models import Profile
@@ -89,8 +90,62 @@ class ProfileImporter:
 
     @transaction.atomic()
     def __create_or_update_videos(self):
-        pass
+        for profile in self.django_profiles:
+            try:
+                imported_profile = self.profiles[profile.username]
+                _ = [self.__add_or_update_video(video, profile) for video in imported_profile.videos]
+            except KeyError:
+                raise("Error finding profile {}".format(profile.username))
 
+    # Video Specific Helpers
+    def __add_or_update_video(self, imported_video: ImportedVideo, profile: Profile):
+        video = None
+        try:
+            video = Video.objects.get(custom_field1=imported_video.s3filename, related_profile=profile)
+        except ObjectDoesNotExist:
+            video = Video.objects.create(custom_field1=imported_video.s3filename, related_profile=profile)
+        finally:
+            video.custom_field1 = imported_video.s3filename
+            video.is_featured = imported_video.is_featured
+            video.rank_total = imported_video.total_rank_amount
+            video.hashtag = '#{}'.format(',#'.join(imported_video.hashtag_string_array))
+            self.__add_category_to_video(imported_video.category_string, video)
+            self.__generate_demo_urls(video, imported_video.s3filename)
+
+            # TODO: Set this to True when Taylor is done uploading the videos
+            video.is_active = False
+            video.is_processing = False
+            video.save()
+
+
+        return video
+
+    def __generate_demo_urls(self, video: Video, filename):
+        # TODO: Should pull this from django settings.
+        STATIC_URL = "http://static.goranked.com"
+        video.high = 'http://{}/{}'.format("videos.goranked.com", filename)
+        video.low = 'http://{}/{}.webm'.format("videos.goranked.com", filename.split('.')[0])
+        filename_parsed = filename.split('.')[0]
+        video.thumbnail_large = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)
+        video.thumbnail_small = "{}/{}-00002.png".format(STATIC_URL, filename_parsed)
+
+
+    def __add_category_to_video(self, category_string, video):
+        # Make successive category acquisition faster by storing results in a local dictionary.
+        category = None
+        try:
+            category = self.categories[category_string]
+        except KeyError:
+            try:
+                self.categories[category_string] = Category.objects.get(name=category_string)
+                category = self.categories[category_string]
+            except ObjectDoesNotExist:
+                print("MISSING CATEGORY {}".format(category_string))
+                raise
+        finally:
+            video.category = category
+
+    # Profile Specific Helpers
     def __add_or_update_profile_if_needed(self, profile_to_update):
         profile = None
         try:

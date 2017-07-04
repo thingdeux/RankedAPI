@@ -1,6 +1,6 @@
 name,parent_category,hashtag,banner_url
 Dance,,ranked-move,http://static.goranked.com/images/category-dance.jpg
-Latest Trend,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-latestTrend.jpg
+Latest Trends,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-latestTrend.jpg
 Ballet,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-ballet.jpg
 Breakdance,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-breakdance.jpg
 Hip-Hop,Dance,ranked-move,http://static.goranked.com/images/twocol-dance-hipHop.jpg
@@ -26,7 +26,7 @@ Baseball,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-bas
 Basketball,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-basketball.jpg
 Boxing,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-boxing.jpg
 eSports,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-eSports.jpg
-Olympic,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-olympic.jpg
+Olympics,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-olympic.jpg
 Football,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-football.jpg
 MMA,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-mma.jpg
 Soccer,Sports,ranked-sweat,http://static.goranked.com/images/twocol-sports-soccer.jpg

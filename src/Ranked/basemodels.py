@@ -112,3 +112,12 @@ class Rankable(models.Model):
 
     def update_ranking_count(self):
         pass
+
+class CustomFieldStorable(models.Model):
+    # Custom_Field 1 is the only field that will be indexed - store things you need to query here.
+    custom_field1 = models.CharField(max_length=512, default=None, null=True, db_index=True)
+    custom_field2 = models.CharField(max_length=512, default=None, null=True)
+    custom_field3 = models.CharField(max_length=512, default=None, null=True)
+
+    class Meta:
+        abstract = True

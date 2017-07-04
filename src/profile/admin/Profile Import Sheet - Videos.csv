@@ -1,7 +1,7 @@
 username,filename,Taylors FileName,title,hashtag,category,is_featured,total_rank_number
-TylerWilliams,Demo_TylerWilliams_GetOutChallenge.mov,Get Out Challenge.mov,,GetOut Challenge,Latest Trend,YES,59
-TylerWilliams,Demo_TylerWilliams_MannequinChallenge.mp4,Mannequin Challenge.mp4,,Mannequin Challenge,Latest Trend,NO,100
-TylerWilliams,Demo_TylerWilliams_MannequinChallenge1.mp4,MannequinChallenge1.mp4,,Mannequin Challenge,Latest Trend,NO,75
+TylerWilliams,Demo_TylerWilliams_GetOutChallenge.mov,Get Out Challenge.mov,,GetOut Challenge,Latest Trends,YES,59
+TylerWilliams,Demo_TylerWilliams_MannequinChallenge.mp4,Mannequin Challenge.mp4,,Mannequin Challenge,Latest Trends,NO,100
+TylerWilliams,Demo_TylerWilliams_MannequinChallenge1.mp4,MannequinChallenge1.mp4,,Mannequin Challenge,Latest Trends,NO,75
 TylerWilliams,Demo_TylerWilliams_BacktoSchoolProblems.mp4,Back to School Problems.mp4,,Magic,Magic,YES,25
 TylerWilliams,Demo_TylerWilliams_DavidBlaine-FrogTrick1-magic.mp4,David Blaine - Frog Trick 1 - magic.mp4,,"Magic, David Blaine",Magic,NO,150
 TylerWilliams,Demo_TylerWilliams_DavidBlaine-FrogTrick2-magic.mp4,David Blaine - Frog Trick 2 - magic.mp4,,"Magic, David Blaine",Magic,NO,670
@@ -18,7 +18,7 @@ TylerWilliams,Demo_TylerWilliams_BestSkateboardTrick10.mp4,BestSkateboardTrick10
 TylerWilliams,Demo_TylerWilliams_BestSurfingAirsFelipeToledo.mp4,BestSurfingAirsFelipeToledo.mp4,,"Surfing, Best Air",Action Sports,NO,100
 TylerWilliams,Demo_TylerWilliams_BestSurfingAirsFelipeToledo2.mp4,BestSurfingAirsFelipeToledo2.mp4,,"Surfing, Best Air",Action Sports,YES,80
 TylerWilliams,Demo_TylerWilliams_BestSurfingAirsGabrielMedina2.mp4,BestSurfingAirsGabrielMedina2.mp4,,"Surfing, Best Air",Action Sports,NO,90
-TylerWilliams,Demo_TylerWilliams_BestSurfingAirsGabrielMedinaBackflip.mp4,BestSurfingAirsGabrielMedinaBackflip.mp4,,"Surfing, Best Air",Action Sports,NO,28
+TylerWilliams,Demo_TylerWilliams_BestSurfingAirsGabrielMedinaBackflip.mp4,BestSurfingAirsGabrielMedinaBackflip.mp4,,"Surfing, Best Air",Action Sports,YES,28
 TylerWilliams,Demo_TylerWilliams_BestSurfingAirsJohnJohnFlorence.mp4,BestSurfingAirsJohnJohnFlorence.mp4,,"Surfing, Best Air",Action Sports,NO,150
 TylerWilliams,Demo_TylerWilliams_BestSurfingAirsJordySmith.mp4,BestSurfingAirsJordySmith.mp4,,"Surfing, Best Air",Action Sports,NO,90
 JennyBrown,Demo_JennyBrown_BestSurfingAirsJulianWilson.mp4,BestSurfingAirsJulianWilson.mp4,,"Surfing, Best Air",Action Sports,NO,80
@@ -189,12 +189,12 @@ RobertScott99,Demo_RobertScott99_KobeBryantPlays4.mp4,KobeBryantPlays4.mp4,,"Bas
 RobertScott99,Demo_RobertScott99_KobeBryantPlays5.mp4,KobeBryantPlays5.mp4,,"Basketball, Kobe Bryant",Basketball,NO,178
 AprilHill,Demo_AprilHill_Domestic.mp4,Domestic.mp4,,"TV, Film",TV/Film,NO,178
 AprilHill,Demo_AprilHill_Holi-ExpectationVsReality-POPxoComedy.mp4,Holi- Expectation Vs Reality - POPxo Comedy.mp4,,"TV, Film",TV/Film,NO,195
-AprilHill,Demo_AprilHill_IfMichaelMyerswasgay....mp4,If Michael Myers was gay....mp4,,"TV, Film",TV/Film,NO,165
-AprilHill,Demo_AprilHill_ItsNotWhatItLooksLike..mp4,It's Not What It Looks Like..mp4,,"TV, Film",TV/Film,NO,323
+AprilHill,Demo_AprilHill_IfMichaelMyerswasgay.mp4,If Michael Myers was gay....mp4,,"TV, Film",TV/Film,NO,165
+AprilHill,Demo_AprilHill_ItsNotWhatItLooksLike.mp4,It's Not What It Looks Like..mp4,,"TV, Film",TV/Film,NO,323
 AprilHill,Demo_AprilHill_JediKittensStrikeBack.mp4,Jedi Kittens Strike Back.mp4,,"TV, Film",TV/Film,NO,300
 AprilHill,Demo_AprilHill_LiteralEnforcer.mp4,Literal Enforcer (Part 4) by @KingBach.mp4,,"TV, Film",TV/Film,NO,245
 AprilHill,Demo_AprilHill_MOMVS.KILLERCLOWN.mp4,MOM VS. KILLER CLOWN!.mp4,,"TV, Film",TV/Film,NO,145
-AprilHill,Demo_AprilHill_SameGirlw-OdellBeckhamJr..mp4,Same Girl w- Odell Beckham Jr..mp4,,"TV, Film",TV/Film,NO,365
+AprilHill,Demo_AprilHill_SameGirlw-OdellBeckhamJr.mp4,Same Girl w- Odell Beckham Jr..mp4,,"TV, Film",TV/Film,NO,365
 AprilHill,Demo_AprilHill_shortfilm1.mp4,shortfilm1.mp4,,"TV, Film",TV/Film,NO,397
 AprilHill,Demo_AprilHill_shortvideo2.mp4,shortvideo2.mp4,,"TV, Film",TV/Film,NO,247
 AprilHill,Demo_AprilHill_shortvideo3.mp4,shortvideo3.mp4,,"TV, Film",TV/Film,NO,100
@@ -505,16 +505,16 @@ KariSosa,Demo_KariSosa_CollegeBestOneHandCatchesFootball14.mp4,CollegeBestOneHan
 KariSosa,Demo_KariSosa_CollegeBestOneHandCatchesFootball15.mp4,CollegeBestOneHandCatchesFootball15.mp4,,"Football, One Hand Catch, College",Football,NO,112
 KariSosa,Demo_KariSosa_CollegeBestOneHandCatchesFootball16.mp4,CollegeBestOneHandCatchesFootball16.mp4,,"Football, One Hand Catch, College",Football,NO,103
 KariSosa,Demo_KariSosa_CollegeBestOneHandCatchesFootball17.mp4,CollegeBestOneHandCatchesFootball17.mp4,,"Football, One Hand Catch, College",Football,NO,145
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS1.mp4,BESTSHUFFLEGIRLS1.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,199
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS2.mp4,BESTSHUFFLEGIRLS2.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,200
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS3.mp4,BESTSHUFFLEGIRLS3.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,245
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS4.mp4,BESTSHUFFLEGIRLS4.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,278
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS5.mp4,BESTSHUFFLEGIRLS5.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,265
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS6.mp4,BESTSHUFFLEGIRLS6.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,293
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS7.mp4,BESTSHUFFLEGIRLS7.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,321
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS8.mp4,BESTSHUFFLEGIRLS8.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,365
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS9.mp4,BESTSHUFFLEGIRLS9.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,NO,247
-SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS10.mp4,BESTSHUFFLEGIRLS10.mp4,,"Dance, EDM, Shuffle, Rave",EDM/Shuffle,YES,456
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS1.mp4,BESTSHUFFLEGIRLS1.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,199
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS2.mp4,BESTSHUFFLEGIRLS2.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,200
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS3.mp4,BESTSHUFFLEGIRLS3.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,245
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS4.mp4,BESTSHUFFLEGIRLS4.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,278
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS5.mp4,BESTSHUFFLEGIRLS5.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,265
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS6.mp4,BESTSHUFFLEGIRLS6.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,293
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS7.mp4,BESTSHUFFLEGIRLS7.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,321
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS8.mp4,BESTSHUFFLEGIRLS8.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,365
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS9.mp4,BESTSHUFFLEGIRLS9.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,NO,247
+SierraFrancis,Demo_SierraFrancis_BESTSHUFFLEGIRLS10.mp4,BESTSHUFFLEGIRLS10.mp4,,"Dance, EDM, Shuffle, Rave",Shuffle/EDM,YES,456
 SierraFrancis,Demo_SierraFrancis_CollegeBestOneHandCatchesFootball29.mp4,CollegeBestOneHandCatchesFootball29.mp4,,"Football, One Hand Catch, College",Football,NO,326
 SierraFrancis,Demo_SierraFrancis_CollegeBestOneHandCatchesFootball30.mp4,CollegeBestOneHandCatchesFootball30.mp4,,"Football, One Hand Catch, College",Football,NO,233
 SierraFrancis,Demo_SierraFrancis_CollegeBestOneHandCatchesFootball31.mp4,CollegeBestOneHandCatchesFootball31.mp4,,"Football, One Hand Catch, College",Football,NO,1300
@@ -1095,16 +1095,16 @@ DuranteFietsam,Demo_DuranteFietsam_BestMensShoesNikeMagSelfLacing1.mp4,BestMensS
 DuranteFietsam,Demo_DuranteFietsam_BestMensShoesNikeMagSelfLacing2.mp4,BestMensShoesNikeMagSelfLacing2.mp4,,"Style, Mens Shoes, Nike, MAG",Men's Shoes,NO,365
 DuranteFietsam,Demo_DuranteFietsam_BestMensShoesWayofWade.mp4,BestMensShoesWayofWade.mp4,,"Style, Mens Shoes, Way of Wade",Men's Shoes,NO,397
 DuranteFietsam,Demo_DuranteFietsam_BestMensShoesYeezys.mp4,BestMensShoesYeezys.mp4,,"Style, Mens Shoes, Way of Wade",Men's Shoes,NO,247
-DuranteFietsam,Demo_DuranteFietsam_BestNailsMyLittlePony3D.mp4,BestNailsMyLittlePony3D .mp4,,"Style, Nails",Nails ,NO,100
-DuranteFietsam,Demo_DuranteFietsam_BestNailsSucculents.mp4,BestNailsSucculents.mp4,,"Style, Nails",Nails ,YES,99
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt1.mp4,BestNewNailsArt1 .mp4,,"Style, Nails",Nails ,NO,254
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt2.mp4,BestNewNailsArt2.mp4,,"Style, Nails",Nails ,NO,401
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt3.mp4,BestNewNailsArt3.mp4,,"Style, Nails",Nails ,NO,222
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt4.mp4,BestNewNailsArt4.mp4,,"Style, Nails",Nails ,NO,467
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt5.mp4,BestNewNailsArt5.mp4,,"Style, Nails",Nails ,NO,224
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt6.mp4,BestNewNailsArt6.mp4,,"Style, Nails",Nails ,NO,226
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt7.mp4,BestNewNailsArt7.mp4,,"Style, Nails",Nails ,NO,323
-DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt8.mp4,BestNewNailsArt8.mp4,,"Style, Nails",Nails ,NO,145
+DuranteFietsam,Demo_DuranteFietsam_BestNailsMyLittlePony3D.mp4,BestNailsMyLittlePony3D .mp4,,"Style, Nails",Nails,NO,100
+DuranteFietsam,Demo_DuranteFietsam_BestNailsSucculents.mp4,BestNailsSucculents.mp4,,"Style, Nails",Nails,YES,99
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt1.mp4,BestNewNailsArt1 .mp4,,"Style, Nails",Nails,NO,254
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt2.mp4,BestNewNailsArt2.mp4,,"Style, Nails",Nails,NO,401
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt3.mp4,BestNewNailsArt3.mp4,,"Style, Nails",Nails,NO,222
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt4.mp4,BestNewNailsArt4.mp4,,"Style, Nails",Nails,NO,467
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt5.mp4,BestNewNailsArt5.mp4,,"Style, Nails",Nails,NO,224
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt6.mp4,BestNewNailsArt6.mp4,,"Style, Nails",Nails,NO,226
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt7.mp4,BestNewNailsArt7.mp4,,"Style, Nails",Nails,NO,323
+DuranteFietsam,Demo_DuranteFietsam_BestNewNailsArt8.mp4,BestNewNailsArt8.mp4,,"Style, Nails",Nails,NO,145
 RichardSonleon,Demo_RichardSonleon_BestPlaysLittleLeagueWorldSeries3.mp4,BestPlaysLittleLeagueWorldSeries3.mp4,,"Baseball, Little League",Baseball,NO,178
 RichardSonleon,Demo_RichardSonleon_BestPlaysLittleLeagueWorldSeries4.mp4,BestPlaysLittleLeagueWorldSeries4.mp4,,"Baseball, Little League",Baseball,NO,195
 RichardSonleon,Demo_RichardSonleon_BestWalk-OffPostseasonHomeRun1.mp4,BestWalk-OffPostseasonHomeRun1.mp4,,"Baseball, Home Run",Baseball,NO,165
@@ -1172,9 +1172,9 @@ CloonanPhillips,Demo_CloonanPhillips_FontusWaterBottle-invention,Fontus Water Bo
 CloonanPhillips,Demo_CloonanPhillips_Opto-invention,Opto - invention,,Inventions,Inventions,NO,99
 CloonanPhillips,Demo_CloonanPhillips_PocketShot-Invention,PocketShot - Invention,,Inventions,Inventions,NO,254
 CloonanPhillips,Demo_CloonanPhillips_SteelWallet,SteelWallet,,Inventions,Inventions,NO,401
-CloonanPhillips,Demo_CloonanPhillips_MannequinChallenge2.mp4,MannequinChallenge2.mp4,,MannequinChallenge,Latest Trend,NO,222
-CloonanPhillips,Demo_CloonanPhillips_MannequinChallenge3.mp4,MannequinChallenge3.mp4,,MannequinChallenge,Latest Trend,NO,467
-CloonanPhillips,Demo_CloonanPhillips_OriginalmannequinChallenge,OriginalmannequinChallenge,,MannequinChallenge,Latest Trend,NO,224
+CloonanPhillips,Demo_CloonanPhillips_MannequinChallenge2.mp4,MannequinChallenge2.mp4,,MannequinChallenge,Latest Trends,NO,222
+CloonanPhillips,Demo_CloonanPhillips_MannequinChallenge3.mp4,MannequinChallenge3.mp4,,MannequinChallenge,Latest Trends,NO,467
+CloonanPhillips,Demo_CloonanPhillips_OriginalmannequinChallenge,OriginalmannequinChallenge,,MannequinChallenge,Latest Trends,NO,224
 CloonanPhillips,Demo_CloonanPhillips_BestSkateboardTrick1.mp4,BestSkateboardTrick1.mp4,,Skateboard,Action Sports,NO,226
 CloonanPhillips,Demo_CloonanPhillips_BestSkateboardTrick2.mp4,BestSkateboardTrick2.mp4,,Skateboard,Action Sports,NO,323
 MelissaShirle,Demo_MelissaShirle_BestSkateboardTrick3.mp4,BestSkateboardTrick3.mp4,,Skateboard,Action Sports,NO,145
