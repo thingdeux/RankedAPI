@@ -1,5 +1,7 @@
 # Django Imports
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 # DRF Imports
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -12,8 +14,10 @@ from src.video.serializers import VideoSerializer
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 
+SIX_HOURS_IN_SECONDS = 21600
 
 @api_view(('GET',))
+@method_decorator(cache_page(SIX_HOURS_IN_SECONDS))
 @permission_classes((IsAuthenticated, TokenHasReadWriteScope))
 def search(request):
     """

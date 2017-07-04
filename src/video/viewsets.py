@@ -5,6 +5,8 @@ from rest_framework.parsers import JSONParser, FormParser
 from rest_framework.decorators import detail_route
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 # Project Imports
 from src.comment.serializers import CommentSerializer
 from .models import Video
@@ -150,8 +152,10 @@ class VideoViewSet(viewsets.ModelViewSet):
 
 # Avatar upload View
 class VideoTopView(APIView):
+    SIX_HOURS_IN_SECONDS = 21600
     permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
 
+    @method_decorator(cache_page(SIX_HOURS_IN_SECONDS))
     def get(self, request, format=None):
         queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
         serialized = VideoSerializer(queryset, many=True)

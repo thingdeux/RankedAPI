@@ -3,7 +3,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from src.profile.models import Profile
 from ..video.models import Video
 from ..video.sns import SNSResponse
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 # DRF Imports
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -18,8 +19,8 @@ import boto3
 import json
 import logging
 
-
 logger = logging.getLogger("video.views")
+SIX_HOURS_IN_SECONDS = 21600
 
 class PlainTextParser(BaseParser):
     """
