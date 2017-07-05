@@ -54,11 +54,8 @@ class VideoViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         # TODO: Paginate
         profile = Profile.objects.get(pk=request.user.id)
-
-        # TODO: JJ - Query Check
-        queryset = Video.objects.filter(id__in=profile.user_ids_i_follow, is_active=True)\
-            .select_related('related_profile')
-
+        # TODO: JJ - Query Improvement
+        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True).select_related('related_profile')
         serialized = VideoSerializer(queryset, many=True)
         return Response(status=200, data=serialized.data)
 

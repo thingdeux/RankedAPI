@@ -22,7 +22,7 @@ class Profile(AbstractUser, Base):
 
     @property
     def user_ids_i_follow(self):
-        return Profile.objects.filter(followed_profiles__id=self.id).values('id') or []
+        return self.followed_profiles.values('id').prefetch_related('followed_profiles')
 
     def follow_user(self, user_id):
         # Can't follow yourself

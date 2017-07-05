@@ -582,18 +582,31 @@ class VideoAPIVideosListCase(TestCase):
         """
         /Videos/ endpoint should return vides from people he/she follows
         """
-        auth_token = "Bearer {}".format(self.test_profile1_token)
+        auth_token = "Bearer {}".format(self.test_profile_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Video", is_processing=True,
-                                       is_active=True, category=self.primary_category)
-
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video",
+                                       is_processing=False, is_active=True,
+                                       category=self.primary_category)
         new_vid.save()
-        # TODO: Fix Failing TESTS / Core Functionality here
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video2",
+                                       is_processing=False,
+                                       is_active=True, category=self.primary_category)
+        new_vid.save()
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video3",
+                                       is_processing=True,
+                                       is_active=False, category=self.primary_category)
+        new_vid.save()
 
-        # response2 = self.client.get('/api/v1/videos/', format='json')
-        # self.assertEqual(response2.status_code, 200)
-        # self.assertEqual(len(response2.data), 1)
+
+        profile = Profile.objects.get(pk=self.test_profile.id)
+        profile.follow_user(self.test_profile2.id)
+        profile.follow_user(self.test_profile3.id)
+        profile.save()
+
+        response2 = self.client.get('/api/v1/videos/', format='json')
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(len(response2.data), 4)
 
 
     def test_videos_endpoint_empty(self):
@@ -616,6 +629,8 @@ class VideoAPIVideosListCase(TestCase):
         self.test_profile.save()
         self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
         self.test_profile2.save()
+        self.test_profile3 = Profile(username="test_user3", password="testpass", email="test3@user.com")
+        self.test_profile3.save()
         self.__create_auth_tokens()
 
         self.primary_category = Category(name="Dance")
@@ -631,6 +646,9 @@ class VideoAPIVideosListCase(TestCase):
         self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
                             category=self.primary_category)
         self.video2.save()
+        self.video3 = Video(related_profile=self.test_profile2, title="My Video3", is_processing=False, is_active=True,
+                            category=self.primary_category)
+        self.video3.save()
 
     def __create_auth_tokens(self):
         self.application = Application.objects.create(
