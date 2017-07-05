@@ -51,10 +51,10 @@ class VideoViewSet(viewsets.ModelViewSet):
         return Response(status=404)
 
     def list(self, request, *args, **kwargs):
-        # queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
-        # serialized = VideoSerializer(queryset, many=True)
-        # return Response(serialized.data)
-        return Response(status=501)
+        # TODO: Paginate
+        queryset = Video.objects.order_by('-rank_total').filter(is_active=True, related_profile__id=request.user.id).select_related('related_profile')
+        serialized = VideoSerializer(queryset, many=True)
+        return Response(status=200, data=serialized.data)
 
     def create(self, request, *args, **kwargs):
         error = {"description":  "POST to /videos/ is not how videos are created. Please see documentation."}
@@ -157,6 +157,6 @@ class VideoTopView(APIView):
 
     @method_decorator(cache_page(SIX_HOURS_IN_SECONDS))
     def get(self, request, format=None):
-        queryset = Video.objects.order_by('-rank_total').select_related('related_profile')[:25]
+        queryset = Video.objects.order_by('-rank_total').filter(is_active=True).select_related('related_profile')[:25]
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)
