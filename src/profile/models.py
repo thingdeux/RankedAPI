@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Project Imports
 from src.Ranked.basemodels import Base
+from src.categorization.models import Category
+from src.categorization.serializers import CategorySerializer
 
 class Profile(AbstractUser, Base):
     email = models.EmailField(max_length=256, db_index=True)
@@ -20,12 +22,35 @@ class Profile(AbstractUser, Base):
 
     followed_profiles = models.ManyToManyField("profile.Profile")
 
+    @property
+    def favorite_category(self):
+        if self.primary_category:
+            return CategorySerializer(self.primary_category).data
+        else:
+            return None
+
+    @property
+    def second_favorite_category(self):
+        if self.secondary_category:
+            return CategorySerializer(self.secondary_category).data
+        else:
+            return None
+
+    @property
+    def user_ids_i_follow(self):
+        return self.followed_profiles.values('id').prefetch_related('followed_profiles')
 
     def follow_user(self, user_id):
         # Can't follow yourself
         if int(user_id) != self.id:
             profile_to_follow = Profile.objects.get(id=user_id)
+
             self.followed_profiles.add(profile_to_follow)
+            self.following_count = self.followed_profiles.count()
+
+            profile_to_follow.followers_count = Profile.objects.filter(followed_profiles__id=profile_to_follow.id).count()
+            profile_to_follow.save()
+
 
     def stop_following_user(self, user_id):
         profile_to_stop_following = Profile.objects.get(id=user_id)

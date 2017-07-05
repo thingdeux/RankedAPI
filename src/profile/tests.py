@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from django.test import TestCase
 # Project Imports
 from .models import Profile
+from src.categorization.models import Category
 # Django Imports
 from django.test import TestCase
 from django.utils import timezone
@@ -39,20 +40,12 @@ class RegistrationTestCase(TestCase):
             'following_count': 0,
             'followers_count': 0,
             'ranked_ten_count': 0,
-            'primary_category': None,
-            'secondary_category': None
+            'favorite_category': None,
+            'second_favorite_category': None
         })
         new_account = Profile.objects.get(id=2)
         self.assertIsNot(new_account.password, None)
         self.assertIsNot(new_account.password, "")
-
-        # self.assertEqual(check_password('mo343re', new_account.password), True)
-
-        # auth_response = self.client.post('/api/v1/users/auth/token/', {
-        #     "username": "ishouldwork", "password": "mo3435re", "client_id": self.application.client_id,
-        #     "grant_type": "password"})
-        #
-        # self.assertEqual(auth_response.status_code, 200)
 
     def test_registration_email_exists(self):
         """
@@ -160,24 +153,6 @@ class RegistrationTestCase(TestCase):
         )
         self.application.save()
 
-
-# class ProfileAuthTestCase(TestCase):
-#     def get_access_token(self):
-#         auth_response = self.client.post('/api/v1/users/auth/token/',
-#                                     {"username": "testme", "password": "test",
-#                                      "client_id": self.application.client_id,
-#                                      "grant_type": "password"})
-#
-#         return response.data.get("access_token")
-#
-#     def setUp(self):
-#         self.client = APIClient()
-#         self.application = Application.objects.get(pk=1)
-#         self.user = self.create_user()
-#         self.access_token = self.get_access_token()
-#
-# #         self.client.credentials(HTTP_AUTHORIZATION="Bearer {}".format(self.access_token))
-
 class UsersMeTestCase(TestCase):
     def test_me_success(self):
         """
@@ -190,6 +165,7 @@ class UsersMeTestCase(TestCase):
         response = self.client.get('/api/v1/users/me/')
 
         self.assertEqual(response.status_code, 200)
+
         self.assertEqual(response.data,
              {
                 'me': {
@@ -203,8 +179,24 @@ class UsersMeTestCase(TestCase):
                     'following_count': 0,
                     'followers_count': 0,
                     'ranked_ten_count': 0,
-                    'primary_category': None,
-                    'secondary_category': None
+                    'favorite_category': {
+                        'is_sub_category': False,
+                        'is_active': True,
+                        'hashtag': 'Blessed',
+                        'name': 'Pizza',
+                        'banner': None,
+                        'parent_category': None,
+                        'id': 1
+                    },
+                    'second_favorite_category': {
+                        'is_sub_category': False,
+                        'is_active': True,
+                        'hashtag': 'Blessed',
+                        'name': 'Chocolate',
+                        'banner': None,
+                        'parent_category': None,
+                        'id': 2
+                    },
                 },
                 'videos': []
               })
@@ -212,10 +204,15 @@ class UsersMeTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
 
+        self.test_category = Category(name="Pizza", is_active=True, hashtag="Blessed")
+        self.test_category.save()
+        self.test_category2 = Category(name="Chocolate", is_active=True, hashtag="Blessed")
+        self.test_category2.save()
         self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
+        self.test_profile.primary_category = self.test_category
+        self.test_profile.secondary_category = self.test_category2
         self.test_profile.save()
         self.__create_auth_tokens()
-
 
     # TODO: Create generic version of this for sharing.
     def __create_auth_tokens(self):
@@ -265,7 +262,6 @@ class UsersFollowersTestCase(TestCase):
         profile = Profile.objects.get(id=self.test_profile.id)
         profile.follow_user(self.test_profile2.id)
         profile.save()
-
 
         response = self.client.delete('/api/v1/users/{}/following/'.format(self.test_profile2.id), format="json")
 
@@ -353,8 +349,76 @@ class UsersFollowersTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['users']), 0)
 
+    def test_profile_followers_count_updated(self):
+        """
+        After adding a follower - followers_count should be updated
+        """
+        # GRRRR - DJANGO SIGNALS MAKES THIS UNTESTABLE .... They're ASYNC so they fire after
+        # The test can check for changes.
 
+    def setUp(self):
+        self.client = APIClient()
 
+        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
+        self.test_profile.save()
+        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
+        self.test_profile2.save()
+        self.test_profile3 = Profile(username="test_user3", password="testpass", email="test3@user.com")
+        self.test_profile3.save()
+        self.__create_auth_tokens()
+
+    def __create_auth_tokens(self):
+        self.application = Application.objects.create(
+            client_type='Resource owner password-based',
+            authorization_grant_type=Application.CLIENT_PUBLIC,
+            client_secret='121212',
+            client_id='123123123',
+            redirect_uris='',
+            name='testAuth',
+            user=self.test_profile
+        )
+        self.application.save()
+
+        self.test_profile_token = AccessToken.objects.create(
+            user=self.test_profile,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile_token.save()
+
+        self.test_profile2_token = AccessToken.objects.create(
+            user=self.test_profile2,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile2.save()
+
+        self.test_profile3_token = AccessToken.objects.create(
+            user=self.test_profile2,
+            scope='read write',
+            expires=timezone.now() + timedelta(seconds=600),
+            token=generate_token(),
+            application=self.application
+        )
+        self.test_profile3.save()
+
+class UserListTestCase(TestCase):
+
+    def test_profile_follow_success(self):
+        """
+        /Users should not list users
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/users/', format="json")
+
+        self.assertEqual(response.status_code, 405)
 
     def setUp(self):
         self.client = APIClient()
