@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from django.test import TestCase
 # Project Imports
 from .models import Profile
+from src.categorization.models import Category
 # Django Imports
 from django.test import TestCase
 from django.utils import timezone
@@ -39,20 +40,12 @@ class RegistrationTestCase(TestCase):
             'following_count': 0,
             'followers_count': 0,
             'ranked_ten_count': 0,
-            'primary_category': None,
-            'secondary_category': None
+            'favorite_category': None,
+            'second_favorite_category': None
         })
         new_account = Profile.objects.get(id=2)
         self.assertIsNot(new_account.password, None)
         self.assertIsNot(new_account.password, "")
-
-        # self.assertEqual(check_password('mo343re', new_account.password), True)
-
-        # auth_response = self.client.post('/api/v1/users/auth/token/', {
-        #     "username": "ishouldwork", "password": "mo3435re", "client_id": self.application.client_id,
-        #     "grant_type": "password"})
-        #
-        # self.assertEqual(auth_response.status_code, 200)
 
     def test_registration_email_exists(self):
         """
@@ -172,6 +165,7 @@ class UsersMeTestCase(TestCase):
         response = self.client.get('/api/v1/users/me/')
 
         self.assertEqual(response.status_code, 200)
+
         self.assertEqual(response.data,
              {
                 'me': {
@@ -185,8 +179,24 @@ class UsersMeTestCase(TestCase):
                     'following_count': 0,
                     'followers_count': 0,
                     'ranked_ten_count': 0,
-                    'primary_category': None,
-                    'secondary_category': None
+                    'favorite_category': {
+                        'is_sub_category': False,
+                        'is_active': True,
+                        'hashtag': 'Blessed',
+                        'name': 'Pizza',
+                        'banner': None,
+                        'parent_category': None,
+                        'id': 1
+                    },
+                    'second_favorite_category': {
+                        'is_sub_category': False,
+                        'is_active': True,
+                        'hashtag': 'Blessed',
+                        'name': 'Chocolate',
+                        'banner': None,
+                        'parent_category': None,
+                        'id': 2
+                    },
                 },
                 'videos': []
               })
@@ -194,10 +204,15 @@ class UsersMeTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
 
+        self.test_category = Category(name="Pizza", is_active=True, hashtag="Blessed")
+        self.test_category.save()
+        self.test_category2 = Category(name="Chocolate", is_active=True, hashtag="Blessed")
+        self.test_category2.save()
         self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
+        self.test_profile.primary_category = self.test_category
+        self.test_profile.secondary_category = self.test_category2
         self.test_profile.save()
         self.__create_auth_tokens()
-
 
     # TODO: Create generic version of this for sharing.
     def __create_auth_tokens(self):

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Project Imports
 from src.Ranked.basemodels import Base
+from src.categorization.models import Category
+from src.categorization.serializers import CategorySerializer
 
 class Profile(AbstractUser, Base):
     email = models.EmailField(max_length=256, db_index=True)
@@ -19,6 +21,20 @@ class Profile(AbstractUser, Base):
                                            null=True, db_index=True)
 
     followed_profiles = models.ManyToManyField("profile.Profile")
+
+    @property
+    def favorite_category(self):
+        if self.primary_category:
+            return CategorySerializer(self.primary_category).data
+        else:
+            return None
+
+    @property
+    def second_favorite_category(self):
+        if self.secondary_category:
+            return CategorySerializer(self.secondary_category).data
+        else:
+            return None
 
     @property
     def user_ids_i_follow(self):
