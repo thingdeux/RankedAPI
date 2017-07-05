@@ -15,6 +15,7 @@ from src.comment.models import Comment
 from src.categorization.models import Category
 from src.profile.serializers import LightProfileSerializer
 from .serializers import VideoSerializer
+from src.profile.models import Profile
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from django.core.exceptions import ObjectDoesNotExist
@@ -52,7 +53,12 @@ class VideoViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         # TODO: Paginate
-        queryset = Video.objects.order_by('-rank_total').filter(is_active=True, related_profile__id=request.user.id).select_related('related_profile')
+        profile = Profile.objects.get(pk=request.user.id)
+
+        # TODO: JJ - Query Check
+        queryset = Video.objects.filter(id__in=profile.user_ids_i_follow, is_active=True)\
+            .select_related('related_profile')
+
         serialized = VideoSerializer(queryset, many=True)
         return Response(status=200, data=serialized.data)
 

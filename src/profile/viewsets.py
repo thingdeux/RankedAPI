@@ -22,6 +22,10 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all().prefetch_related('primary_category', 'secondary_category')
     # TODO: Password update - should hash.
 
+    def list(self, request, *args, **kwargs):
+        error = {'description': 'Not Available'}
+        return Response(status=405, data=error)
+
     def update(self, request, *args, **kwargs):
         try:
             if int(kwargs['pk']) == request.user.id:
