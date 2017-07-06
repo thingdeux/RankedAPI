@@ -25,7 +25,7 @@ class SearchExploreAPICase(TestCase):
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/search/', format='json')
+        response = self.client.get('/api/v1/search/?category=1', format='json')
         self.assertEqual(response.status_code, 200)
 
 
