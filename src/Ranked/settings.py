@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'src.video',
     'src.ranking',
     'src.api',
-    'debug_toolbar',
+    'src.manager'
 ]
 
 REST_FRAMEWORK = {
@@ -185,7 +185,7 @@ LOGGING = {
             'class': 'logging.StreamHandler'
         },
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'debug.log'),
         },
@@ -214,3 +214,5 @@ if DEBUG:
 
 if 'amzn' in platform.uname()[2]:
     from .dev_settings import *
+else:
+    INSTALLED_APPS.append('debug_toolbar')

@@ -1,11 +1,16 @@
 # Django Imports
 from django.core.management.base import LabelCommand
 from django.db import transaction
+from django.utils import timezone
 # Standard Library Imports
 import os
 # Project Imports
 from src.video.models import Video
 from src.categorization.models import Category
+from src.manager.models import EnvironmentState
+import logging
+
+logger = logging.getLogger("cron.update_ranking")
 
 
 class Command(LabelCommand):
@@ -30,21 +35,38 @@ def _update_top_ten_rankings():
         3 Queries per Category
         Worst case 0(n + 4 + 10) where n == Categories
     """
-    with transaction.atomic():
-        for category in Category.objects.filter(is_active=True):
-            top_10_videos_for_category = Video.objects.filter(category__id=category.id,
-                                                              is_active=True).order_by('-rank_total').values_list()[:10]
+    state = EnvironmentState.get_environment_state()
 
-            top_10_ids = [x[0] for x in top_10_videos_for_category]
+    if not state.should_update_ranking:
+        return
 
-            # Kill previous top 10 rankings
-            Video.objects.filter(is_top_10=True, category__id=category.id)\
-                .update(is_top_10=False, top_10_ranking=None)
+    state.is_updating_ranking = True
+    state.save()
 
-            Video.objects.filter(id__in=top_10_ids).update(is_top_10=True)
+    try:
+        with transaction.atomic():
+            for category in Category.objects.filter(is_active=True):
+                top_10_videos_for_category = Video.objects.filter(category__id=category.id,
+                                                                  is_active=True).order_by('-rank_total').values_list()[:10]
 
-            updated_videos = Video.objects.filter(is_top_10=True, category__id=category.id).order_by('-rank_total')
-            for i, video in enumerate(updated_videos):
-                video.top_10_ranking = i + 1
-                video.save()
+                top_10_ids = [x[0] for x in top_10_videos_for_category]
+
+                # Kill previous top 10 rankings
+                Video.objects.filter(is_top_10=True, category__id=category.id)\
+                    .update(is_top_10=False, top_10_ranking=None)
+
+                Video.objects.filter(id__in=top_10_ids).update(is_top_10=True)
+
+                updated_videos = Video.objects.filter(is_top_10=True, category__id=category.id).order_by('-rank_total')
+                for i, video in enumerate(updated_videos):
+                    video.top_10_ranking = i + 1
+                    video.save()
+
+            state.is_updating_ranking = False
+            state.last_updated_ranking_scores = timezone.now()
+            state.save()
+    except Exception as error:
+        logger.error("Error Running Ranking Update Job {}".format(error))
+        state.is_updating_ranking = False
+        state.save()
 

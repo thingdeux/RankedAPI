@@ -1,6 +1,6 @@
 # Django Imports
 from src.Ranked.test import APITestBase
-from django.db import transaction
+from django.utils import timezone
 # Project Imports
 from src.video.management.commands.update_top_ten import _update_top_ten_rankings
 from src.video.models import Video
@@ -8,6 +8,11 @@ from src.profile.models import Profile
 from src.ranking.models import Ranking
 from src.comment.models import Comment
 from src.categorization.models import Category
+from src.manager.models import EnvironmentState
+# Standard LIbrary Imports
+from datetime import timedelta
+
+
 
 
 class VideoRankingAPICase(APITestBase):
@@ -504,6 +509,7 @@ class VideoCronCase(APITestBase):
 
         self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 0)
 
+        self.__reset_last_ranking_time()
         _update_top_ten_rankings()
 
         ranked_10_videos = Video.get_ranked_10_videos_queryset(self.primary_category.id)
@@ -516,7 +522,9 @@ class VideoCronCase(APITestBase):
         video_to_change.rank_total = 0
         video_to_change.save()
 
+        self.__reset_last_ranking_time()
         _update_top_ten_rankings()
+
         self.assertEqual(ranked_10_videos.first().id, 14)
         self.assertEqual(ranked_10_videos[1].id, 13)
         self.assertEqual(ranked_10_videos.first().top_10_ranking, 1)
@@ -530,6 +538,8 @@ class VideoCronCase(APITestBase):
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
         self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 0)
+
+        self.__reset_last_ranking_time()
         _update_top_ten_rankings()
 
         ranked_10_videos = Video.get_ranked_10_videos_queryset(self.primary_category.id)
@@ -543,14 +553,21 @@ class VideoCronCase(APITestBase):
         video_to_change.rank_total = 0
         video_to_change.save()
 
+        self.__reset_last_ranking_time()
         _update_top_ten_rankings()
+
         self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 10)
         self.assertEqual(Video.objects.filter(top_10_ranking=None).count(), 5)
 
 
+    def __reset_last_ranking_time(self):
+        state = EnvironmentState.get_environment_state()
+        state.last_updated_ranking_scores = timezone.now() - timedelta(minutes=60)
+        state.save()
+
     def setUp(self):
         APITestBase.setUp(self)
-
+        self.__reset_last_ranking_time()
         self.primary_category = Category(name="Dance", is_active=True)
         self.primary_category.save()
 

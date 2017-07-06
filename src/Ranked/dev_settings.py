@@ -1,6 +1,9 @@
 import os
 import platform
 
+
+ALLOWED_HOSTS = ['dev.goranked.com', 'demo.goranked.com']
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DEBUG = False
