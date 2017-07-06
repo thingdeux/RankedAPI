@@ -151,12 +151,15 @@ definitions:
       category:
         $ref: "#/definitions/Category"
       hashtag:
-        type: "string"
-        example: "Peace"
+        type: "array"
+        example: ['#Gems', '#Ballin', '#DabIsStillRelevant', '#Corporate']
+        items:
+          type: "string"
       likes:
         type: integer
         format: "int32"
         example: 12
+
       image_links:
         $ref: "#/definitions/VideoImageOptions"
       video_urls:
@@ -189,6 +192,11 @@ definitions:
       is_processing:
         type: "boolean"
         example: false
+      hashtag:
+        type: "array"
+        example: ['#Gems', '#Ballin', '#DabIsStillRelevant', '#Corporate']
+        items:
+          type: "string"
       comments:
         type: "array"
         items:

@@ -49,10 +49,10 @@ class VideoSerializer(serializers.Serializer):
     class Meta:
         fields = ['id', 'title', 'category', 'sub_category', 'is_featured',
                   'is_processing', 'rank_total', 'hashtag', 'mobile',
-                  'low', 'high', 'hd', 'is_active', 'thumbnail_large', 'thumbnail_small']
+                  'low', 'high', 'hd', 'is_active', 'thumbnail_large', 'thumbnail_small', 'top_10_ranking']
 
         read_only_fields = ('id', 'is_featured', 'is_processing', 'rank_total', 'is_active', 'processing_progress',
-                            'mobile', 'low', 'high', 'hd', 'thumbnail_large', 'thumbnail_small')
+                            'mobile', 'low', 'high', 'hd', 'thumbnail_large', 'thumbnail_small', 'top_10_ranking')
         model = Video
 
 
