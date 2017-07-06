@@ -1,22 +1,16 @@
-# DRF Imports
-from rest_framework.test import APIClient
-# 3rd Party Imports
-from oauthlib.common import generate_token
 # Django Imports
-from django.test import TestCase
-from django.utils import timezone
+from src.Ranked.test import APITestBase
+from django.db import transaction
 # Project Imports
+from src.video.management.commands.update_top_ten import _update_top_ten_rankings
 from src.video.models import Video
 from src.profile.models import Profile
 from src.ranking.models import Ranking
 from src.comment.models import Comment
 from src.categorization.models import Category
-from oauth2_provider.models import Application, AccessToken
-# Standard Library Imports
-from datetime import timedelta
 
 
-class VideoRankingAPICase(TestCase):
+class VideoRankingAPICase(APITestBase):
 
     def test_ranking_success(self):
         """
@@ -103,51 +97,15 @@ class VideoRankingAPICase(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def setUp(self):
-        self.client = APIClient()
-
-        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
-        self.test_profile.save()
-        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
-        self.test_profile2.save()
-        self.__create_auth_tokens()
+        APITestBase.setUp(self)
 
         self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True)
         self.video1.save()
         self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True)
         self.video2.save()
 
-    def __create_auth_tokens(self):
-        self.application = Application.objects.create(
-            client_type='Resource owner password-based',
-            authorization_grant_type=Application.CLIENT_PUBLIC,
-            client_secret='121212',
-            client_id='123123123',
-            redirect_uris='',
-            name='testAuth',
-            user=self.test_profile
-        )
-        self.application.save()
 
-        self.test_profile_token = AccessToken.objects.create(
-            user=self.test_profile,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile_token.save()
-
-        self.test_profile2_token = AccessToken.objects.create(
-            user=self.test_profile2,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile2.save()
-
-
-class VideoCommentAPICase(TestCase):
+class VideoCommentAPICase(APITestBase):
 
     def test_comment_success(self):
         """
@@ -283,51 +241,15 @@ class VideoCommentAPICase(TestCase):
         self.assertEqual(len(comments_from_response), 2)
 
     def setUp(self):
-        self.client = APIClient()
-
-        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
-        self.test_profile.save()
-        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
-        self.test_profile2.save()
-        self.__create_auth_tokens()
+        APITestBase.setUp(self)
 
         self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True)
         self.video1.save()
         self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True)
         self.video2.save()
 
-    def __create_auth_tokens(self):
-        self.application = Application.objects.create(
-            client_type='Resource owner password-based',
-            authorization_grant_type=Application.CLIENT_PUBLIC,
-            client_secret='121212',
-            client_id='123123123',
-            redirect_uris='',
-            name='testAuth',
-            user=self.test_profile
-        )
-        self.application.save()
 
-        self.test_profile_token = AccessToken.objects.create(
-            user=self.test_profile,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile_token.save()
-
-        self.test_profile2_token = AccessToken.objects.create(
-            user=self.test_profile2,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile2.save()
-
-
-class VideoAPITopListCase(TestCase):
+class VideoAPITopListCase(APITestBase):
     def test_image_links_in_video_list_response(self):
         """
         For Video List API Responses image_links should be available
@@ -410,13 +332,7 @@ class VideoAPITopListCase(TestCase):
         self.assertEqual(len(response.data), 2)
 
     def setUp(self):
-        self.client = APIClient()
-
-        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
-        self.test_profile.save()
-        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
-        self.test_profile2.save()
-        self.__create_auth_tokens()
+        APITestBase.setUp(self)
 
         self.primary_category = Category(name="Dance")
         self.primary_category.save()
@@ -434,37 +350,8 @@ class VideoAPITopListCase(TestCase):
         self.video3 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=False,
                             category=self.primary_category)
 
-    def __create_auth_tokens(self):
-        self.application = Application.objects.create(
-            client_type='Resource owner password-based',
-            authorization_grant_type=Application.CLIENT_PUBLIC,
-            client_secret='121212',
-            client_id='123123123',
-            redirect_uris='',
-            name='testAuth',
-            user=self.test_profile
-        )
-        self.application.save()
 
-        self.test_profile_token = AccessToken.objects.create(
-            user=self.test_profile,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile_token.save()
-
-        self.test_profile2_token = AccessToken.objects.create(
-            user=self.test_profile2,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile2.save()
-
-class VideoAPICasePatch(TestCase):
+class VideoAPICasePatch(APITestBase):
     def test_video_patch_should_accept_title(self):
         """
         You should be able to set 'title' via /videos/<id>/ PATCH
@@ -523,15 +410,8 @@ class VideoAPICasePatch(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-
     def setUp(self):
-        self.client = APIClient()
-
-        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
-        self.test_profile.save()
-        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
-        self.test_profile2.save()
-        self.__create_auth_tokens()
+        APITestBase.setUp(self)
 
         self.primary_category = Category(name="Dance")
         self.primary_category.save()
@@ -547,37 +427,8 @@ class VideoAPICasePatch(TestCase):
                             category=self.primary_category)
         self.video2.save()
 
-    def __create_auth_tokens(self):
-        self.application = Application.objects.create(
-            client_type='Resource owner password-based',
-            authorization_grant_type=Application.CLIENT_PUBLIC,
-            client_secret='121212',
-            client_id='123123123',
-            redirect_uris='',
-            name='testAuth',
-            user=self.test_profile
-        )
-        self.application.save()
 
-        self.test_profile_token = AccessToken.objects.create(
-            user=self.test_profile,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile_token.save()
-
-        self.test_profile2_token = AccessToken.objects.create(
-            user=self.test_profile2,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile2.save()
-
-class VideoAPIVideosListCase(TestCase):
+class VideoAPIVideosListCase(APITestBase):
     def test_videos_endpoint_contains_personal_results(self):
         """
         /Videos/ endpoint should return vides from people he/she follows
@@ -623,15 +474,7 @@ class VideoAPIVideosListCase(TestCase):
         self.assertEqual(len(response.data), 0)
 
     def setUp(self):
-        self.client = APIClient()
-
-        self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
-        self.test_profile.save()
-        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
-        self.test_profile2.save()
-        self.test_profile3 = Profile(username="test_user3", password="testpass", email="test3@user.com")
-        self.test_profile3.save()
-        self.__create_auth_tokens()
+        APITestBase.setUp(self)
 
         self.primary_category = Category(name="Dance")
         self.primary_category.save()
@@ -650,32 +493,68 @@ class VideoAPIVideosListCase(TestCase):
                             category=self.primary_category)
         self.video3.save()
 
-    def __create_auth_tokens(self):
-        self.application = Application.objects.create(
-            client_type='Resource owner password-based',
-            authorization_grant_type=Application.CLIENT_PUBLIC,
-            client_secret='121212',
-            client_id='123123123',
-            redirect_uris='',
-            name='testAuth',
-            user=self.test_profile
-        )
-        self.application.save()
 
-        self.test_profile_token = AccessToken.objects.create(
-            user=self.test_profile,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile_token.save()
+class VideoCronCase(APITestBase):
+    def test_ranking_update_job_success(self):
+        """
+        This job will run periodically and update the is_top_10 ranked property on all video items.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        self.test_profile2_token = AccessToken.objects.create(
-            user=self.test_profile2,
-            scope='read write',
-            expires=timezone.now() + timedelta(seconds=600),
-            token=generate_token(),
-            application=self.application
-        )
-        self.test_profile2.save()
+        self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 0)
+
+        _update_top_ten_rankings()
+
+        ranked_10_videos = Video.get_ranked_10_videos_queryset(self.primary_category.id)
+
+        self.assertEqual(ranked_10_videos.count(), 10)
+        self.assertEqual(ranked_10_videos.first().id, 15)
+        self.assertEqual(ranked_10_videos[1].id, 14)
+
+        video_to_change = ranked_10_videos[0]
+        video_to_change.rank_total = 0
+        video_to_change.save()
+
+        _update_top_ten_rankings()
+        self.assertEqual(ranked_10_videos.first().id, 14)
+        self.assertEqual(ranked_10_videos[1].id, 13)
+        self.assertEqual(ranked_10_videos.first().top_10_ranking, 1)
+        self.assertEqual(ranked_10_videos[1].top_10_ranking, 2)
+
+    def test_ranking_update_job_removes_other_rankings(self):
+        """
+        After the ranking update job there should only ever be 10 top ranked videos.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 0)
+        _update_top_ten_rankings()
+
+        ranked_10_videos = Video.get_ranked_10_videos_queryset(self.primary_category.id)
+        video_to_change = ranked_10_videos[0]
+        video_to_change.rank_total = 0
+        video_to_change.save()
+        video_to_change = ranked_10_videos[1]
+        video_to_change.rank_total = 0
+        video_to_change.save()
+        video_to_change = ranked_10_videos[2]
+        video_to_change.rank_total = 0
+        video_to_change.save()
+
+        _update_top_ten_rankings()
+        self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 10)
+        self.assertEqual(Video.objects.filter(top_10_ranking=None).count(), 5)
+
+
+    def setUp(self):
+        APITestBase.setUp(self)
+
+        self.primary_category = Category(name="Dance", is_active=True)
+        self.primary_category.save()
+
+        for i in range(0, 15):
+            new_vid = Video(related_profile=self.test_profile, title="Video{}".format(str(i)), is_active=True,
+                            rank_total=i, category=self.primary_category)
+            new_vid.save()

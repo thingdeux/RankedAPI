@@ -5,16 +5,17 @@ from src.profile.mixins import ProfileRelatable
 from src.categorization.mixins import MultiCategoryRelatable
 
 
-class Category(Base, Hashtagable):
-    """
-    Category and sub-category for videos / pics... etc
-
-    A Sub-Category will be stored on the same table but will have a parent_category relationship.
-    """
-
-    name = models.CharField(max_length=256, null=False, blank=False)
-    # Any Category can have a subcategory
-    parent_category = models.ForeignKey('self', default=None, related_name='parent')
+# class Category(Base, Hashtagable, Activatable):
+#     """
+#     Category and sub-category for videos / pics... etc
+#
+#     A Sub-Category will be stored on the same table but will have a parent_category relationship.
+#     """
+#
+#     name = models.CharField(max_length=256, null=False, blank=False)
+#     # Any Category can have a subcategory
+#     parent_category = models.ForeignKey('self', default=None, related_name='parent')
+#
 
 
 class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, CustomFieldStorable,
@@ -27,7 +28,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
         return "{}'s video {}".format(self.related_profile, self.id)
 
     @staticmethod
-    def get_ranked_10_videos_queryset(category, title_filter: str):
+    def get_ranked_10_videos_queryset(category=None, title_filter=None):
         """
         Get videos queryset for videos that have is_ranked_10 flag set.
 

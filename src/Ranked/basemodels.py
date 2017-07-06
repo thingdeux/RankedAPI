@@ -1,8 +1,10 @@
+# Django Imports
 from django.db import models
 # Standard Library imports
 import json
 import uuid
 import boto3
+
 
 
 class Base(models.Model):
@@ -106,6 +108,7 @@ class Rankable(models.Model):
     """
     rank_total = models.IntegerField(default=0)
     is_top_10 = models.BooleanField(default=False, db_index=True)
+    top_10_ranking = models.IntegerField(default=None, null=True)
 
     class Meta:
         abstract = True
