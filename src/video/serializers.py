@@ -13,12 +13,16 @@ class VideoSerializer(serializers.Serializer):
     is_active = serializers.BooleanField(read_only=True)
 
     category = serializers.SerializerMethodField()
-    # sub_category = serializers.SerializerMethodField()
 
-    hashtag = serializers.CharField()
+    hashtag = serializers.SerializerMethodField()
     image_links = serializers.SerializerMethodField()
     video_urls = serializers.SerializerMethodField()
     uploaded_by = serializers.SerializerMethodField(read_only=True)
+
+    def get_hashtag(self, model):
+        if model.hashtag:
+            return model.hashtag.split(',')
+        return None
 
     def get_uploaded_by(self, model):
         return LightProfileSerializer(model.related_profile).data
@@ -27,12 +31,6 @@ class VideoSerializer(serializers.Serializer):
         if model.category:
             return CategorySerializer(model.category).data
         return None
-
-    # Categories now have nested parents. No need for this.
-    # def get_sub_category(self, model):
-    #     if model.sub_category:
-    #         return CategorySerializer(model.sub_category).data
-    #     return None
 
     def get_video_urls(self, model):
         return {
@@ -62,11 +60,17 @@ class SearchVideoSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField()
     rank_total = serializers.IntegerField(read_only=True)
-    hashtag = serializers.CharField()
+    hashtag = serializers.SerializerMethodField()
     is_featured = serializers.BooleanField()
     image_links = serializers.SerializerMethodField()
     video_urls = serializers.SerializerMethodField()
     result_type = serializers.SerializerMethodField()
+
+    def get_hashtag(self, model):
+        if model.hashtag:
+            return model.hashtag.split(',')
+        return None
+
 
     def get_result_type(self, model):
         return "Video"

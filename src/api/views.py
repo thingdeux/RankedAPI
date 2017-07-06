@@ -33,6 +33,10 @@ def search(request, **kwargs):
     category_id = request.query_params.get('category', False)
     name = request.query_params.get('name', False)
 
+    if name and len(name) < 4:
+        error = {'description': 'Name cannot be shorter than 3 characters.'}
+        return Response(status=400, data=error)
+
     if route == SEARCH_ROUTE_EXPLORE:
         if not category_id and not name:
             error = {'description': 'Category or name required'}
@@ -41,9 +45,9 @@ def search(request, **kwargs):
         dict_to_return['videos'] = videos
         dict_to_return['profiles'] = profiles
     elif route == SEARCH_ROUTE_RANKED_10:
-        dict_to_return['videos'] = Video.get_ranked_10_videos_queryset(name)
+        dict_to_return['videos'] = VideoSerializer(Video.get_ranked_10_videos_queryset(category_id, name), many=True).data
     elif route == SEARCH_ROUTE_TRENDING:
-        dict_to_return['videos'] = Video.get_ranked_trending_videos_queryset()
+        dict_to_return['videos'] = VideoSerializer(Video.get_ranked_trending_videos_queryset(), many=True).data
     elif route == SEARCH_ROUTE_TRENDSETTERS:
         dict_to_return['profiles'] = __get_trendsetters()
     else:
@@ -77,9 +81,9 @@ def __get_explore_search_data(filter_phrase, category_id):
     base_queryset = Video.objects.filter(is_active=True)
 
     if category_id:
-        base_queryset.filter(category__id=category_id).select_related('category').select_related('related_profile')
+        base_queryset = base_queryset.filter(category__id=category_id).select_related('category').select_related('related_profile')
     if filter_phrase:
-        base_queryset.filter(title__icontains=str(filter_phrase))
+        base_queryset = base_queryset.filter(title__icontains=str(filter_phrase))
     return VideoSerializer(base_queryset[:50], many=True).data
 
 def __get_profile_by_name(name):

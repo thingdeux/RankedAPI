@@ -27,7 +27,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
         return "{}'s video {}".format(self.related_profile, self.id)
 
     @staticmethod
-    def get_ranked_10_videos_queryset(title_filter: str):
+    def get_ranked_10_videos_queryset(category, title_filter: str):
         """
         Get videos queryset for videos that have is_ranked_10 flag set.
 
@@ -38,9 +38,11 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
             .filter(is_top_10=True, is_active=True)\
             .select_related('related_profile').select_related('category')
 
+        if category:
+            base_queryset = base_queryset.filter(category__id=category)
+
         if title_filter:
-            # Note - tablescan....yuck
-            base_queryset.filter(title__icontains='{}'.format(title_filter.lower()))
+            base_queryset = base_queryset.filter(title__icontains=title_filter.lower())[:50]
 
         return base_queryset
 

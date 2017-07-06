@@ -1239,11 +1239,10 @@ paths:
       - **category** and **name** are both optional query parameters but at least one must be filled out.
 
       - If the search phrase contains a # only videos will be returned.
-
       - If only category is populated - only videos will be returned.
-
       - If only name is populated Profiles will be queried by username and videos filtered by title
 
+      ### Note: Name cannot be less than 3 characters
       "
       operationId: "get_search_explore_results"
       tags:
@@ -1294,6 +1293,8 @@ paths:
       - If only category is populated - only videos will be returned.
       - If only name is populated the results will be filtered by titles that contain the phrase as well.
       - If both are populated results from a specific category with a specific title will be returned.
+
+      ### Note: Name cannot be less than 3 characters
       "
       operationId: "get_search_results"
       tags:
@@ -1337,7 +1338,7 @@ paths:
     get:
       summary: "Search for Trend Setters"
       description: "
-      # Search for Profiles by Category.
+      # Search for Trend Setting Profiles.
 
       Note: Documentation purposes only - this will not work for demo and will return random users.
       "

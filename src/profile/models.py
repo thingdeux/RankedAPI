@@ -60,8 +60,10 @@ class Profile(AbstractUser, Base):
     def get_trend_setters_queryset():
         """
         Get videos queryset for videos that have is_ranked_10 flag set.
-        # TODO: Make this work - is mocked for demo
+
         """
+        # TODO: Make this work - is mocked for demo
+        # TODO: Choose some useful profiles or heck, just randomize
         return Profile.objects.filter(id__in=[1,3,55], is_active=True)\
             .select_related('primary_category').select_related('secondary_category')\
             .prefetch_related('followed_profiles')\
