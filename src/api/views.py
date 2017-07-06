@@ -78,10 +78,13 @@ def __get_videos_by_category(category_id):
         return None
 
 def __get_explore_search_data(filter_phrase, category_id):
-    base_queryset = Video.objects.filter(is_active=True)
+    base_queryset = Video.objects.filter(is_active=True).select_related('category')\
+        .select_related('related_profile').select_related('category__parent_category')\
+        .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category')\
+        .select_related('related_profile__secondary_category').select_related('related_profile__secondary_category__parent_category')\
 
     if category_id:
-        base_queryset = base_queryset.filter(category__id=category_id).select_related('category').select_related('related_profile')
+        base_queryset = base_queryset.filter(category__id=category_id)
     if filter_phrase:
         base_queryset = base_queryset.filter(title__icontains=str(filter_phrase))
     return VideoSerializer(base_queryset[:50], many=True).data

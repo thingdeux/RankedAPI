@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'src.video',
     'src.ranking',
     'src.api',
-    'src.manager'
+    'src.manager',
+    'debug_toolbar'
 ]
 
 REST_FRAMEWORK = {
@@ -77,6 +78,7 @@ OAUTH2_PROVIDER = {
 }
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -84,7 +86,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -214,5 +215,3 @@ if DEBUG:
 
 if 'amzn' in platform.uname()[2]:
     from .dev_settings import *
-else:
-    INSTALLED_APPS.append('debug_toolbar')

@@ -15,6 +15,7 @@ Including another URLconf
 """
 # Django Imports
 from django.conf.urls import url, include
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 # Project Imports
@@ -23,9 +24,14 @@ from src.profile.models import Profile
 
 admin.site.register(Profile, UserAdmin)
 admin.autodiscover()
-import debug_toolbar
+
 urlpatterns = [
-    #url(r'^debug/', include(debug_toolbar.urls)),
     url(r'^api/v1/', include(api_urls)),
     url(r'^josh/', admin.site.urls)
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug/', include(debug_toolbar.urls)),
+    ] + urlpatterns

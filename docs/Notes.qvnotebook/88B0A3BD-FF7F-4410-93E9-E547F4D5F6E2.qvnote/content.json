@@ -18,7 +18,7 @@
     {
       "type": "code",
       "language": "python",
-      "data": "top_ten2 = Video.objects.filter(is_active=True).order_by('-rank_total')[:10].values_list('id')\ntop_ten\n<QuerySet [<Video: LisaParker00's video 563>, <Video: LisaParker00's video 557>, <Video: LisaParker00's video 562>, <Video: LisaParker00's video 558>, <Video: LisaParker00's video 556>, <Video: LisaParker00's video 560>, <Video: LisaParker00's video 564>, <Video: LisaParker00's video 561>, <Video: LisaParker00's video 555>, <Video: MarcelStamenov's video 9>]>\ntop_ten2 = Video.objects.filter(is_active=True).order_by('-rank_total').values_list('id')[:10]\ntop_ten2\n<QuerySet [(563,), (557,), (562,), (558,), (556,), (560,), (564,), (561,), (555,), (9,)]>\ntop_ten2 = Video.objects.filter(is_active=True).order_by('-rank_total').values('id')[:10]\ntop_ten\n<QuerySet [<Video: LisaParker00's video 563>, <Video: LisaParker00's video 557>, <Video: LisaParker00's video 562>, <Video: LisaParker00's video 558>, <Video: LisaParker00's video 556>, <Video: LisaParker00's video 560>, <Video: LisaParker00's video 564>, <Video: LisaParker00's video 561>, <Video: LisaParker00's video 555>, <Video: MarcelStamenov's video 9>]>\ntop_ten2\n<QuerySet [{'id': 563}, {'id': 557}, {'id': 562}, {'id': 558}, {'id': 556}, {'id': 560}, {'id': 564}, {'id': 561}, {'id': 555}, {'id': 9}]>\ntop_ten2 = Video.objects.filter(is_active=True).order_by('-rank_total').values_list('id')[:10]\ntop_ten2 = list(top_ten2)\ntop_ten2\n[(563,), (557,), (562,), (558,), (556,), (560,), (564,), (561,), (555,), (9,)]\nVideo.objects.filter(id__in=top_ten2)\n"
+      "data": "from src.api.views import __get_explore_search_data\n\nblah = __get_explore_search_data(None, 33)"
     }
   ]
 }

@@ -20,6 +20,7 @@ from src.profile.views import me, AvatarUploadView
 from src.video.views import GenerateUploadView, sns_error, sns_success
 from src.video.viewsets import VideoViewSet, VideoTopView
 from src.categorization.viewsets import CategoryViewSet
+from django.conf import settings
 from .views import search
 
 router = routers.DefaultRouter()
