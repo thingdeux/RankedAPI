@@ -36,6 +36,10 @@ urlpatterns = [
     url(r'^videos/processing/error/$', sns_error),
     url(r'^videos/upload/$', GenerateUploadView.as_view()),
     url(r'^videos/top/$', VideoTopView.as_view()),
-    url(r'^search/$', search),
+    url(r'^search/explore/$', search, {'route': 'explore'}),
+    url(r'^search/ranked10/$', search, {'route': 'ranked10'}),
+    url(r'^search/trending/$', search, {'route': 'trending'}),
+    url(r'^search/trendsetters/$', search, {'route': 'trendsetters'}),
+    url(r'^search/$', search, {'route': 'base'}),
     url(r'^', include(router.urls)),
 ]

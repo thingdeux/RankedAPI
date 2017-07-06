@@ -16,36 +16,60 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 
 SIX_HOURS_IN_SECONDS = 21600
 
-@api_view(('GET',))
-@method_decorator(cache_page(SIX_HOURS_IN_SECONDS))
-@permission_classes((IsAuthenticated, TokenHasReadWriteScope))
-def search(request):
-    """
-    /Search Endpoint implementation.  This endpoint takes 2 query parameters
-      category: <int>   -- Category ID of videos to query.
-      name: <string>    -- Username to query.
+# Route "Enums"
+SEARCH_ROUTE_BASE = "base"
+SEARCH_ROUTE_EXPLORE = "explore"
+SEARCH_ROUTE_RANKED_10 = "ranked10"
+SEARCH_ROUTE_TRENDING = "trending"
+SEARCH_ROUTE_TRENDSETTERS = "trendsetters"
 
-    This endpoint requires either category or name be filled out.
-    """
+@api_view(('GET',))
+@permission_classes((IsAuthenticated, TokenHasReadWriteScope))
+def search(request, **kwargs):
     dict_to_return = {
-        'videos': [], 'profiles': []
+        'videos': None, 'profiles': None
     }
-    category = request.query_params.get('category', False)
+    route = kwargs.get('route', 'base')
+    category_id = request.query_params.get('category', False)
     name = request.query_params.get('name', False)
 
-    if category:
-        # TODO: Optimize Query and set cache keys
-        video_results = Video.objects.filter(category__id=category).select_related('category')
-        dict_to_return['videos'] = VideoSerializer(video_results, many=True).data
+    if route == SEARCH_ROUTE_EXPLORE:
+        # If the name begins with a hashtag (#) then don't include profile results.
+        if name:
+            if name[0] != "#":
+                dict_to_return['profiles'] = __get_profile_by_name(name)
+            dict_to_return['videos'] = __get_explore_search_data(name, category_id)
 
-    if name:
-        # TODO: Optimize Query and set cache keys
-        profile_results = Profile.objects.filter(username__contains=str(name).lower())
-        dict_to_return['profiles'] = LightProfileSerializer(profile_results, many=True).data
+    elif route == SEARCH_ROUTE_RANKED_10:
+        dict_to_return['videos'] = Video.get_ranked_10_videos_queryset(name)
+    elif route == SEARCH_ROUTE_TRENDING:
+        dict_to_return['videos'] = Video.get_ranked_trending_videos_queryset()
+    elif route == SEARCH_ROUTE_TRENDSETTERS:
+        dict_to_return['profiles'] = Profile.get_trend_setters_queryset()
+    else:
+        # Implicit 'base' route - which is category only
+        if not name:
+            error = {'description': 'Category required'}
+            return Response(status=400, data=error)
+        dict_to_return['videos'] = __get_videos_by_category()
 
-    if not category and not name:
-        error = {'description': 'You must include either category or name query params'}
-        return Response(status=400, data=error)
     return Response(status=200, data=dict_to_return)
 
+def __get_videos_by_category(category_id):
+    if category_id:
+        return Video.objects.filter(category__id=category_id, is_active=True).select_related('category')\
+            .select_related('related_profile')
+    else:
+        return None
 
+def __get_explore_search_data(filter_phrase=None, category_id=None):
+    base_queryset = Video.objects.filter(is_active=True)
+
+    if category_id:
+        base_queryset.filter(category__id=category_id).select_related('category').select_related('related_profile')
+    if filter_phrase:
+        base_queryset.filter(title__icontains=str(filter_phrase))
+    return VideoSerializer(base_queryset, many=True).data
+
+def __get_profile_by_name(name):
+    return LightProfileSerializer(Profile.objects.filter(username__icontains=name, is_active=True), many=True).data

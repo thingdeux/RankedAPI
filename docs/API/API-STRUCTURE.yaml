@@ -119,7 +119,6 @@ definitions:
         type: "object"
         $ref: '#/definitions/Category'
 
-
   UserList:
     type: "object"
     properties:
@@ -390,7 +389,6 @@ definitions:
         type: "object"
         description: "If a sub-category - name of parent category if not, null"
         $ref: '#/definitions/ParentCategory'
-
 
 
 paths:

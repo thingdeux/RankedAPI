@@ -7,7 +7,7 @@
     },
     {
       "type": "markdown",
-      "data": "# Contextual Search\n------\nThe content to be searched for will change based on the selected tab\n\n\n### Explore\n\n**Results**: Mixture of Profile / Video\n**Notes**: \n  - If the search phrase contains a \\# at the beginning - then limit the results to videos.\n\n### Trending\n\n/list/top/\n\n### Ranked 10\n\n**Results**: Videos (Limit to videos with the is\\_ranked\\_ten flag set to True)\n**Note**: \n- is_ranked_ten will be faked for the alpha.\n\n### ‘Trend Setters’:\n\n**Results**: Profiles (Profiles with videos that are highly ranked)\n\n**Notes**: \n  - This won’t be working for the alpha."
+      "data": "# Contextual Search\n------\nThe content to be searched for will change based on the selected tab\n\n\n### Explore\n\n**Results**: Mixture of Profile / Video\n**Notes**: \n  - If the search phrase contains a \\# at the beginning - then limit the results to videos.\n\n### Trending\n\n/list/top/\n\n### Ranked 10\n\n**Results**: Videos (Limit to videos with the is\\_ranked\\_ten flag set to True)\n**Note**: \n- is_ranked_ten will be faked for the alpha. (Maybe)\n\n### ‘Trend Setters’:\n\n**Results**: Profiles (Profiles with videos that are highly ranked)\n\n**Notes**: \n  - This won’t be working for the alpha."
     },
     {
       "type": "text",

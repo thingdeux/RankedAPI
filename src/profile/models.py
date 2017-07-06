@@ -55,3 +55,15 @@ class Profile(AbstractUser, Base):
     def stop_following_user(self, user_id):
         profile_to_stop_following = Profile.objects.get(id=user_id)
         self.followed_profiles.remove(profile_to_stop_following)
+
+    @staticmethod
+    def get_trend_setters_queryset():
+        """
+        Get videos queryset for videos that have is_ranked_10 flag set.
+        # TODO: Make this work - is mocked for demo
+        """
+        return Profile.objects.filter(id__in=[1,3,55], is_active=True)\
+            .select_related('primary_category').select_related('secondary_category')\
+            .prefetch_related('followed_profiles')\
+            .select_related('followed_profiles__primary_category')\
+            .select_related('followed_profiles__secondary_category')
