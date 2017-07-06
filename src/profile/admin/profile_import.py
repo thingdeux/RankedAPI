@@ -95,7 +95,7 @@ class ProfileImporter:
 
     @transaction.atomic()
     def __create_or_update_videos(self):
-        for profile in self.django_profiles:
+        for username, profile in self.django_profiles.items():
             try:
                 imported_profile = self.profiles[profile.username]
                 _ = [self.__add_or_update_video(video, profile) for video in imported_profile.videos]
@@ -118,7 +118,7 @@ class ProfileImporter:
             self.__generate_demo_urls(video, imported_video.s3filename)
 
             # TODO: Set this to True when Taylor is done uploading the videos
-            video.is_active = False
+            video.is_active = True
             video.is_processing = False
             video.save()
 
