@@ -132,7 +132,7 @@ class ProfileImporter:
         video.low = 'http://{}/{}.webm'.format("videos.goranked.com", filename.split('.')[0])
         filename_parsed = filename.split('.')[0]
         video.thumbnail_large = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)
-        video.thumbnail_small = "{}/{}-00002.png".format(STATIC_URL, filename_parsed)
+        video.thumbnail_small = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)
 
     def __add_category_to_video(self, category_string, video):
         # Make successive category acquisition faster by storing results in a local dictionary.

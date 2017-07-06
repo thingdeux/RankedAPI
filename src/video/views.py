@@ -88,7 +88,7 @@ class GenerateUploadView(APIView):
         try:
             filename_parsed = filename.split('.')[0]
             return ("{}/{}-00001.png".format(STATIC_URL, filename_parsed),
-                    "{}/{}-00002.png".format(STATIC_URL, filename_parsed))
+                    "{}/{}-00001.png".format(STATIC_URL, filename_parsed))
         except IndexError:
             return ("", "")
 
