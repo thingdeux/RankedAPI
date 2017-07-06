@@ -14,19 +14,18 @@ logger = logging.getLogger("cron.update_ranking")
 
 
 class Command(LabelCommand):
-    help = "Manually import and update profiles/videos"
+    help = "Update Top_10 rankings for each Category"
 
     def handle(self, *args, **options):
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.Ranked.settings")
-        try:
-            self.stdout.write("Importing / Profiles and Videos", ending='\n')
-            _update_top_ten_rankings()
-        except IndexError:
-            self.stdout.write("No command provided, available options: 'import' / 'wipe'", ending='\n')
+        self.stdout.write("Updating Video Rankings!", ending='\n')
+        logger.info("Updating Video Rankings!")
+
+        _update_top_ten_rankings()
+        logger.info("Done Updating Video Rankings!")
 
 
-# HELPER METHODS
-
+# HELPER FUNCTIONS
 def _update_top_ten_rankings():
     """
     Update the ranking for videos in each category. To be run as a cron (or celery) job.
@@ -44,8 +43,12 @@ def _update_top_ten_rankings():
     state.save()
 
     try:
+        logger.info("Processing Video Ranking Updates")
+
         with transaction.atomic():
             for category in Category.objects.filter(is_active=True):
+                logger.info("Processing Video Ranking for {}".format(category.name))
+
                 top_10_videos_for_category = Video.objects.filter(category__id=category.id,
                                                                   is_active=True).order_by('-rank_total').values_list()[:10]
 
@@ -69,4 +72,3 @@ def _update_top_ten_rankings():
         logger.error("Error Running Ranking Update Job {}".format(error))
         state.is_updating_ranking = False
         state.save()
-
