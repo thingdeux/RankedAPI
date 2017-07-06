@@ -35,7 +35,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
         :return: Queryset
         """
         base_queryset = Video.objects.order_by('-rank_total')\
-            .filter(is_ranked_10=True, is_active=True)\
+            .filter(is_top_10=True, is_active=True)\
             .select_related('related_profile').select_related('category')
 
         if title_filter:

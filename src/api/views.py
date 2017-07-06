@@ -34,42 +34,56 @@ def search(request, **kwargs):
     name = request.query_params.get('name', False)
 
     if route == SEARCH_ROUTE_EXPLORE:
-        # If the name begins with a hashtag (#) then don't include profile results.
-        if name:
-            if name[0] != "#":
-                dict_to_return['profiles'] = __get_profile_by_name(name)
-            dict_to_return['videos'] = __get_explore_search_data(name, category_id)
-
+        if not category_id and not name:
+            error = {'description': 'Category or name required'}
+            return Response(status=400, data=error)
+        videos, profiles = __get_explore_data(name, category_id)
+        dict_to_return['videos'] = videos
+        dict_to_return['profiles'] = profiles
     elif route == SEARCH_ROUTE_RANKED_10:
         dict_to_return['videos'] = Video.get_ranked_10_videos_queryset(name)
     elif route == SEARCH_ROUTE_TRENDING:
         dict_to_return['videos'] = Video.get_ranked_trending_videos_queryset()
     elif route == SEARCH_ROUTE_TRENDSETTERS:
-        dict_to_return['profiles'] = Profile.get_trend_setters_queryset()
+        dict_to_return['profiles'] = __get_trendsetters()
     else:
         # Implicit 'base' route - which is category only
-        if not name:
+        if not category_id:
             error = {'description': 'Category required'}
             return Response(status=400, data=error)
-        dict_to_return['videos'] = __get_videos_by_category()
+        dict_to_return['videos'] = __get_videos_by_category(category_id)
 
     return Response(status=200, data=dict_to_return)
 
+def __get_explore_data(name, category_id):
+    # If the name begins with a hashtag (#) then don't include profile results.
+    profiles = None
+    if name:
+        if name[0] != "#":
+            profiles = __get_profile_by_name(name)
+    videos = __get_explore_search_data(name, category_id)
+    return videos, profiles
+
+
 def __get_videos_by_category(category_id):
     if category_id:
-        return Video.objects.filter(category__id=category_id, is_active=True).select_related('category')\
+        results = Video.objects.filter(category__id=category_id, is_active=True).select_related('category')\
             .select_related('related_profile')
+        return VideoSerializer(results, many=True).data
     else:
         return None
 
-def __get_explore_search_data(filter_phrase=None, category_id=None):
+def __get_explore_search_data(filter_phrase, category_id):
     base_queryset = Video.objects.filter(is_active=True)
 
     if category_id:
         base_queryset.filter(category__id=category_id).select_related('category').select_related('related_profile')
     if filter_phrase:
         base_queryset.filter(title__icontains=str(filter_phrase))
-    return VideoSerializer(base_queryset, many=True).data
+    return VideoSerializer(base_queryset[:50], many=True).data
 
 def __get_profile_by_name(name):
     return LightProfileSerializer(Profile.objects.filter(username__icontains=name, is_active=True), many=True).data
+
+def __get_trendsetters():
+    return LightProfileSerializer(Profile.get_trend_setters_queryset(), many=True).data
