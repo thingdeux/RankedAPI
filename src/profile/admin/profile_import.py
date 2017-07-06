@@ -54,6 +54,7 @@ class ProfileImporter:
     def create_update_profiles(self):
         self.__create_or_update_accounts()
         self.__update_followed_profiles()
+        self.__update_followers_counts()
 
     def create_update_videos(self):
         self.__create_or_update_videos()
@@ -174,6 +175,15 @@ class ProfileImporter:
             imported_profile = self.profiles[username]
             for profile_string in imported_profile.following_string_array:
                 profile.followed_profiles.add(self.django_profiles[profile_string])
+
+            profile.following_count = profile.followed_profiles.count()
+            profile.save()
+
+    @transaction.atomic()
+    def __update_followers_counts(self):
+        for username, profile in self.django_profiles.items():
+            followers_count = Profile.objects.filter(followed_profiles__id=profile.id).count()
+            profile.followers_count = followers_count or 0
             profile.save()
 
     def __add_category_to_profile(self, category_string, profile, is_primary=True):
