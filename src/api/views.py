@@ -1,7 +1,3 @@
-# Django Imports
-from django.core.exceptions import ObjectDoesNotExist
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 # DRF Imports
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -13,6 +9,7 @@ from src.video.models import Video
 from src.video.serializers import VideoSerializer
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
+from silk.profiling.profiler import silk_profile
 
 SIX_HOURS_IN_SECONDS = 21600
 
@@ -59,6 +56,7 @@ def search(request, **kwargs):
 
     return Response(status=200, data=dict_to_return)
 
+@silk_profile(name="__get_explore_data")
 def __get_explore_data(name, category_id):
     # If the name begins with a hashtag (#) then don't include profile results.
     profiles = None
@@ -68,7 +66,7 @@ def __get_explore_data(name, category_id):
     videos = __get_explore_search_data(name, category_id)
     return videos, profiles
 
-
+@silk_profile(name="__get_videos_by_category")
 def __get_videos_by_category(category_id):
     if category_id:
         results = Video.objects.filter(category__id=category_id, is_active=True).select_related('category')\
@@ -77,6 +75,7 @@ def __get_videos_by_category(category_id):
     else:
         return None
 
+@silk_profile(name="__get_explore_search_data")
 def __get_explore_search_data(filter_phrase, category_id):
     base_queryset = Video.objects.filter(is_active=True).select_related('category')\
         .select_related('related_profile').select_related('category__parent_category')\
@@ -89,8 +88,10 @@ def __get_explore_search_data(filter_phrase, category_id):
         base_queryset = base_queryset.filter(title__icontains=str(filter_phrase))
     return VideoSerializer(base_queryset[:50], many=True).data
 
+@silk_profile(name="__get_profile_by_name")
 def __get_profile_by_name(name):
     return LightProfileSerializer(Profile.objects.filter(username__icontains=name, is_active=True), many=True).data
 
+@silk_profile(name="__get_trendsetters")
 def __get_trendsetters():
     return LightProfileSerializer(Profile.get_trend_setters_queryset(), many=True).data

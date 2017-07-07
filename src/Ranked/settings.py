@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'src.ranking',
     'src.api',
     'src.manager',
-    'debug_toolbar'
+    'silk'
 ]
 
 REST_FRAMEWORK = {
@@ -78,16 +78,17 @@ OAUTH2_PROVIDER = {
 }
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'src.Ranked.urls'
