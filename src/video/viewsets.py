@@ -19,7 +19,7 @@ from src.profile.models import Profile
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from django.core.exceptions import ObjectDoesNotExist
-from silk.profiling.profiler import silk_profile
+
 
 class VideoViewSet(viewsets.ModelViewSet):
     """
@@ -31,7 +31,6 @@ class VideoViewSet(viewsets.ModelViewSet):
     parser_classes = (FormParser, JSONParser)
     ordering_fields = ()
 
-    @silk_profile(name="video_viewsets_retrieve")
     def retrieve(self, request, *args, **kwargs):
         video_id = kwargs.get('pk', None)
         if video_id:
@@ -52,7 +51,6 @@ class VideoViewSet(viewsets.ModelViewSet):
             return Response(status=200, data=to_return)
         return Response(status=404)
 
-    @silk_profile(name="video_viewsets_list")
     def list(self, request, *args, **kwargs):
         # TODO: Paginate
         profile = Profile.objects.get(pk=request.user.id)
@@ -160,7 +158,6 @@ class VideoTopView(APIView):
     SIX_HOURS_IN_SECONDS = 21600
     permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
 
-    @silk_profile(name="video_views_top")
     @method_decorator(cache_page(SIX_HOURS_IN_SECONDS))
     def get(self, request, format=None):
         queryset = Video.objects.order_by('-rank_total').filter(is_active=True).select_related('related_profile')[:25]
