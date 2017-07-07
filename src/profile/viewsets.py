@@ -21,7 +21,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all().prefetch_related('primary_category', 'secondary_category')
-    # TODO: Password update - should hash.
 
     def list(self, request, *args, **kwargs):
         error = {'description': 'Not Available'}
