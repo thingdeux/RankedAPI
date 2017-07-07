@@ -55,7 +55,12 @@ class VideoViewSet(viewsets.ModelViewSet):
         # TODO: Paginate
         profile = Profile.objects.get(pk=request.user.id)
         # TODO: JJ - Query Improvement
-        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True).select_related('related_profile')
+        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True)\
+            .select_related('related_profile').select_related('related_profile__secondary_category')\
+            .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category')\
+            .select_related('related_profile__secondary_category__parent_category')
+
+
         serialized = VideoSerializer(queryset, many=True)
         return Response(status=200, data=serialized.data)
 
@@ -160,6 +165,10 @@ class VideoTopView(APIView):
 
     @method_decorator(cache_page(SIX_HOURS_IN_SECONDS))
     def get(self, request, format=None):
-        queryset = Video.objects.order_by('-rank_total').filter(is_active=True).select_related('related_profile')[:25]
+        queryset = Video.objects.order_by('-rank_total').filter(is_active=True).select_related('related_profile') \
+            .select_related('related_profile').select_related('related_profile__secondary_category') \
+            .select_related('related_profile__primary_category').select_related(
+            'related_profile__primary_category__parent_category') \
+            .select_related('related_profile__secondary_category__parent_category')[:25]
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)
