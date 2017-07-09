@@ -559,11 +559,34 @@ class VideoCronCase(APITestBase):
         self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 10)
         self.assertEqual(Video.objects.filter(top_10_ranking=None).count(), 5)
 
+    def test_average_ranking(self):
+        """
+        After the ranking update job there should only ever be 10 top ranked videos.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+        self.__reset_last_ranking_time()
+
+
+        _update_top_ten_rankings()
+        response = self.client.get('/api/v1/search/ranked10/?category={}'.format(self.primary_category.id), format='json')
+        top_ranked_video = response.data['videos'][0]
+        self.assertEqual(top_ranked_video['average_rank'], 10)
+
+        response = self.client.get('/api/v1/videos/{}/'.format(1), format='json')
+        lowest_ranked_video_ranking = response.data['average_rank']
+        self.assertEqual(lowest_ranked_video_ranking, 0)
+
+        response = self.client.get('/api/v1/videos/{}/'.format(3), format='json')
+        not_top10_but_not_0_video_rank = response.data['average_rank']
+        self.assertGreaterEqual(not_top10_but_not_0_video_rank, 1)
+        self.assertLessEqual(not_top10_but_not_0_video_rank, 9)
 
     def __reset_last_ranking_time(self):
         state = EnvironmentState.get_environment_state()
         state.last_updated_ranking_scores = timezone.now() - timedelta(minutes=60)
         state.save()
+
 
     def setUp(self):
         APITestBase.setUp(self)

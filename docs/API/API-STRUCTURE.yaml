@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "Ranked API"
   description: "API for mobile and/or Web Clients"
-  version: "0.8.25"
+  version: "0.8.26"
   contact:
     email: "me@josh.land"
 
@@ -155,8 +155,9 @@ definitions:
         example: ['#Gems', '#Ballin', '#DabIsStillRelevant', '#Corporate']
         items:
           type: "string"
-      likes:
+      average_rank:
         type: integer
+        description: "Ranking between 1-10"
         format: "int32"
         example: 12
 

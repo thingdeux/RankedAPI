@@ -33,23 +33,28 @@ class VideoViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         video_id = kwargs.get('pk', None)
-        if video_id:
-            video = Video.objects.filter(id=video_id)\
-                .prefetch_related('comments')\
-                .select_related('related_profile').first()
+        try:
+            if video_id:
+                video = Video.objects.filter(id=video_id)\
+                    .prefetch_related('comments')\
+                    .select_related('related_profile').first()
 
-            video_serialized = VideoSerializer(video)
-            profile_serialized = LightProfileSerializer(video.related_profile)
-            comments_serialized = CommentSerializer(video.comments, many=True)
+                if not video:
+                    raise ObjectDoesNotExist
 
-            # TODO: Profile this query - gonna be gnarly
+                video_serialized = VideoSerializer(video)
+                profile_serialized = LightProfileSerializer(video.related_profile)
+                comments_serialized = CommentSerializer(video.comments, many=True)
 
-            to_return = video_serialized.data
-            to_return['uploaded_by'] = profile_serialized.data
-            to_return['comments'] = comments_serialized.data
+                # TODO: Profile this query - gonna be gnarly
 
-            return Response(status=200, data=to_return)
-        return Response(status=404)
+                to_return = video_serialized.data
+                to_return['uploaded_by'] = profile_serialized.data
+                to_return['comments'] = comments_serialized.data
+
+                return Response(status=200, data=to_return)
+        except ObjectDoesNotExist:
+            return Response(status=404)
 
     def list(self, request, *args, **kwargs):
         # TODO: Paginate

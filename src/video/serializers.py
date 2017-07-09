@@ -1,3 +1,6 @@
+# Standard Library Imports
+from math import floor
+import random
 from rest_framework import serializers
 # Project Imports
 from .models import Video
@@ -20,6 +23,19 @@ class VideoSerializer(serializers.Serializer):
     uploaded_by = serializers.SerializerMethodField(read_only=True)
     is_top_10 = serializers.BooleanField(read_only=True)
     top_10_ranking = serializers.IntegerField(read_only=True)
+    average_rank = serializers.SerializerMethodField()
+
+    def get_average_rank(self, model):
+        if model.top_10_ranking:
+            # If the video is one of the top 10 ranked videos return 10.
+            return 10
+        elif model.rank_total > 0:
+            # TODO: Should actually be a field and be updated with the ranking algorithm.
+            # For now just a rando. number between 1 and 9
+            return floor(random.randint(1, 9))
+        else:
+            return 0
+
 
     def get_hashtag(self, model):
         if model.hashtag:
@@ -51,8 +67,10 @@ class VideoSerializer(serializers.Serializer):
     class Meta:
         fields = ['id', 'title', 'category', 'sub_category', 'is_featured',
                   'is_processing', 'rank_total', 'hashtag', 'mobile',
-                  'low', 'high', 'hd', 'is_active', 'thumbnail_large', 'thumbnail_small', 'is_top_10', 'top_10_ranking']
+                  'low', 'high', 'hd', 'is_active', 'thumbnail_large', 'thumbnail_small', 'is_top_10', 'average_rank',
+                  'top_10_ranking']
 
         read_only_fields = ('id', 'is_featured', 'is_processing', 'rank_total', 'is_active', 'processing_progress',
-                            'mobile', 'low', 'high', 'hd', 'thumbnail_large', 'thumbnail_small', 'is_top_10', 'top_10_ranking')
+                            'mobile', 'low', 'high', 'hd', 'thumbnail_large', 'thumbnail_small', 'is_top_10',
+                            'average_rank', 'top_10_ranking')
         model = Video
