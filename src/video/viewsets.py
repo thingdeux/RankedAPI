@@ -19,6 +19,7 @@ from src.profile.models import Profile
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from django.core.exceptions import ObjectDoesNotExist
+import re
 
 
 class VideoViewSet(viewsets.ModelViewSet):
@@ -152,8 +153,12 @@ class VideoViewSet(viewsets.ModelViewSet):
 
     def __update_video(self, video_id, request_data):
         video = Video.objects.get(pk=video_id)
-        video.title = request_data.get('title', video.title)
-        video.hashtag = request_data.get('hashtag', video.hashtag)
+
+        if request_data.get('title', False):
+            video.title, video.hashtag = VideoViewSet.__extract_hashtags(request_data['title'])
+        else:
+            video.title = video.title
+
         category = request_data.get('category', False)
 
         if category:
@@ -161,6 +166,46 @@ class VideoViewSet(viewsets.ModelViewSet):
             video.category = new_category
 
         video.save()
+
+    @staticmethod
+    def __extract_hashtags(title: str):
+        """
+        Extract hashtags from title.  Supported formats:
+
+
+
+        :return: Tuple (Title Stripped of hashtags, hashtags comma delimited
+        """
+        # TODO: Logic is fairly gnarly but it gets the job done. Would like more safety for edge cases.
+        hashtag_finder = re.compile("(?:^|\s)[＃#]{1}(\w+)", re.UNICODE)
+
+        final_title = None
+        hashtags = ""
+
+        for text in hashtag_finder.split(title):
+            if len(text) < 1:
+                continue
+
+            word_count = text.split(' ')
+
+            if len(word_count) > 1 and not final_title:
+                final_title = text.rstrip(' ')
+            else:
+                # If there are no spaces between hashtags the regex will combine multiple hashtags in one string
+                # Split that and parse it.
+                if text.startswith('#'):
+                    for bound_hashtag in text.split('#'):
+                        if len(bound_hashtag) > 1:
+                            hashtags = hashtags + ",#" + bound_hashtag
+                    continue
+
+                if len(hashtags) < 1:
+                    hashtags = "#" + text
+                    continue
+                hashtags = hashtags + ",#" + text
+
+        return final_title or "", hashtags
+
 
 
 # Avatar upload View

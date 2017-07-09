@@ -9,6 +9,8 @@ pipelines:
   branches:
     master: # Deployment pipeline for Ranked CodeDeploy
       - step:
+          caches:
+            - pip
           script:
             - apt-get update # required to install zip
             - pip install -r requirements.txt
