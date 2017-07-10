@@ -170,9 +170,12 @@ class VideoViewSet(viewsets.ModelViewSet):
     @staticmethod
     def __extract_hashtags(title: str):
         """
-        Extract hashtags from title.  Supported formats:
+        Extract hashtags from title.
 
-
+        Supported formats:
+         [Space Delineation] ex: #Sweet #Noice #Totes
+         [Comma Delineation] ex: #Sweet,#Noice,#Totes
+         [Just hashes Delineation] ex: #Sweet#Noice#Totes
 
         :return: Tuple (Title Stripped of hashtags, hashtags comma delimited
         """

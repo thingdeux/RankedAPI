@@ -19,7 +19,7 @@ exports.handler = function(event, context) {
   context.fail("Incorrect Video Input Bucket");
   return;
  }
- var srcKey =  decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " ")); //the object may have spaces
+ var srcKey =  decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " ")); // the object may have spaces
  var newKey = key.split(".")[0];
  var params = {
   PipelineId: pipelineId,
@@ -34,11 +34,11 @@ exports.handler = function(event, context) {
   Outputs: [{
    Key: newKey + ".mp4",
    ThumbnailPattern: newKey + "-{count}",
-   PresetId: "1351620000001-000010" //Generic 720p
+   PresetId: "1499652501062-cjnh3u" // RankedWebMp41By1 PNG
   },{
    Key: newKey + ".webm",
    ThumbnailPattern: "",
-   PresetId: "1351620000001-100240" //Webm 720p
+   PresetId: "1351620000001-100240" // Webm 720p
   }]
  };
  console.log("Starting Job");
