@@ -20,6 +20,8 @@ from src.profile.models import Profile
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from django.core.exceptions import ObjectDoesNotExist
 import re
+# Django Imports
+from django.db import transaction
 
 
 class VideoViewSet(viewsets.ModelViewSet):
@@ -83,6 +85,21 @@ class VideoViewSet(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             return Response(status=404)
 
+    @detail_route(methods=['post'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
+    def viewed(self, request, pk=None):
+        try:
+            if not pk:
+                error = {'description': 'Video ID Required'}
+                return Response(status=400, data=error)
+            video = Video.objects.get(pk=pk)
+            with transaction.atomic():
+                video.views += 1
+                video.save()
+        except ObjectDoesNotExist:
+            error = {'description': 'Video does not exist'}
+            return Response(status=400, data=error)
+
+        return Response(status=200)
 
     @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
     def rank(self, request, pk=None):

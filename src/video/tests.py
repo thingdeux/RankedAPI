@@ -493,7 +493,6 @@ class VideoAPIVideosListCase(APITestBase):
         self.assertEqual(response2.status_code, 200)
         self.assertEqual(len(response2.data), 4)
 
-
     def test_videos_endpoint_empty(self):
         """
         /Videos/ endpoint should return a given users' videos.
@@ -627,3 +626,35 @@ class VideoCronCase(APITestBase):
             new_vid = Video(related_profile=self.test_profile, title="Video{}".format(str(i)), is_active=True,
                             rank_total=i, category=self.primary_category)
             new_vid.save()
+
+class VideoAPIViewedCase(APITestBase):
+    def test_videos_endpoint_contains_personal_results(self):
+        """
+        /Videos/ endpoint should return vides from people he/she follows
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.post('/api/v1/videos/{}/viewed/'.format(self.video1.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        video = Video.objects.get(pk=self.video1.id)
+        self.assertEqual(video.views, 1)
+
+        response = self.client.post('/api/v1/videos/{}/viewed/'.format(self.video1.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        video = Video.objects.get(pk=self.video1.id)
+        self.assertEqual(video.views, 2)
+
+    def setUp(self):
+        APITestBase.setUp(self)
+
+        self.primary_category = Category(name="Dance")
+        self.primary_category.save()
+        self.sub_category = Category(name="Breakdance", is_active=True, parent_category=self.primary_category)
+        self.sub_category.save()
+
+
+        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            category=self.sub_category, rank_total=300)
+        self.video1.save()
