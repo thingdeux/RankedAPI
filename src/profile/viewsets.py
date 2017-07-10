@@ -2,7 +2,7 @@
 from rest_framework import permissions, routers, viewsets
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FormParser
-from .serializers import ProfileSerializer, LightProfileSerializer
+from .serializers import ProfileSerializer, LightProfileSerializer, BasicProfileSerializer
 from rest_framework.decorators import detail_route
 # Project Imports
 from .models import Profile
@@ -15,12 +15,11 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 
-
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all().prefetch_related('primary_category', 'secondary_category')
-    # TODO: Password update - should hash.
+
 
     def list(self, request, *args, **kwargs):
         error = {'description': 'Not Available'}
@@ -57,9 +56,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         try:
-            # TODO: JJ - Performance Gains from query optimization on this reverse lookup.
-            profile = Profile.objects.get(pk=kwargs['pk'])
-            videos = Video.objects.filter(related_profile=profile)
+            profile = Profile.objects.filter(pk=kwargs['pk']).select_related('primary_category')\
+            .select_related('primary_category__parent_category').select_related('secondary_category')\
+            .select_related('secondary_category__parent_category').first()
+            videos = Video.objects.filter(related_profile=profile).select_related('related_profile') \
+                .select_related('category').select_related('category__parent_category')
 
             response_dict = {
                 'user': LightProfileSerializer(instance=profile, context={"request": request}).data,
@@ -86,7 +87,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
                 error = {"description": "Profile not found {}".format(e)}
                 Response(status=404, data=error)
         else:
-            profile = Profile.objects.get(id=request.user.id)
+            profile = Profile.objects.filter(id=request.user.id).only('id').first()
             try:
                 if request.method == "POST":
                     profile.follow_user(pk)
@@ -160,28 +161,27 @@ def _validate_registration_fields(data):
     _ = data['unlock_key']
     _ = data['email']
 
-
 def _get_profiles_user_is_following(profile_id):
-    # TODO: QUERY OPTIMIZATION
     profile = Profile.objects.filter(id=profile_id).prefetch_related('followed_profiles').first()
     followed_profiles = list(profile.followed_profiles.all())
 
     if len(followed_profiles) > 0:
         return Response(status=200, data={
-            'users': LightProfileSerializer(followed_profiles, many=True).data
+            'users': BasicProfileSerializer(followed_profiles, many=True).data
         })
     else:
         return Response(status=200, data={'users': []})
 
 
 def _get_profiles_following_user(profile_id):
-    # TODO: QUERY OPTIMIZATION
-    followers = Profile.objects.filter(followed_profiles__id=profile_id).prefetch_related('followed_profiles')
+    followers = Profile.objects.filter(followed_profiles__id=profile_id).prefetch_related('followed_profiles')\
+    .select_related('primary_category').select_related('primary_category__parent_category')\
+    .select_related('secondary_category').select_related('secondary_category__parent_category')
     followed_profiles = list(followers)
 
     if len(followed_profiles) > 0:
         return Response(status=200, data={
-            'users': LightProfileSerializer(followed_profiles, many=True).data
+            'users': BasicProfileSerializer(followed_profiles, many=True).data
         })
     else:
         return Response(status=200, data={'users': []})

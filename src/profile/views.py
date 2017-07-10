@@ -17,14 +17,15 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 import boto3
 import uuid
 
-
 @api_view(('GET',))
 @permission_classes((IsAuthenticated, TokenHasReadWriteScope))
 def me(request):
     try:
-        # TODO: JJ - Performance Gains from query optimization on this reverse lookup.
-        profile = Profile.objects.get(pk=request.user.id)
-        videos = Video.objects.filter(related_profile=profile)
+        profile = Profile.objects.filter(pk=request.user.id).select_related('primary_category')\
+            .select_related('primary_category__parent_category').select_related('secondary_category')\
+            .select_related('secondary_category__parent_category').first()
+        videos = Video.objects.filter(related_profile=profile).select_related('related_profile')\
+            .select_related('category').select_related('category__parent_category')
 
         response_dict = {
             'me': ProfileSerializer(instance=profile, context={"request": request}).data,

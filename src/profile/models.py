@@ -43,7 +43,7 @@ class Profile(AbstractUser, Base):
     def follow_user(self, user_id):
         # Can't follow yourself
         if int(user_id) != self.id:
-            profile_to_follow = Profile.objects.get(id=user_id)
+            profile_to_follow = Profile.objects.filter(id=user_id).only('id').first()
 
             self.followed_profiles.add(profile_to_follow)
             self.following_count = self.followed_profiles.count()

@@ -19,6 +19,7 @@ import boto3
 import json
 import logging
 
+
 logger = logging.getLogger("video.views")
 SIX_HOURS_IN_SECONDS = 21600
 

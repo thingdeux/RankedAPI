@@ -23,7 +23,6 @@ import re
 # Django Imports
 from django.db import transaction
 
-
 class VideoViewSet(viewsets.ModelViewSet):
     """
     Viewset for Videos
@@ -39,7 +38,7 @@ class VideoViewSet(viewsets.ModelViewSet):
         try:
             if video_id:
                 video = Video.objects.filter(id=video_id)\
-                    .prefetch_related('comments')\
+                    .prefetch_related('comments').select_related('category').select_related('category__parent_category')\
                     .select_related('related_profile').first()
 
                 if not video:
@@ -62,11 +61,11 @@ class VideoViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         # TODO: Paginate
         profile = Profile.objects.get(pk=request.user.id)
-        # TODO: JJ - Query Improvement
         queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True)\
             .select_related('related_profile').select_related('related_profile__secondary_category')\
             .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category')\
-            .select_related('related_profile__secondary_category__parent_category')
+            .select_related('related_profile__secondary_category__parent_category').select_related('category')\
+            .select_related('category__parent_category')
 
 
         serialized = VideoSerializer(queryset, many=True)
@@ -239,6 +238,7 @@ class VideoTopView(APIView):
             .select_related('related_profile').select_related('related_profile__secondary_category') \
             .select_related('related_profile__primary_category').select_related(
             'related_profile__primary_category__parent_category') \
-            .select_related('related_profile__secondary_category__parent_category')[:25]
+            .select_related('related_profile__secondary_category__parent_category').select_related('category')\
+            .select_related('category__parent_category')[:25]
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)

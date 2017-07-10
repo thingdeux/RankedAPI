@@ -55,7 +55,6 @@ def search(request, **kwargs):
 
     return Response(status=200, data=dict_to_return)
 
-
 def __get_explore_data(name, category_id):
     # If the name begins with a hashtag (#) then don't include profile results.
     profiles = None
@@ -65,11 +64,10 @@ def __get_explore_data(name, category_id):
     videos = __get_explore_search_data(name, category_id)
     return videos, profiles
 
-
 def __get_videos_by_category(category_id):
     if category_id:
         results = Video.objects.filter(category__id=category_id, is_active=True).select_related('category')\
-            .select_related('related_profile')
+            .select_related('related_profile').select_related('category').select_related('category__parent_category')
         return VideoSerializer(results, many=True).data
     else:
         return None
@@ -86,7 +84,6 @@ def __get_explore_search_data(filter_phrase, category_id):
     if filter_phrase:
         base_queryset = base_queryset.filter(title__icontains=str(filter_phrase))
     return VideoSerializer(base_queryset[:50], many=True).data
-
 
 def __get_profile_by_name(name):
     return LightProfileSerializer(Profile.objects.filter(username__icontains=name, is_active=True), many=True).data
