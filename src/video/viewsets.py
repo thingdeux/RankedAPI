@@ -13,13 +13,16 @@ from .models import Video
 from src.ranking.models import Ranking
 from src.comment.models import Comment
 from src.categorization.models import Category
-from src.profile.serializers import LightProfileSerializer
+from src.profile.serializers import LightProfileSerializer, BasicProfileSerializer
 from .serializers import VideoSerializer
 from src.profile.models import Profile
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from django.core.exceptions import ObjectDoesNotExist
-from silk.profiling.profiler import silk_profile
+import re
+# Django Imports
+from django.db import transaction
+
 
 class VideoViewSet(viewsets.ModelViewSet):
     """
@@ -31,33 +34,41 @@ class VideoViewSet(viewsets.ModelViewSet):
     parser_classes = (FormParser, JSONParser)
     ordering_fields = ()
 
-    @silk_profile(name="video_viewsets_retrieve")
     def retrieve(self, request, *args, **kwargs):
         video_id = kwargs.get('pk', None)
-        if video_id:
-            video = Video.objects.filter(id=video_id)\
-                .prefetch_related('comments')\
-                .select_related('related_profile').first()
+        try:
+            if video_id:
+                video = Video.objects.filter(id=video_id)\
+                    .prefetch_related('comments')\
+                    .select_related('related_profile').first()
 
-            video_serialized = VideoSerializer(video)
-            profile_serialized = LightProfileSerializer(video.related_profile)
-            comments_serialized = CommentSerializer(video.comments, many=True)
+                if not video:
+                    raise ObjectDoesNotExist
 
-            # TODO: Profile this query - gonna be gnarly
+                video_serialized = VideoSerializer(video)
+                profile_serialized = BasicProfileSerializer(video.related_profile)
+                comments_serialized = CommentSerializer(video.comments, many=True)
 
-            to_return = video_serialized.data
-            to_return['uploaded_by'] = profile_serialized.data
-            to_return['comments'] = comments_serialized.data
+                # TODO: Profile this query - gonna be gnarly
 
-            return Response(status=200, data=to_return)
-        return Response(status=404)
+                to_return = video_serialized.data
+                to_return['uploaded_by'] = profile_serialized.data
+                to_return['comments'] = comments_serialized.data
 
-    @silk_profile(name="video_viewsets_list")
+                return Response(status=200, data=to_return)
+        except ObjectDoesNotExist:
+            return Response(status=404)
+
     def list(self, request, *args, **kwargs):
         # TODO: Paginate
         profile = Profile.objects.get(pk=request.user.id)
         # TODO: JJ - Query Improvement
-        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True).select_related('related_profile')
+        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True)\
+            .select_related('related_profile').select_related('related_profile__secondary_category')\
+            .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category')\
+            .select_related('related_profile__secondary_category__parent_category')
+
+
         serialized = VideoSerializer(queryset, many=True)
         return Response(status=200, data=serialized.data)
 
@@ -74,6 +85,21 @@ class VideoViewSet(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             return Response(status=404)
 
+    @detail_route(methods=['post'], permission_classes=[permissions.IsAuthenticated, TokenHasReadWriteScope])
+    def viewed(self, request, pk=None):
+        try:
+            if not pk:
+                error = {'description': 'Video ID Required'}
+                return Response(status=400, data=error)
+            video = Video.objects.get(pk=pk)
+            with transaction.atomic():
+                video.views += 1
+                video.save()
+        except ObjectDoesNotExist:
+            error = {'description': 'Video does not exist'}
+            return Response(status=400, data=error)
+
+        return Response(status=200)
 
     @detail_route(methods=['post', 'delete'], permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope])
     def rank(self, request, pk=None):
@@ -144,8 +170,12 @@ class VideoViewSet(viewsets.ModelViewSet):
 
     def __update_video(self, video_id, request_data):
         video = Video.objects.get(pk=video_id)
-        video.title = request_data.get('title', video.title)
-        video.hashtag = request_data.get('hashtag', video.hashtag)
+
+        if request_data.get('title', False):
+            video.title, video.hashtag = VideoViewSet.__extract_hashtags(request_data['title'])
+        else:
+            video.title = video.title
+
         category = request_data.get('category', False)
 
         if category:
@@ -154,15 +184,61 @@ class VideoViewSet(viewsets.ModelViewSet):
 
         video.save()
 
+    @staticmethod
+    def __extract_hashtags(title: str):
+        """
+        Extract hashtags from title.
+
+        Supported formats:
+         [Space Delineation] ex: #Sweet #Noice #Totes
+         [Comma Delineation] ex: #Sweet,#Noice,#Totes
+         [Just hashes Delineation] ex: #Sweet#Noice#Totes
+
+        :return: Tuple (Title Stripped of hashtags, hashtags comma delimited
+        """
+        # TODO: Logic is fairly gnarly but it gets the job done. Would like more safety for edge cases.
+        hashtag_finder = re.compile("(?:^|\s)[＃#]{1}(\w+)", re.UNICODE)
+
+        final_title = None
+        hashtags = ""
+
+        for text in hashtag_finder.split(title):
+            if len(text) < 1:
+                continue
+
+            word_count = text.split(' ')
+
+            if len(word_count) > 1 and not final_title:
+                final_title = text.rstrip(' ')
+            else:
+                # If there are no spaces between hashtags the regex will combine multiple hashtags in one string
+                # Split that and parse it.
+                if text.startswith('#'):
+                    for bound_hashtag in text.split('#'):
+                        if len(bound_hashtag) > 1:
+                            hashtags = hashtags + ",#" + bound_hashtag
+                    continue
+
+                if len(hashtags) < 1:
+                    hashtags = "#" + text
+                    continue
+                hashtags = hashtags + ",#" + text
+
+        return final_title or "", hashtags
+
+
 
 # Avatar upload View
 class VideoTopView(APIView):
     SIX_HOURS_IN_SECONDS = 21600
     permission_classes = (IsAuthenticated, TokenHasReadWriteScope)
 
-    @silk_profile(name="video_views_top")
     @method_decorator(cache_page(SIX_HOURS_IN_SECONDS))
     def get(self, request, format=None):
-        queryset = Video.objects.order_by('-rank_total').filter(is_active=True).select_related('related_profile')[:25]
+        queryset = Video.objects.order_by('-rank_total').filter(is_active=True).select_related('related_profile') \
+            .select_related('related_profile').select_related('related_profile__secondary_category') \
+            .select_related('related_profile__primary_category').select_related(
+            'related_profile__primary_category__parent_category') \
+            .select_related('related_profile__secondary_category__parent_category')[:25]
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)

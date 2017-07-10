@@ -14,8 +14,7 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasS
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
-# Library Imports
-from silk.profiling.profiler import silk_profile
+
 
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
@@ -160,7 +159,7 @@ def _validate_registration_fields(data):
     _ = data['unlock_key']
     _ = data['email']
 
-@silk_profile(name="_get_profiles_user_is_following")
+
 def _get_profiles_user_is_following(profile_id):
     # TODO: QUERY OPTIMIZATION
     profile = Profile.objects.filter(id=profile_id).prefetch_related('followed_profiles').first()
@@ -173,7 +172,7 @@ def _get_profiles_user_is_following(profile_id):
     else:
         return Response(status=200, data={'users': []})
 
-@silk_profile(name="_get_profiles_following_user")
+
 def _get_profiles_following_user(profile_id):
     # TODO: QUERY OPTIMIZATION
     followers = Profile.objects.filter(followed_profiles__id=profile_id).prefetch_related('followed_profiles')

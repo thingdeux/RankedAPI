@@ -1,5 +1,5 @@
 from .models import Comment
-from src.profile.serializers import LightProfileSerializer
+from src.profile.serializers import BasicProfileSerializer
 from rest_framework import permissions, viewsets,serializers
 
 class CommentSerializer(serializers.Serializer):
@@ -8,7 +8,7 @@ class CommentSerializer(serializers.Serializer):
     posted_by = serializers.SerializerMethodField(read_only=True)
 
     def get_posted_by(self, transaction):
-        return LightProfileSerializer(transaction.related_profile).data
+        return BasicProfileSerializer(transaction.related_profile).data
 
     class Meta:
         fields = ['text', 'posted_date', 'related_profile']

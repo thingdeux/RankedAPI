@@ -16,10 +16,8 @@ from .viewsets import ProfileSerializer
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 import boto3
 import uuid
-from silk.profiling.profiler import silk_profile
 
 
-@silk_profile(name="me_endpoint")
 @api_view(('GET',))
 @permission_classes((IsAuthenticated, TokenHasReadWriteScope))
 def me(request):

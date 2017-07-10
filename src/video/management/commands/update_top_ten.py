@@ -37,6 +37,7 @@ def _update_top_ten_rankings():
     state = EnvironmentState.get_environment_state()
 
     if not state.should_update_ranking:
+        print("No need to update ranking - bailing.")
         return
 
     state.is_updating_ranking = True
@@ -64,11 +65,12 @@ def _update_top_ten_rankings():
                 for i, video in enumerate(updated_videos):
                     video.top_10_ranking = i + 1
                     video.save()
-
-            state.is_updating_ranking = False
-            state.last_updated_ranking_scores = timezone.now()
-            state.save()
+                state.last_updated_ranking_scores = timezone.now()
+        state.is_updating_ranking = False
+        state.save()
     except Exception as error:
         logger.error("Error Running Ranking Update Job {}".format(error))
         state.is_updating_ranking = False
         state.save()
+
+

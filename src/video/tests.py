@@ -372,20 +372,49 @@ class VideoAPICasePatch(APITestBase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_video.title, "My Bologna has a first name")
 
-    def test_video_patch_should_accept_hashtag(self):
+    def test_video_patch_should_build_hashtag(self):
         """
-        You should be able to set 'hashtag' via /videos/<id>/ PATCH
+        You should be able to set 'hashtag' by proxy via title via /videos/<id>/ PATCH
         """
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
+        # Hashtags should be stripped and turned into comma-delimited
         response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
-           'hashtag': "Bunny"
+           'title': "Bunny's are so great #Bunnies #Love #Dude"
         }, format='json')
 
         updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(updated_video.hashtag, "Bunny")
+        self.assertEqual(updated_video.title, "Bunny's are so great")
+        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude")
+
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+            'title': "Bunny's are so great #Bunnies#Love#Dude"
+        }, format='json')
+
+        updated_video = Video.objects.get(id=self.video1.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_video.title, "Bunny's are so great")
+        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude")
+
+
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+            'title': "#Bunnies #Love #Dude"
+        }, format='json')
+        updated_video = Video.objects.get(id=self.video1.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_video.title, "")
+        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude")
+
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+            'title': "I love BEES!  #Bunnies_AND_BEES1245_ #Love #Dude"
+        }, format='json')
+        updated_video = Video.objects.get(id=self.video1.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_video.title, 'I love BEES!')
+        self.assertEqual(updated_video.hashtag, "#Bunnies_AND_BEES1245_,#Love,#Dude")
+
 
     def test_video_patch_should_accept_category(self):
         """
@@ -463,7 +492,6 @@ class VideoAPIVideosListCase(APITestBase):
         response2 = self.client.get('/api/v1/videos/', format='json')
         self.assertEqual(response2.status_code, 200)
         self.assertEqual(len(response2.data), 4)
-
 
     def test_videos_endpoint_empty(self):
         """
@@ -559,11 +587,34 @@ class VideoCronCase(APITestBase):
         self.assertEqual(Video.get_ranked_10_videos_queryset(self.primary_category.id).count(), 10)
         self.assertEqual(Video.objects.filter(top_10_ranking=None).count(), 5)
 
+    def test_average_ranking(self):
+        """
+        After the ranking update job there should only ever be 10 top ranked videos.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+        self.__reset_last_ranking_time()
+
+
+        _update_top_ten_rankings()
+        response = self.client.get('/api/v1/search/ranked10/?category={}'.format(self.primary_category.id), format='json')
+        top_ranked_video = response.data['videos'][0]
+        self.assertEqual(top_ranked_video['average_rank'], 10)
+
+        response = self.client.get('/api/v1/videos/{}/'.format(1), format='json')
+        lowest_ranked_video_ranking = response.data['average_rank']
+        self.assertEqual(lowest_ranked_video_ranking, 0)
+
+        response = self.client.get('/api/v1/videos/{}/'.format(3), format='json')
+        not_top10_but_not_0_video_rank = response.data['average_rank']
+        self.assertGreaterEqual(not_top10_but_not_0_video_rank, 1)
+        self.assertLessEqual(not_top10_but_not_0_video_rank, 9)
 
     def __reset_last_ranking_time(self):
         state = EnvironmentState.get_environment_state()
         state.last_updated_ranking_scores = timezone.now() - timedelta(minutes=60)
         state.save()
+
 
     def setUp(self):
         APITestBase.setUp(self)
@@ -575,3 +626,35 @@ class VideoCronCase(APITestBase):
             new_vid = Video(related_profile=self.test_profile, title="Video{}".format(str(i)), is_active=True,
                             rank_total=i, category=self.primary_category)
             new_vid.save()
+
+class VideoAPIViewedCase(APITestBase):
+    def test_videos_endpoint_contains_personal_results(self):
+        """
+        /Videos/ endpoint should return vides from people he/she follows
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.post('/api/v1/videos/{}/viewed/'.format(self.video1.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        video = Video.objects.get(pk=self.video1.id)
+        self.assertEqual(video.views, 1)
+
+        response = self.client.post('/api/v1/videos/{}/viewed/'.format(self.video1.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        video = Video.objects.get(pk=self.video1.id)
+        self.assertEqual(video.views, 2)
+
+    def setUp(self):
+        APITestBase.setUp(self)
+
+        self.primary_category = Category(name="Dance")
+        self.primary_category.save()
+        self.sub_category = Category(name="Breakdance", is_active=True, parent_category=self.primary_category)
+        self.sub_category.save()
+
+
+        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            category=self.sub_category, rank_total=300)
+        self.video1.save()
