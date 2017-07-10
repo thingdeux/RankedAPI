@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^josh/', admin.site.urls)
 ]
 
-# if settings.DEBUG:
-#     urlpatterns = [
-#         url(r'^silk/', include('silk.urls', namespace='silk'))
-#     ] + urlpatterns
+if settings.DEBUG:
+    urlpatterns = [
+        url(r'^silk/', include('silk.urls', namespace='silk'))
+    ] + urlpatterns

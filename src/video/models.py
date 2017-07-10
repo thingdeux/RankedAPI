@@ -25,7 +25,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
         """
         base_queryset = Video.objects.order_by('-rank_total')\
             .filter(is_top_10=True, is_active=True)\
-            .select_related('related_profile').select_related('category')
+            .select_related('related_profile').select_related('category').select_related('category__parent_category')
 
         if category:
             base_queryset = base_queryset.filter(category__id=category)

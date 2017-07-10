@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'src.video',
     'src.ranking',
     'src.api',
-    'src.manager'
+    'src.manager',
+    'silk'
 ]
 
 REST_FRAMEWORK = {
@@ -80,6 +81,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
