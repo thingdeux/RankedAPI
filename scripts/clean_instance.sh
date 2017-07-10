@@ -11,7 +11,6 @@ chown -R nginx:nginx /tmp/static
 
 rm -rf /tmp/gunicorn.sock
 chown ec2-user:ec2-user /tmp/gunicorn.sock
-chmod +x /home/ec2-user/src/ranked/scripts/api_management/update_top_ten.sh
 # TODO: Remove these permissions
 chmod -f 777 /tmp/gunicorn.sock || true
 chmod -f 755 /tmp/docs || true

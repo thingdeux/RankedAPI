@@ -13,6 +13,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         """
         Update and return profile instance
         """
+
         # Can't update your username
         instance.email = validated_data.get('email', instance.email)
         instance.avatar_url = validated_data.get('avatar_url', instance.avatar_url)
@@ -39,4 +40,10 @@ class LightProfileSerializer(serializers.ModelSerializer):
                   'ranked_ten_count', 'favorite_category', 'second_favorite_category']
         read_only_fields = ('id', 'avatar_url', 'is_partner', 'is_featured', 'username', 'followers_count',
                             'following_count', 'ranked_ten_count', 'favorite_category', 'second_favorite_category')
+        model = Profile
+
+class BasicProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('id', 'avatar_url', 'username', 'is_partner', 'is_featured', 'followers_count', 'following_count')
+        read_only_fields = ('id', 'avatar_url', 'username', 'is_partner', 'is_featured', 'followers_count', 'following_count')
         model = Profile

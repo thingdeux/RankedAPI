@@ -10,7 +10,3 @@ yum install -y python-pip python35 python35-pip htop
 pip install virtualenv
 pip install virtualenvwrapper
 pip install psycopg2
-
-# Copy Cron file to cron directory
-cp -rf /home/ec2-user/src/ranked/conf/cron/api-tasks /etc/cron.d/
-service crond restart

@@ -5,7 +5,7 @@ from rest_framework import serializers
 # Project Imports
 from .models import Video
 from src.categorization.serializers import CategorySerializer
-from src.profile.serializers import LightProfileSerializer
+from src.profile.serializers import BasicProfileSerializer
 
 class VideoSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -24,6 +24,7 @@ class VideoSerializer(serializers.Serializer):
     is_top_10 = serializers.BooleanField(read_only=True)
     top_10_ranking = serializers.IntegerField(read_only=True)
     average_rank = serializers.SerializerMethodField()
+    views = serializers.IntegerField(read_only=True)
 
     def get_average_rank(self, model):
         if model.top_10_ranking:
@@ -43,7 +44,7 @@ class VideoSerializer(serializers.Serializer):
         return None
 
     def get_uploaded_by(self, model):
-        return LightProfileSerializer(model.related_profile).data
+        return BasicProfileSerializer(model.related_profile).data
 
     def get_category(self, model):
         if model.category:
@@ -66,11 +67,11 @@ class VideoSerializer(serializers.Serializer):
 
     class Meta:
         fields = ['id', 'title', 'category', 'sub_category', 'is_featured',
-                  'is_processing', 'rank_total', 'hashtag', 'mobile',
-                  'low', 'high', 'hd', 'is_active', 'thumbnail_large', 'thumbnail_small', 'is_top_10', 'average_rank',
-                  'top_10_ranking']
+                  'is_processing', 'is_top_10', 'average_rank',
+                  'top_10_ranking','rank_total', 'views', 'hashtag', 'mobile',
+                  'low', 'high', 'hd', 'is_active', 'thumbnail_large', 'thumbnail_small']
 
-        read_only_fields = ('id', 'is_featured', 'is_processing', 'rank_total', 'is_active', 'processing_progress',
+        read_only_fields = ('id', 'is_featured', 'is_processing', 'rank_total', 'views', 'is_active', 'processing_progress',
                             'mobile', 'low', 'high', 'hd', 'thumbnail_large', 'thumbnail_small', 'is_top_10',
                             'average_rank', 'top_10_ranking')
         model = Video
