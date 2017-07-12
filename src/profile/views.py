@@ -51,8 +51,7 @@ class AvatarUploadView(APIView):
                 generated_s3_key = 'ava{id}-{uuid}.{ext}'.format(id=profile.id, uuid=uuid.uuid4(), ext=file_extension)
                 s3.Bucket('static.goranked.com').put_object(Key=generated_s3_key, Body=file_obj, ACL='public-read')
 
-                # TODO: Hacky - Better way to find extension in production
-                profile.avatar_url = "http://static.goranked.com/ava{id}.{ext}".format(id=profile.id, ext=file_extension)
+                profile.avatar_url = "http://static.goranked.com/{}".format(generated_s3_key)
                 profile.save()
                 return Response(ProfileSerializer(instance=profile,
                                                   context={"request": request}).data, status=200)
