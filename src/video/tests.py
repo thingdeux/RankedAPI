@@ -13,8 +13,6 @@ from src.manager.models import EnvironmentState
 from datetime import timedelta
 
 
-
-
 class VideoRankingAPICase(APITestBase):
 
     def test_ranking_success(self):
@@ -627,6 +625,7 @@ class VideoCronCase(APITestBase):
                             rank_total=i, category=self.primary_category)
             new_vid.save()
 
+
 class VideoAPIViewedCase(APITestBase):
     def test_videos_endpoint_contains_personal_results(self):
         """
@@ -644,6 +643,54 @@ class VideoAPIViewedCase(APITestBase):
         self.assertEqual(response.status_code, 200)
         video = Video.objects.get(pk=self.video1.id)
         self.assertEqual(video.views, 2)
+
+    def setUp(self):
+        APITestBase.setUp(self)
+
+        self.primary_category = Category(name="Dance")
+        self.primary_category.save()
+        self.sub_category = Category(name="Breakdance", is_active=True, parent_category=self.primary_category)
+        self.sub_category.save()
+
+
+        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            category=self.sub_category, rank_total=300)
+        self.video1.save()
+
+
+class VideoAPIUploadingCase(APITestBase):
+    def test_s3_generated_urls_are_properly_created(self):
+        """
+        S3 Upload endpoint should properly generate a valid url.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        filename = '51-1bdedd12-2a36-45b6-8da2-ff2514fe6f86-trim.2163E8A4-3A45-47BE-AA5A-489F8919B118.MOV'
+        generated_filename = Video.get_generated_s3_key(self.test_profile.id, filename)
+
+        split_filename = generated_filename.split('-')
+
+        self.assertEqual(split_filename[0], '{}'.format(self.test_profile.id))
+
+        no_extension_filename = '51-1bdedd12-2a36-45b6-8da2-ff2514fe6f86-trim' \
+                           '2163E8A4-3A45-47BE-AA5A-489F8919B118'
+        failed_filename = Video.get_generated_s3_key(self.test_profile.id, no_extension_filename)
+
+        self.assertEqual(failed_filename, None)
+
+
+
+    def test_s3_generated_thumbnails(self):
+        url = '51-1bdedd12-2a36-45b6-8da2-ff2514fe6f86-trim' \
+              '2163E8A4-3A45-47BE-AA5A-489F8919B118.MOV'
+
+        filename = Video.generate_thumbnail_links(url)[0]
+        self.assertEqual(filename, 'http://static.goranked.com/51-1bdedd12-2a36-45b6-8da2-ff2514fe6f86-trim'
+                                   '2163E8A4-3A45-47BE-AA5A-489F8919B118-00001.png')
+
+
 
     def setUp(self):
         APITestBase.setUp(self)

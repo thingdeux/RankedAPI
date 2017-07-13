@@ -82,7 +82,10 @@ class UploadProcessable(models.Model):
     @classmethod
     def generate_pre_signed_upload_url(self, profile_id, filename, file_type):
         s3 = boto3.client('s3', region_name="us-west-2")
-        generated_filename = "{}-{}-{}".format(profile_id, uuid.uuid4(), filename)
+        generated_filename = UploadProcessable.get_generated_s3_key(profile_id, filename)
+
+        if not generated_filename:
+            return None
 
         pre_signed_post = s3.generate_presigned_post(
             Bucket=UploadProcessable.S3_BUCKET,
@@ -100,6 +103,30 @@ class UploadProcessable(models.Model):
             'final_url': 'http://{}/{}'.format("videos.goranked.com", generated_filename),
             'low_url': 'http://{}/{}.webm'.format("videos.goranked.com", generated_filename.split('.')[0])
         }
+
+    @staticmethod
+    def get_generated_s3_key(profile_id, filename):
+        try:
+            # Make sure to only take the characters after the final . in a filename.
+            split_filename = filename.split('.')
+
+            if not len(split_filename) > 1:
+                return None
+
+            extension = split_filename[-1:][0]
+            return "{}-{}.{}".format(profile_id, uuid.uuid4(), extension)
+        except IndexError:
+            return None
+
+    @staticmethod
+    def generate_thumbnail_links(filename):
+        STATIC_URL = "http://static.goranked.com"
+        try:
+            filename_parsed = filename.split('.')[0]
+            return ("{}/{}-00001.png".format(STATIC_URL, filename_parsed),
+                    "{}/{}-00001.png".format(STATIC_URL, filename_parsed))
+        except IndexError:
+            return ("", "")
 
 
 class Rankable(models.Model):

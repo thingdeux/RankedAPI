@@ -58,13 +58,17 @@ class GenerateUploadView(APIView):
             profile = Profile.objects.get(pk=request.user.id)
             pre_signed_details = Video.generate_pre_signed_upload_url(profile.id, filename, file_type)
 
+            if not pre_signed_details:
+                error = {"description": 'Filename is not acceptable'}
+                return Response(status=400, data=error)
+
             # Setup Video DB Entry
             video = Video.objects.create(related_profile=profile, title="", is_processing=True,
                                          is_active=False, s3_filename=pre_signed_details['data']['fields']['key'])
 
             video.low = pre_signed_details['low_url']
             video.high = pre_signed_details['final_url']
-            video.thumbnail_large, video.thumbnail_small = self.__generate_thumbnail_links(video.s3_filename)
+            video.thumbnail_large, video.thumbnail_small = Video.generate_thumbnail_links(video.s3_filename)
             video.pre_signed_upload_url = pre_signed_details['data']['url']
             video.save()
 
@@ -83,15 +87,6 @@ class GenerateUploadView(APIView):
         # User doesn't exist
         except ObjectDoesNotExist:
             return Response(data={"description": "Profile not found"}, status=404)
-
-    def __generate_thumbnail_links(self, filename):
-        STATIC_URL = "http://static.goranked.com"
-        try:
-            filename_parsed = filename.split('.')[0]
-            return ("{}/{}-00001.png".format(STATIC_URL, filename_parsed),
-                    "{}/{}-00001.png".format(STATIC_URL, filename_parsed))
-        except IndexError:
-            return ("", "")
 
 
 # SNS Handlers
