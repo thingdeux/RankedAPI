@@ -47,3 +47,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
             .select_related('related_profile').select_related('category')[:50]
 
         return base_queryset
+
+    @staticmethod
+    def get_all_videos_user_has_ranked_queryset(profile_id):
+        return Video.objects.filter(rankings__related_profile_id__in=[profile_id]).only('id').values('id')

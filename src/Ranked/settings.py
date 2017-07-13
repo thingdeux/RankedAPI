@@ -214,3 +214,23 @@ if DEBUG:
 
 if 'amzn' in platform.uname()[2]:
     from .dev_settings import *
+
+
+# Silky profiling enable
+# INSTALLED_APPS = INSTALLED_APPS + [
+#     'silk'
+# ]
+#
+# MIDDLEWARE = [
+#     'corsheaders.middleware.CorsMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.security.SecurityMiddleware',
+#     'silk.middleware.SilkyMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#
+# ]

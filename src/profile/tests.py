@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from django.test import TestCase
 # Project Imports
 from .models import Profile
+from src.video.models import Video
 from src.categorization.models import Category
 # Django Imports
 from django.test import TestCase
@@ -166,10 +167,10 @@ class UsersMeTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.data,
+        self.assertDictEqual(response.data,
              {
                 'me': {
-                    'id': 1,
+                    'id': 2,
                     'email': 'test@user.com',
                     'avatar_url': None,
                     'is_partner': False,
@@ -198,8 +199,50 @@ class UsersMeTestCase(TestCase):
                         'id': 2
                     },
                 },
+                'my_ranked_video_ids': [],
                 'videos': []
               })
+
+
+
+    def test_users_ranked_videos_success(self):
+        """
+        The /users/me/ endpoint should return an array of the users ranked videos.
+        """
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        primary_category = Category(name="Dance")
+        primary_category.save()
+        sub_category = Category(name="Breakdance", is_active=True, parent_category=primary_category)
+        sub_category.save()
+
+        video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            category=sub_category, rank_total=300)
+        video1.save()
+        video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
+                            category=primary_category)
+        video2.save()
+        video3 = Video(related_profile=self.test_profile2, title="My Video3", is_processing=False, is_active=True,
+                            category=primary_category)
+        video3.save()
+
+        _ = self.client.post('/api/v1/videos/{}/rank/'.format(video1.id), data={'rank_amount': 10}, format='json')
+        _ = self.client.post('/api/v1/videos/{}/rank/'.format(video2.id), data={'rank_amount': 5}, format='json')
+        _ = self.client.post('/api/v1/videos/{}/rank/'.format(video3.id), data={'rank_amount': 1}, format='json')
+
+        videos_response = self.client.get('/api/v1/users/me/', format='json')
+
+        ranked_videos = videos_response.data['my_ranked_video_ids']
+        self.assertEqual(len(ranked_videos), 3)
+        self.assertEqual(ranked_videos, [1, 2, 3])
+
+        _ = self.client.delete('/api/v1/videos/{}/rank/'.format(video3.id), format='json')
+        videos_response = self.client.get('/api/v1/users/me/', format='json')
+        ranked_videos = videos_response.data['my_ranked_video_ids']
+        self.assertEqual(len(ranked_videos), 2)
+        self.assertEqual(ranked_videos, [1, 2])
 
     def setUp(self):
         self.client = APIClient()
@@ -211,6 +254,10 @@ class UsersMeTestCase(TestCase):
         self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
         self.test_profile.primary_category = self.test_category
         self.test_profile.secondary_category = self.test_category2
+        self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
+        self.test_profile2.primary_category = self.test_category
+
+        self.test_profile2.save()
         self.test_profile.save()
         self.__create_auth_tokens()
 

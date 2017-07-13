@@ -504,6 +504,28 @@ class VideoAPIVideosListCase(APITestBase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 0)
 
+    # def test_users_ranked_videos_success(self):
+    #     """
+    #     The videos 'list' endpoint should return an array of the users ranked videos.
+    #     """
+    #     auth_token = "Bearer {}".format(self.test_profile_token)
+    #     self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+    #
+    #     _ = self.client.post('/api/v1/videos/{}/rank/'.format(self.video1.id), data={'rank_amount': 10}, format='json')
+    #     _ = self.client.post('/api/v1/videos/{}/rank/'.format(self.video2.id), data={'rank_amount': 5}, format='json')
+    #     _ = self.client.post('/api/v1/videos/{}/rank/'.format(self.video3.id), data={'rank_amount': 1}, format='json')
+    #
+    #     videos_response = self.client.get('/api/v1/videos/', format='json')
+    #
+    #     ranked_videos = videos_response.data['my_ranked_video_ids']
+    #     self.assertEqual(len(ranked_videos), 3)
+    #
+    #     _ = self.client.delete('/api/v1/videos/{}/rank/'.format(self.video3.id), format='json')
+    #     videos_response = self.client.get('/api/v1/videos/', format='json')
+    #     ranked_videos = videos_response.data['my_ranked_video_ids']
+    #     self.assertEqual(len(ranked_videos), 2)
+
+
     def setUp(self):
         APITestBase.setUp(self)
 

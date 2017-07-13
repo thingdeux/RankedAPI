@@ -527,6 +527,12 @@ paths:
                 description: "The authorized users uploaded videos"
                 items:
                   $ref: "#/definitions/Video"
+              my_ranked_video_ids:
+                type: "array"
+                items: {
+                  "type": "integer"
+                }
+
         401:
           description: "Unauthorized"
         403:

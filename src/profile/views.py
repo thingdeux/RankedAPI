@@ -27,9 +27,12 @@ def me(request):
         videos = Video.objects.filter(related_profile=profile).select_related('related_profile')\
             .select_related('category').select_related('category__parent_category')
 
+        my_ranked_videos = [x['id'] for x in Video.get_all_videos_user_has_ranked_queryset(profile.id)]
+
         response_dict = {
             'me': ProfileSerializer(instance=profile, context={"request": request}).data,
-            'videos': VideoSerializer(instance=videos, many=True).data
+            'videos': VideoSerializer(instance=videos, many=True).data,
+            'my_ranked_video_ids': my_ranked_videos
         }
         return Response(data=response_dict, status=200)
     except ObjectDoesNotExist:
