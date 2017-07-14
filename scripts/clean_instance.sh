@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 mkdir /tmp/docs -p
 mkdir /home/ec2-user/.virtualenvs/ranked-venv -p
+mkdir /home/ec2-user/static/ -p
 
 rm -rf /home/ec2-user/src/*
 rm -rf /tmp/docs/*
