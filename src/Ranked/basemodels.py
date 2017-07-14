@@ -123,7 +123,7 @@ class UploadProcessable(models.Model):
         STATIC_URL = "http://static.goranked.com"
         try:
             filename_parsed = filename.split('.')[0]
-            return ("{}/{}-00001.png".format(STATIC_URL, filename_parsed),
+            return ("{}/{}-lrg-00001.jpg".format(STATIC_URL, filename_parsed),
                     "{}/{}-00001.png".format(STATIC_URL, filename_parsed))
         except IndexError:
             return ("", "")

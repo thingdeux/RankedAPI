@@ -34,11 +34,11 @@ exports.handler = function(event, context) {
   Outputs: [{
    Key: newKey + ".mp4",
    ThumbnailPattern: newKey + "-{count}",
-   PresetId: "1499652501062-cjnh3u" // RankedWebMp41By1 PNG
+   PresetId: "1500009566806-lf6tgx" // RankedWebMp41By1-v2
   },{
    Key: newKey + ".webm",
-   ThumbnailPattern: "",
-   PresetId: "1351620000001-100240" // Webm 720p
+   ThumbnailPattern: newKey + "lrg-" + "{count}",
+   PresetId: "1500010955930-48y2d4" // RankedWebM720-v1
   }]
  };
  console.log("Starting Job");

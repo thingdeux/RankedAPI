@@ -11,7 +11,11 @@
     },
     {
       "type": "text",
-      "data": "Worth a read -&gt; <a href=\"http://stuff-things.net/2016/03/09/uploading-images-directly-from-the-browser-to-aws-s3/\">http://stuff-things.net/2016/03/09/uploading-images-directly-from-the-browser-to-aws-s3/</a>"
+      "data": "Worth a read -&gt; <a href=\"http://stuff-things.net/2016/03/09/uploading-images-directly-from-the-browser-to-aws-s3/\">http://stuff-things.net/2016/03/09/uploading-images-directly-from-the-browser-to-aws-s3/</a><div><br></div>"
+    },
+    {
+      "type": "text",
+      "data": "<pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><a href=\"https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#SecurityGroups:search=sg-dba7fda0\" target=\"_blank\" style=\"color: rgb(20, 110, 180); text-decoration: none; cursor: pointer; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; padding: 1px 2px; font-family: 'Helvetica Neue', Roboto, Arial, 'Droid Sans', sans-serif; font-size: 14px; font-variant-ligatures: normal; orphans: 2; white-space: pre-wrap; widows: 2; background-color: rgb(255, 255, 255);\">CodeDeploySampleStack-p6v1xl-SecurityGroup-L753F0AVLR9T (sg-dba7fda0</a>)</pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"></pre>"
     }
   ]
 }
