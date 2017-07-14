@@ -243,11 +243,11 @@ def is_demo_environment():
         return False
     return False
 
-
-if is_demo_environment():
-    from .demo_settings import *
-elif 'amzn' in platform.uname()[2]:
-    from .dev_settings import *
+if 'amzn' in platform.uname()[2]:
+    if is_demo_environment():
+        from .demo_settings import *
+    else:
+        from .dev_settings import *
 
 
 
