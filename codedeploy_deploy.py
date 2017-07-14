@@ -30,14 +30,14 @@ def get_environment_variable(name):
             "DEPLOYMENT_GROUP_NAME": str(os.getenv('DEPLOYMENT_GROUP_NAME')),
             "S3_BUCKET": str(os.getenv('S3_BUCKET')),
             "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG')),
-            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(get_environment_variable('APPLICATION_NAME'), VERSION_LABEL)
+            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(str(os.getenv('APPLICATION_NAME')), VERSION_LABEL)
         },
         "demo": {
             "APPLICATION_NAME": str(os.getenv('DEMO_APPLICATION_NAME')),
             "DEPLOYMENT_GROUP_NAME": str(os.getenv('DEMO_DEPLOYMENT_GROUP_NAME')),
             "S3_BUCKET": str(os.getenv('DEMO_S3_BUCKET')),
             "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG')),
-            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(get_environment_variable('APPLICATION_NAME'), VERSION_LABEL)
+            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(str(os.getenv('DEMO_APPLICATION_NAME')), VERSION_LABEL)
         }
     }
     return ENVIRONMENT_VARIABLE_KEYS[CURRENT_ENVIRONMENT][name]
