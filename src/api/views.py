@@ -9,7 +9,7 @@ from src.video.models import Video
 from src.video.serializers import VideoSerializer
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
-
+from django.http import HttpResponse
 SIX_HOURS_IN_SECONDS = 21600
 
 # Route "Enums"
@@ -91,3 +91,7 @@ def __get_profile_by_name(name):
 
 def __get_trendsetters():
     return LightProfileSerializer(Profile.get_trend_setters_queryset(), many=True).data
+
+
+def health_check(request):
+    return HttpResponse(status=200)
