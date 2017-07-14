@@ -21,7 +21,7 @@ import boto3
 from botocore.exceptions import ClientError
 
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
-CURRENT_ENVIRONMENT = "dev"
+CURRENT_ENVIRONMENT = ""
 
 def get_environment_variable(name):
     ENVIRONMENT_VARIABLE_KEYS = {
@@ -122,6 +122,7 @@ def deploy_new_revision():
 
 def main():
     # Current Options - dev|demo
+    global CURRENT_ENVIRONMENT
     CURRENT_ENVIRONMENT = str(sys.argv[0]).lower()
 
     if not upload_to_s3('/tmp/artifact.zip'):
