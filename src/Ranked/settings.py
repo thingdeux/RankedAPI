@@ -230,7 +230,7 @@ def is_demo_environment():
     import urllib
     import json
 
-    aws_info_url = "169.254.169.254/latest/meta-data/iam/info/"
+    aws_info_url = "http://169.254.169.254/latest/meta-data/iam/info/"
     response = request.urlopen(aws_info_url)
     raw_data = response.read().decode('utf-8')
     json_response = json.loads(raw_data)
