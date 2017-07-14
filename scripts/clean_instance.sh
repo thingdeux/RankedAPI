@@ -10,7 +10,8 @@ rm -rf /var/log/gunicorn.debug
 chown -R ec2-user:ec2-user /home/ec2-user/src
 chown -R nginx:nginx /tmp/docs
 chown -R nginx:nginx /tmp/static
-chown -R /home/ec2-user/.virtualenvs/ranked-venv
+chown ec2-user:ec2-user /home/ec2-user/.virtualenvs/ranked-venv
+chown ec2-user:ec2-user /home/ec2-user/.virtualenvs/ranked-venv*
 
 rm -rf /tmp/gunicorn.sock
 chown ec2-user:ec2-user /tmp/gunicorn.sock
