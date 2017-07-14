@@ -123,7 +123,7 @@ def deploy_new_revision():
 def main():
     # Current Options - dev|demo
     global CURRENT_ENVIRONMENT
-    CURRENT_ENVIRONMENT = str(sys.argv[0]).lower()
+    CURRENT_ENVIRONMENT = str(sys.argv[1]).lower()
 
     if not upload_to_s3('/tmp/artifact.zip'):
         sys.exit(1)
