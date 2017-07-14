@@ -21,4 +21,4 @@ chmod -f 777 /tmp/gunicorn.sock || true
 chmod -f 755 /tmp/docs || true
 
 # Have to remove this from images that start with apache installed
-yum remove httpd
+yum -y remove httpd
