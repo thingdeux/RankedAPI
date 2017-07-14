@@ -212,8 +212,45 @@ if DEBUG:
         }
     }
 
+
+def is_demo_environment():
+    """
+        Look for the codedeploy group that makes up the DemoFleet - If it's found then this is the demo environment.
+
+        Example Response:
+        {
+            "Code" : "Success",
+            "LastUpdated" : "2017-07-14T07:28:15Z",
+            "InstanceProfileArn" : "arn:aws:iam::582343330365:instance-profile/CodeDeployBGStack",
+            "InstanceProfileId" : "JFJFJFJFJF"
+        }
+    """
+
+    from urllib import request
+    import urllib
+    import json
+
+    aws_info_url = "http://169.254.169.254/latest/meta-data/iam/info/"
+    response = request.urlopen(aws_info_url)
+    raw_data = response.read().decode('utf-8')
+    json_response = json.loads(raw_data)
+
+    try:
+        instance_arn = json_response['InstanceProfileArn']
+        if "CodeDeployBGStack" in instance_arn:
+            return True
+    except KeyError:
+        return False
+    return False
+
 if 'amzn' in platform.uname()[2]:
-    from .dev_settings import *
+    if is_demo_environment():
+        from .demo_settings import *
+    else:
+        from .dev_settings import *
+
+
+
 
 
 # Silky profiling enable

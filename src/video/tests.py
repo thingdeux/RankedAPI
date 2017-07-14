@@ -710,7 +710,7 @@ class VideoAPIUploadingCase(APITestBase):
 
         filename = Video.generate_thumbnail_links(url)[0]
         self.assertEqual(filename, 'http://static.goranked.com/51-1bdedd12-2a36-45b6-8da2-ff2514fe6f86-trim'
-                                   '2163E8A4-3A45-47BE-AA5A-489F8919B118-00001.png')
+                                   '2163E8A4-3A45-47BE-AA5A-489F8919B118-lrg-00001.jpg')
 
 
 
