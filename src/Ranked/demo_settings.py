@@ -2,7 +2,7 @@ import os
 import platform
 from urllib import request
 
-ALLOWED_HOSTS = ['demo.goranked.com']
+ALLOWED_HOSTS = ['api.goranked.com']
 
 # AWS ELB Health Checker uses the instances local IP to perform health checks. Django will raise suspicious
 # Exception if the ip is not added to the allowed_hosts.  Using the AWS instance metadata to pull the
