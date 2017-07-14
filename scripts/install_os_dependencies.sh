@@ -9,4 +9,3 @@ yum install -y python-pip python35 python35-pip htop
 # if additional python dependencies need to be installed w/ root.
 pip install virtualenv
 pip install virtualenvwrapper
-pip install psycopg2

@@ -10,15 +10,6 @@
       "type": "code",
       "language": "sh",
       "data": "# Swagger-CodegenCommands\n\nswagger-codegen generate -i API-STRUCTURE.yaml -l javascript -o codegen/js\n"
-    },
-    {
-      "type": "markdown",
-      "data": "# Messing about with update for ranking top\\_10"
-    },
-    {
-      "type": "code",
-      "language": "python",
-      "data": "from src.api.views import __get_explore_search_data\n\nblah = __get_explore_search_data(None, 33)"
     }
   ]
 }
