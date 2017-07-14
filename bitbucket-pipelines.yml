@@ -7,7 +7,7 @@ image: python:3.6.0
 
 pipelines:
   branches:
-    master: # Deployment pipeline for Ranked CodeDeploy
+    master: # Deployment pipeline for Dev/Ranked CodeDeploy
       - step:
           caches:
             - pip
@@ -17,4 +17,16 @@ pipelines:
             - python manage.py test
             - apt-get install -y zip # required for packaging up the application
             - zip -r /tmp/artifact.zip * # package up the application for deployment
-            - python codedeploy_deploy.py # run the deployment script
+            - python codedeploy_deploy.py dev # run the deployment script
+
+    release: # Deployment pipeline for Demo/Ranked CodeDeploy
+      - step:
+          caches:
+            - pip
+          script:
+            - apt-get update # required to install zip
+            - pip install -r requirements.txt
+            - python manage.py test
+            - apt-get install -y zip # required for packaging up the application
+            - zip -r /tmp/artifact.zip * # package up the application for deployment
+            - python codedeploy_deploy.py demo # run the deployment script
