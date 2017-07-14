@@ -21,9 +21,6 @@ import boto3
 from botocore.exceptions import ClientError
 
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
-BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + VERSION_LABEL + \
-             '-bitbucket_builds.zip'
-
 CURRENT_ENVIRONMENT = "dev"
 
 def get_environment_variable(name):
@@ -32,17 +29,18 @@ def get_environment_variable(name):
             "APPLICATION_NAME": str(os.getenv('APPLICATION_NAME')),
             "DEPLOYMENT_GROUP_NAME": str(os.getenv('DEPLOYMENT_GROUP_NAME')),
             "S3_BUCKET": str(os.getenv('S3_BUCKET')),
-            "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG'))
+            "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG')),
+            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(get_environment_variable('APPLICATION_NAME'), VERSION_LABEL)
         },
         "demo": {
             "APPLICATION_NAME": str(os.getenv('DEMO_APPLICATION_NAME')),
             "DEPLOYMENT_GROUP_NAME": str(os.getenv('DEMO_DEPLOYMENT_GROUP_NAME')),
             "S3_BUCKET": str(os.getenv('DEMO_S3_BUCKET')),
-            "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG'))
+            "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG')),
+            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(get_environment_variable('APPLICATION_NAME'), VERSION_LABEL)
         }
     }
     return ENVIRONMENT_VARIABLE_KEYS[CURRENT_ENVIRONMENT][name]
-
 
 def upload_to_s3(artifact):
     """
@@ -57,7 +55,7 @@ def upload_to_s3(artifact):
         client.put_object(
             Body=open(artifact, 'rb'),
             Bucket=get_environment_variable('S3_BUCKET'),
-            Key=BUCKET_KEY
+            Key=get_environment_variable('BUCKET_KEY')
         )
     except ClientError as err:
         print("Failed to upload artifact to S3.\n" + str(err))
@@ -86,7 +84,7 @@ def deploy_new_revision():
                 'revisionType': 'S3',
                 's3Location': {
                     'bucket': get_environment_variable('S3_BUCKET'),
-                    'key': BUCKET_KEY,
+                    'key': get_environment_variable('BUCKET_KEY'),
                     'bundleType': 'zip'
                 }
             },
