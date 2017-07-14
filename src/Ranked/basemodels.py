@@ -124,7 +124,7 @@ class UploadProcessable(models.Model):
         try:
             filename_parsed = filename.split('.')[0]
             return ("{}/{}-lrg-00001.jpg".format(STATIC_URL, filename_parsed),
-                    "{}/{}-00001.png".format(STATIC_URL, filename_parsed))
+                    "{}/{}-00001.png".format(STATIC_URL, filename_parsed))  # TODO: Update the thumbnail job to generate jpgs
         except IndexError:
             return ("", "")
 

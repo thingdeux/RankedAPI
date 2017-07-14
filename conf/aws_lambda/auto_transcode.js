@@ -37,7 +37,7 @@ exports.handler = function(event, context) {
    PresetId: "1500009566806-lf6tgx" // RankedWebMp41By1-v2
   },{
    Key: newKey + ".webm",
-   ThumbnailPattern: newKey + "lrg-" + "{count}",
+   ThumbnailPattern: newKey + "-lrg-" + "{count}",
    PresetId: "1500010955930-48y2d4" // RankedWebM720-v1
   }]
  };

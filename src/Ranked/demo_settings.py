@@ -31,7 +31,7 @@ DATABASES = {
         'NAME': 'RankedDemo',
         'USER': 'rankeddbadmin',
         'PASSWORD': '40hff!9939fhhbvc',
-        'HOST': 'rankeddemo.cgafuwikv4jj.us-west-2.rds.amazonaws.com',
+        'HOST': 'rankeddemodb.cgafuwikv4jj.us-west-2.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
