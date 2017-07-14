@@ -19,3 +19,6 @@ chown ec2-user:ec2-user /tmp/gunicorn.sock
 # TODO: Remove these permissions
 chmod -f 777 /tmp/gunicorn.sock || true
 chmod -f 755 /tmp/docs || true
+
+# Have to remove this from images that start with apache installed
+yum remove httpd
