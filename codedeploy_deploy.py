@@ -16,14 +16,31 @@ v1.0.0
 from __future__ import print_function
 import os
 import sys
-from time import strftime, sleep
+from time import strftime
 import boto3
 from botocore.exceptions import ClientError
 
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
-BUCKET_KEY = os.getenv('APPLICATION_NAME') + '/' + VERSION_LABEL + \
-             '-bitbucket_builds.zip'
+CURRENT_ENVIRONMENT = "dev"
 
+def get_environment_variable(name):
+    ENVIRONMENT_VARIABLE_KEYS = {
+        "dev": {
+            "APPLICATION_NAME": str(os.getenv('APPLICATION_NAME')),
+            "DEPLOYMENT_GROUP_NAME": str(os.getenv('DEPLOYMENT_GROUP_NAME')),
+            "S3_BUCKET": str(os.getenv('S3_BUCKET')),
+            "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG')),
+            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(str(os.getenv('APPLICATION_NAME')), VERSION_LABEL)
+        },
+        "demo": {
+            "APPLICATION_NAME": str(os.getenv('DEMO_APPLICATION_NAME')),
+            "DEPLOYMENT_GROUP_NAME": str(os.getenv('DEMO_DEPLOYMENT_GROUP_NAME')),
+            "S3_BUCKET": str(os.getenv('DEMO_S3_BUCKET')),
+            "DEPLOYMENT_CONFIG": str(os.getenv('DEPLOYMENT_CONFIG')),
+            "BUCKET_KEY": "{}/{}-bitbucket_builds.zip".format(str(os.getenv('DEMO_APPLICATION_NAME')), VERSION_LABEL)
+        }
+    }
+    return ENVIRONMENT_VARIABLE_KEYS[CURRENT_ENVIRONMENT][name]
 
 def upload_to_s3(artifact):
     """
@@ -37,8 +54,8 @@ def upload_to_s3(artifact):
     try:
         client.put_object(
             Body=open(artifact, 'rb'),
-            Bucket=os.getenv('S3_BUCKET'),
-            Key=BUCKET_KEY
+            Bucket=get_environment_variable('S3_BUCKET'),
+            Key=get_environment_variable('BUCKET_KEY')
         )
     except ClientError as err:
         print("Failed to upload artifact to S3.\n" + str(err))
@@ -61,17 +78,17 @@ def deploy_new_revision():
 
     try:
         response = client.create_deployment(
-            applicationName=str(os.getenv('APPLICATION_NAME')),
-            deploymentGroupName=str(os.getenv('DEPLOYMENT_GROUP_NAME')),
+            applicationName=get_environment_variable('APPLICATION_NAME'),
+            deploymentGroupName=get_environment_variable('DEPLOYMENT_GROUP_NAME'),
             revision={
                 'revisionType': 'S3',
                 's3Location': {
-                    'bucket': os.getenv('S3_BUCKET'),
-                    'key': BUCKET_KEY,
+                    'bucket': get_environment_variable('S3_BUCKET'),
+                    'key': get_environment_variable('BUCKET_KEY'),
                     'bundleType': 'zip'
                 }
             },
-            deploymentConfigName=str(os.getenv('DEPLOYMENT_CONFIG')),
+            deploymentConfigName=get_environment_variable('DEPLOYMENT_CONFIG'),
             description='New deployment from BitBucket',
             ignoreApplicationStopFailures=True
         )
@@ -104,6 +121,9 @@ def deploy_new_revision():
 
 
 def main():
+    # Current Options - dev|demo
+    CURRENT_ENVIRONMENT = str(sys.argv[0]).lower()
+
     if not upload_to_s3('/tmp/artifact.zip'):
         sys.exit(1)
     if not deploy_new_revision():
