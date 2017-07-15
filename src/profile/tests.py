@@ -6,6 +6,7 @@ from django.test import TestCase
 from .models import Profile
 from src.video.models import Video
 from src.categorization.models import Category
+from src.Ranked.test import APITestBase
 # Django Imports
 from django.test import TestCase
 from django.utils import timezone
@@ -516,3 +517,42 @@ class UserListTestCase(TestCase):
             application=self.application
         )
         self.test_profile3.save()
+
+class UserPatchTestCase(APITestBase):
+
+    def test_profile_update_via_patch_success(self):
+        """
+        /Users/<id>/Patch/ should allow updating of profile  fields
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.patch('/api/v1/users/{}/'.format(self.test_profile.id), data={
+            'password': 'slewfoot',
+            'email': 'somenewemail@email.com'
+        },format="json")
+
+        self.assertEqual(response.status_code, 200)
+        profile = Profile.objects.get(id=self.test_profile.id)
+        self.assertEqual(profile.email, 'somenewemail@email.com')
+
+    def test_profile_update_via_patch_failure_on_email_unique_constraint(self):
+        """
+        /Users/<id>/Patch/ should allow updating of profile  fields
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+        self.test_profile2.email = 'emailtoreuse@yup.com'
+        self.test_profile2.save()
+
+        response = self.client.patch('/api/v1/users/{}/'.format(self.test_profile.id), data={
+            'email': 'emailtoreuse@yup.com'
+        },format="json")
+
+        self.assertEqual(response.status_code, 408)
+
+    def setUp(self):
+        APITestBase.setUp(self)
+        self.client = APIClient()

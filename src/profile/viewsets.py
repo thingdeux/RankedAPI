@@ -14,6 +14,7 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasS
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import IntegrityError
 
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
@@ -51,6 +52,9 @@ class ProfileViewSet(viewsets.ModelViewSet):
             error = {"description": "Password does not meet standards. At least 6 characters.",
                      "errors": ["password"]}
             return Response(status=400, data=error)
+        except IntegrityError:
+            error = {'description': 'E-Mail already in use'}
+            return Response(status=408, data=error)
         except KeyError:
             return Response(status=404)
 
