@@ -7,7 +7,7 @@ chown -R nginx:nginx /home/ec2-user/static/
 
 cp /home/ec2-user/src/ranked/conf/nginx/default.conf /etc/nginx/nginx.conf
 
-unlink /etc/nginx/sites-enabled/*
+unlink /etc/nginx/sites-enabled/* > /dev/null
 
 cp /home/ec2-user/src/ranked/conf/nginx/dev.conf /etc/nginx/sites-available/goranked.conf
 

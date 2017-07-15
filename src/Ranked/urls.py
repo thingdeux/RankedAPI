@@ -20,14 +20,16 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 # Project Imports
 import src.api.urls as api_urls
+from src.api.views import health_check
 from src.profile.models import Profile
 
 admin.site.register(Profile, UserAdmin)
 admin.autodiscover()
 
 urlpatterns = [
+    url(r'superduperextrasecretsuperhealthcheck/', health_check),
     url(r'^api/v1/', include(api_urls)),
-    url(r'^josh/', admin.site.urls)
+    url(r'^josh/', admin.site.urls),
 ]
 
 # if settings.DEBUG:
