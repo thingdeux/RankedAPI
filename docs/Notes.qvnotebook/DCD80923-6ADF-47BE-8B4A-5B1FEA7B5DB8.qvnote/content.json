@@ -3,28 +3,15 @@
   "cells": [
     {
       "type": "markdown",
-      "data": "\n\n### OAuth Flow Notes"
-    },
-    {
-      "type": "code",
-      "language": "sh",
-      "data": "curl -X POST -d \"grant_type=password&username=<user_name>&password=<password>\" -u\"<client_id>:<client_secret>\" http://localhost:8000/<TOKEN ENDPOINT>"
+      "data": "# Redis\nvpc Group: sg-56df782c"
     },
     {
       "type": "markdown",
-      "data": "### Full Text Search Indexes\n\nTo speed up the search, PostgreSQL offers the use of indexes. It is worth noting that the index is not required for a full-text search. But if the search takes place in specific (constant) columns, the presence of the index is desirable.\n\nThere are 2 types of indexes:\n\nGiST (Generalized Search Tree) - a bit signature is assigned for each document, which contains information about all the tokens that are in this document. It is created with a command:\n\n```\nCREATE INDEX name ON table USING GIST (column);\n\n```\n\nGIN (Generalized Inverted Index) - in this type of index the key is a token and the value is an organized list of document identifiers which contain the token. It is created with a command:\n\n```\nCREATE INDEX name ON table USING GIN (column);\n```\n\nThere is a big difference in performance between these two types of indexes. Before you choose which one to use, I recommend you to study the documentation on them in detail. I would like to add that:\n\n* the creation of GIN index is 3 times faster than GiST\n* GIN index is 2-3 times bigger than GiST-index\n* Search for GIN index is 3 times faster than GiST index\n* GiN index updates 10 times slower\n\nIt is best to use GiST index for updated data, and GIN index suits well for static data.\n"
+      "data": "\n### Full Text Search Indexes\n\nTo speed up the search, PostgreSQL offers the use of indexes. It is worth noting that the index is not required for a full-text search. But if the search takes place in specific (constant) columns, the presence of the index is desirable.\n\nThere are 2 types of indexes:\n\nGiST (Generalized Search Tree) - a bit signature is assigned for each document, which contains information about all the tokens that are in this document. It is created with a command:\n\n```\nCREATE INDEX name ON table USING GIST (column);\n\n```\n\nGIN (Generalized Inverted Index) - in this type of index the key is a token and the value is an organized list of document identifiers which contain the token. It is created with a command:\n\n```\nCREATE INDEX name ON table USING GIN (column);\n```\n\nThere is a big difference in performance between these two types of indexes. Before you choose which one to use, I recommend you to study the documentation on them in detail. I would like to add that:\n\n* the creation of GIN index is 3 times faster than GiST\n* GIN index is 2-3 times bigger than GiST-index\n* Search for GIN index is 3 times faster than GiST index\n* GiN index updates 10 times slower\n\nIt is best to use GiST index for updated data, and GIN index suits well for static data."
     },
     {
       "type": "text",
-      "data": "Google Tracking"
-    },
-    {
-      "type": "text",
-      "data": "<div>&lt;script&gt;</div><div>&nbsp; (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){</div><div>&nbsp; (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),</div><div>&nbsp; m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)</div><div>&nbsp; })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');</div><div><br></div><div>&nbsp; ga('create', 'UA-102519446-1', 'auto');</div><div>&nbsp; ga('send', 'pageview');</div><div><br></div><div>&lt;/script&gt;</div><div><br></div>"
-    },
-    {
-      "type": "text",
-      "data": "Property ID:&nbsp;<span style=\"color: rgb(34, 34, 34); font-family: Roboto, sans-serif; font-variant-ligatures: normal; orphans: 2; widows: 2; background-color: rgb(255, 255, 255);\">UA-102519446-1</span>"
+      "data": ""
     }
   ]
 }

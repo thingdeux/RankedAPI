@@ -12,13 +12,16 @@
       "data": "# Swagger-CodegenCommands\n\nswagger-codegen generate -i API-STRUCTURE.yaml -l javascript -o codegen/js\n"
     },
     {
-      "type": "markdown",
-      "data": "# Messing about with update for ranking top\\_10"
+      "type": "text",
+      "data": "Location for codedeploy logs -&gt;&nbsp;<span style=\"font-family: 'Andale Mono'; font-size: 12px;\">/opt/codedeploy-agent/deployment-root/deployment-logs</span>"
     },
     {
-      "type": "code",
-      "language": "python",
-      "data": "from src.api.views import __get_explore_search_data\n\nblah = __get_explore_search_data(None, 33)"
+      "type": "text",
+      "data": "<div>— Names of AMI images</div><div><div style=\"color: rgb(221, 221, 221);\"><a data-ami-id=\"ami-1b3b462b\" style=\"color: rgb(17, 102, 187); background-color: rgb(255, 255, 255); border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; padding: 1px 2px; cursor: pointer; font-family: 'Helvetica Neue', Roboto, Arial, sans-serif; font-variant-ligatures: normal; orphans: 2; widows: 2;\">amzn-ami-pv-2014.03.2.x86_64-ebs (ami-1b3b462b) &nbsp;- OLD</a></div><div style=\"color: rgb(221, 221, 221);\"><a data-ami-id=\"ami-5ec1673e\" style=\"color: rgb(17, 102, 187); background-color: rgb(255, 255, 255); border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; padding: 1px 2px; cursor: pointer; font-variant-ligatures: normal;\"><br></a></div><div style=\"color: rgb(221, 221, 221);\"><a data-ami-id=\"ami-5ec1673e\" style=\"color: rgb(17, 102, 187); background-color: rgb(255, 255, 255); border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; padding: 1px 2px; cursor: pointer; font-variant-ligatures: normal;\">amzn-ami-hvm-2016.09.0.20161028-x86_64-gp2 (ami-5ec1673e) = T2 Micros</a></div></div>"
+    },
+    {
+      "type": "markdown",
+      "data": "# Contextual Search\n------\nThe content to be searched for will change based on the selected tab\n\n\n### Explore\n\n**Results**: Mixture of Profile / Video\n**Notes**: \n  - If the search phrase contains a \\# at the beginning - then limit the results to videos.\n\n### Trending\n\n/list/top/\n\n### Ranked 10\n\n**Results**: Videos (Limit to videos with the is\\_ranked\\_ten flag set to True)\n**Note**: \n- is_ranked_ten will be faked for the alpha. (Maybe)\n\n### ‘Trend Setters’:\n\n**Results**: Profiles (Profiles with videos that are highly ranked)\n\n**Notes**: \n  - This won’t be working for the alpha."
     }
   ]
 }

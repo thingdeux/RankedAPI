@@ -160,6 +160,7 @@ class ProfileImporter:
         finally:
             profile.avatar_url = profile_to_update.avatar_url
             profile.set_password(profile_to_update.password)
+            profile.email = "{}@goranked.com".format(profile.username)
             self.__add_category_to_profile(profile_to_update.favorite_category1, profile)
             self.__add_category_to_profile(profile_to_update.favorite_category2, profile, False)
             profile.is_active = True
