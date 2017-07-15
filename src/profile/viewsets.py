@@ -129,12 +129,6 @@ class RegisterViewSet(viewsets.ModelViewSet):
             serialized_profile = ProfileSerializer(data=request.data)
             _validate_registration_fields(request.data)
             if serialized_profile.is_valid():
-                existing_account = list(Profile.objects.filter(email=serialized_profile.validated_data['email']))
-
-                if len(existing_account) > 0:
-                    error = {"description": "E-Mail already exists"}
-                    return Response(status=408, data=error)
-
                 new_profile = serialized_profile.save()
                 new_profile.save()
                 serialized_new_profile = ProfileSerializer(new_profile)
@@ -144,6 +138,9 @@ class RegisterViewSet(viewsets.ModelViewSet):
                 errors = []
                 for error in serialized_profile.errors:
                     errors.append(error)
+                if 'email' in errors:
+                    error = {"description": "E-Mail already exists"}
+                    return Response(status=408, data=error)
 
                 error = { "description": "Errors in fields", "errors": errors }
                 return Response(status=400, data=error)

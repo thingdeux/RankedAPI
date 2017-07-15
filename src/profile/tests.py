@@ -52,7 +52,7 @@ class RegistrationTestCase(TestCase):
         """
         Email is unique - verify two exact emails can't exist.
         """
-        response = self.client.post('/api/v1/users/register/', {
+        response = self.client.post('/api/v1/users/register/', data={
             'username': 'test_use23232r',
             'password': 'mo3435re',
             'email': 'test@user.com',
