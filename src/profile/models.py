@@ -6,7 +6,7 @@ from src.categorization.models import Category
 from src.categorization.serializers import CategorySerializer
 
 class Profile(AbstractUser, Base):
-    email = models.EmailField(max_length=256, db_index=True)
+    email = models.EmailField(max_length=256, db_index=True, unique=True)
     avatar_url = models.URLField(max_length=512, default=None, null=True)
     is_partner = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
