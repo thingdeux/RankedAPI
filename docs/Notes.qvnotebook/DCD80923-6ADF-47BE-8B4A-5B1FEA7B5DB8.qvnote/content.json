@@ -3,7 +3,19 @@
   "cells": [
     {
       "type": "markdown",
-      "data": "# Redis\nvpc Group: sg-56df782c"
+      "data": "# PERFORMANCE (Load Testing)\n3 T2.Micros\n85 req/s - 200 users.\n0% failure. Sustained running w/ ~60% CPU per app box and 22% CPU on DB.\n20K Requests w/ No failures or drops.\n\n# Run 2\n85 req/s - 200 users.\n0% failure. Sustained running w/ ~60% CPU per app box and 22% CPU on DB.\n20K Requests w/ No failures or drops."
+    },
+    {
+      "type": "text",
+      "data": "Kill unnecessary auth tokens.<div><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">from oauth2_provider.models import AccessToken</span></p><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">tokes = AccessToken.objects.filter(user__id=6)</span></p><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">tokes.delete()</span></p></div>"
+    },
+    {
+      "type": "text",
+      "data": ""
+    },
+    {
+      "type": "text",
+      "data": ""
     },
     {
       "type": "markdown",
