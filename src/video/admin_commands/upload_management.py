@@ -57,6 +57,19 @@ class UploadPurger:
         except ClientError as err:
             print("Received S3 Client Error {}".format(err))
 
-if __name__ == "__main__":
-    purger = UploadPurger()
-    purger.process()
+def update_videos_to_large_urls():
+    from django.core.exceptions import ObjectDoesNotExist
+    from src.video.models import Video
+
+    for filename in names_to_purge.split('\n'):
+        if len(filename) > 0:
+            vid_to_update = None
+
+            try:
+                vid_to_update = Video.objects.get(custom_field1='{}.mp4'.format(filename))
+            except ObjectDoesNotExist:
+                vid_to_update = Video.objects.filter(custom_field1='{}.mov'.format(filename)).first()
+            finally:
+                if vid_to_update:
+                    vid_to_update.thumbnail_large = 'http://static.goranked.com/{}-lrg-00001.jpg'.format(filename)
+                    vid_to_update.save()
