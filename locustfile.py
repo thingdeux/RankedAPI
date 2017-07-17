@@ -7,7 +7,7 @@
 
 # To Install -> pip install locustio==0.8a2
 # To Run -> locust --host=http://api.goranked.com
-# Navigate to http://127.0.0.1:8089 
+# Navigate to http://127.0.0.1:8089
 
 from locust import HttpLocust, TaskSet, task
 import json

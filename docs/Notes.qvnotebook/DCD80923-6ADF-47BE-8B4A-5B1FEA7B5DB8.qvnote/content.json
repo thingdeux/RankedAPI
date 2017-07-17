@@ -2,12 +2,16 @@
   "title": "Dev Notes",
   "cells": [
     {
-      "type": "markdown",
-      "data": "# PERFORMANCE (Load Testing)\n3 T2.Micros\n85 req/s - 200 users.\n0% failure. Sustained running w/ ~60% CPU per app box and 22% CPU on DB.\n20K Requests w/ No failures or drops.\n\n# Run 2\n85 req/s - 200 users.\n0% failure. Sustained running w/ ~60% CPU per app box and 22% CPU on DB.\n20K Requests w/ No failures or drops."
+      "type": "text",
+      "data": "Kill unnecessary auth tokens.<div><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">from oauth2_provider.models import AccessToken</span></p><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">tokes = AccessToken.objects.filter(user__id=6)</span></p><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">tokes.delete()</span></p></div>"
     },
     {
       "type": "text",
-      "data": "Kill unnecessary auth tokens.<div><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">from oauth2_provider.models import AccessToken</span></p><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">tokes = AccessToken.objects.filter(user__id=6)</span></p><p style=\"margin: 0px; font-size: 12px; line-height: normal; font-family: 'Andale Mono'; color: rgb(40, 254, 20); background-color: rgba(0, 0, 0, 0.901961);\"><span style=\"font-variant-ligatures: no-common-ligatures\">tokes.delete()</span></p></div>"
+      "data": "<div><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><span style=\"color:#008080;\">Demo_KohnkeStephens_JasmineThompson–Adore[OfficialVideo]<br></span><span style=\"color:#008080;\">Demo_HulmSteller_JhenéAikoCoversTupacsKeepYaHeadUp<br></span><span style=\"color:#008080;\">Demo_FullenWilder_RachelCollier_OriginalSongs&amp;BeatMakers4<br></span><span style=\"color:#008080;\">Demo_TheresaBenitez_No[o]neUltrakillvs.TeamEmpireGlobaleSportsCup</span></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><span style=\"color:#008080;\">Demo_MckenzieLaura_BestOneHandCatchNFLInterceptionDolphinsGrines</span></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><span style=\"color:#008080;\"><br></span></pre><pre style=\"background-color:#272822;color:#f8f8f2;font-family:'Menlo';font-size:9.0pt;\"><pre style=\"color: rgb(248, 248, 242); background-color: rgb(39, 40, 34); font-family: Menlo; font-size: 9pt;\"><span style=\"color: rgb(0, 128, 128);\">Demo_DarrenPeck_BestTysonKnockout39</span></pre></pre></div><div><br></div><div><br></div>"
+    },
+    {
+      "type": "text",
+      "data": ""
     },
     {
       "type": "text",

@@ -1,0 +1,11 @@
+names_to_purge = """
+Demo_BenjaminFreida_LightMatchwithouttouching-science
+Demo_BenjaminFreida_360VIDEO-SPINAROUND(FlyingDroneVidcon)
+Demo_KohnkeStephens_JasmineThompson–Adore[OfficialVideo]
+Demo_HulmSteller_JhenéAikoCoversTupacsKeepYaHeadUp
+Demo_FullenWilder_RachelCollier_OriginalSongs&BeatMakers4
+Demo_TheresaBenitez_No[o]neUltrakillvs.TeamEmpireGlobaleSportsCup
+Demo_DarrenPeck_BestTysonKnockout39
+Demo_MckenzieLaura_BestOneHandCatchNFLInterceptionDolphinsGrines
+"""
+
