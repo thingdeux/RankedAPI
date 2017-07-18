@@ -73,3 +73,13 @@ def update_videos_to_large_urls():
                 if vid_to_update:
                     vid_to_update.thumbnail_large = 'http://static.goranked.com/{}-lrg-00001.jpg'.format(filename)
                     vid_to_update.save()
+
+def purge_old_videos():
+    from src.video.models import Video
+
+    for filename in names_to_purge.split('\n'):
+        if len(filename) > 0:
+            bad_vid = Video.objects.filter(custom_field1=filename).first()
+            if bad_vid:
+                print("Deleting {}".format(filename))
+                bad_vid.delete()
