@@ -27,8 +27,18 @@ class SearchExploreAPICase(TestCase):
 
         response = self.client.get('/api/v1/search/?category=1', format='json')
         self.assertEqual(response.status_code, 200)
+        # TODO: Add video category and check here
 
+    def test_search_trendsetters_success_less_than_20(self):
+        """
+        If not enough accounts exist for 20 random ids - just return what we have.
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
+        response = self.client.get('/api/v1/search/trendsetters/', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['profiles']), 2)
 
 
     def setUp(self):
