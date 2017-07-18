@@ -133,7 +133,7 @@ class ProfileImporter:
         video.low = 'http://{}/{}.webm'.format("videos.goranked.com", filename.split('.')[0])
         filename_parsed = filename.split('.')[0]
         # TODO: This should be updated to using -lrg-00001.jpg
-        video.thumbnail_large = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)
+        video.thumbnail_large = "{}/{}-lrg-00001.jpg".format(STATIC_URL, filename_parsed)
         video.thumbnail_small = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)
 
     def __add_category_to_video(self, category_string, video):
