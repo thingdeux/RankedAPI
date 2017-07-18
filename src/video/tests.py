@@ -36,6 +36,32 @@ class VideoRankingAPICase(APITestBase):
         self.assertEqual(latest_ranking.related_profile, self.test_profile2)
         self.assertEqual(latest_ranking.video, self.video1)
 
+    def test_ranking_amount_is_a_string(self):
+        """
+        If ranking endpoint is send a string for rank_amount make sure it accepts it.
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.post('/api/v1/videos/{}/rank/'.format(self.video1.id), {
+            'rank_amount': '8'
+        }, format='json')
+
+        latest_ranking = Ranking.objects.get(video=self.video1, related_profile=self.test_profile2)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(latest_ranking.rank_amount, 8)
+
+        response = self.client.post('/api/v1/videos/{}/rank/'.format(self.video2.id), {
+            'rank_amount': '100'
+        }, format='json')
+
+        latest_ranking = Ranking.objects.get(video=self.video2, related_profile=self.test_profile2)
+        self.assertEqual(response.status_code, 200)
+        # Any Rank amount over 10 should just be set to 10
+        self.assertEqual(latest_ranking.rank_amount, 10)
+
+
     def test_ranking_rank_amount_is_zero(self):
         """
         Account creation success

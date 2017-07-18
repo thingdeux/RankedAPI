@@ -111,7 +111,7 @@ class VideoViewSet(viewsets.ModelViewSet):
             try:
                 video = Video.objects.get(id=pk)
                 profile = self.request.user
-                rank_amount = request.data.get('rank_amount', 1)
+                rank_amount = VideoViewSet.__get_rank_as_int(request.data.get('rank_amount', 1))
 
                 if rank_amount > 10:
                     rank_amount = 10
@@ -130,6 +130,13 @@ class VideoViewSet(viewsets.ModelViewSet):
                 return Response(status=404, data=error)
         elif request.method == "DELETE":
             return self.__delete_ranking(self.request.user, pk)
+
+    @staticmethod
+    def __get_rank_as_int(amount):
+        try:
+            return int(amount)
+        except ValueError:
+            return 1
 
     def __delete_ranking(self, profile, video_id):
         try:
