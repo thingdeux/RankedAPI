@@ -26,7 +26,7 @@ class RegistrationTestCase(TestCase):
         response = self.client.post('/api/v1/users/register/', {
             'username': 'ishouldwork',
             'password': 'mo3435re',
-            'email': 'shouldwork@user.com',
+            'email': 'shouldwork@user.media',
             'unlock_key': '123123'
         }, format='json')
 
@@ -35,7 +35,7 @@ class RegistrationTestCase(TestCase):
             'id': 2,
             'username': 'ishouldwork',
             'is_featured': False,
-            'email': 'shouldwork@user.com',
+            'email': 'shouldwork@user.media',
             'phone_number': None,
             'is_partner': False,
             'avatar_url': None,

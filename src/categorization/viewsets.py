@@ -16,7 +16,7 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
 
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = CategorySerializer
-    queryset = Category.objects.filter(is_active=True).select_related('parent_category')
+    queryset = Category.objects.filter(is_active=True).order_by('ordinal').select_related('parent_category')
 
     # @silk_profile(name='Category List')
     # def list(self, request, *args, **kwargs):

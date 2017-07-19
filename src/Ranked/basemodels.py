@@ -151,3 +151,12 @@ class CustomFieldStorable(models.Model):
 
     class Meta:
         abstract = True
+
+class Orderable(models.Model):
+    """
+    Allow ordinal and create custom order
+    """
+    ordinal = models.IntegerField(default=1000, null=False, blank=False)
+
+    class Meta:
+        abstract = True
