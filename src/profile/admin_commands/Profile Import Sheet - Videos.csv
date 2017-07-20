@@ -1,10 +1,9 @@
 username,filename,Taylors FileName,title,hashtag,category,is_featured,total_rank_number
-TylerWilliams,Demo_TylerWilliams_GetOutChallenge.mov,Get Out Challenge.mov,,GetOut Challenge,Latest Trends,YES,59
 TylerWilliams,Demo_TylerWilliams_MannequinChallenge.mp4,Mannequin Challenge.mp4,,Mannequin Challenge,Latest Trends,NO,100
 TylerWilliams,Demo_TylerWilliams_MannequinChallenge1.mp4,MannequinChallenge1.mp4,,Mannequin Challenge,Latest Trends,NO,75
 TylerWilliams,Demo_TylerWilliams_BacktoSchoolProblems.mp4,Back to School Problems.mp4,,Magic,Magic,YES,25
-TylerWilliams,Demo_TylerWilliams_DavidBlaine-FrogTrick1-magic.mp4,David Blaine - Frog Trick 1 - magic.mp4,,"Magic, David Blaine",Magic,NO,150
-TylerWilliams,Demo_TylerWilliams_DavidBlaine-FrogTrick2-magic.mp4,David Blaine - Frog Trick 2 - magic.mp4,,"Magic, David Blaine",Magic,NO,670
+TylerWilliams,Demo_TylerWilliams_DavidBlaine-FrogTrick1magic.mp4,David Blaine - Frog Trick 1 - magic.mp4,,"Magic, David Blaine",Magic,NO,150
+TylerWilliams,Demo_TylerWilliams_DavidBlaine-FrogTrick2magic.mp4,David Blaine - Frog Trick 2 - magic.mp4,,"Magic, David Blaine",Magic,NO,670
 TylerWilliams,Demo_TylerWilliams_GettingawaywithSchoolPrank.mp4,Getting away with School Prank.mp4,,Magic,Magic,NO,278
 TylerWilliams,Demo_TylerWilliams_HowtoCleanYourRoom.mp4,How to Clean Your Room.mp4,,Magic,Magic,NO,245
 TylerWilliams,Demo_TylerWilliams_JailEscape.mp4,Jail Escape.mp4,,Magic,Magic,NO,168
@@ -47,7 +46,6 @@ JennyBrown,Demo_JennyBrown_BestMLBbaseballplay11.mp4,BestMLBbaseballplay11.mp4,,
 JennyBrown,Demo_JennyBrown_BestMLBbaseballplay12.mp4,BestMLBbaseballplay12.mp4,,"Baseball, Best Play",Baseball,NO,116
 JennyBrown,Demo_JennyBrown_BestPlaysLittleLeagueWorldSeries1.mp4,BestPlaysLittleLeagueWorldSeries1.mp4,,"Baseball, Little League",Baseball,NO,300
 JennyBrown,Demo_JennyBrown_BestPlaysLittleLeagueWorldSeries2.mp4,BestPlaysLittleLeagueWorldSeries2.mp4,,"Baseball, Little League",Baseball,NO,66
-JamilaConner,Demo_JamilaConner_1WomensFashionChanel6.mp4,1WomensFashionChanel6.mp4,,"Style, Womens Fashion, Chanel",Women's Fashion & Modeling,NO,199
 JamilaConner,Demo_JamilaConner_BestFashionMetBallAdrianaLima.mp4,BestFashionMetBallAdrianaLima.mp4,,"Style, Fashion, Women, Adriana Lima",Women's Fashion & Modeling,NO,321
 JamilaConner,Demo_JamilaConner_BestFashionMetBallBellaHadid.mp4,BestFashionMetBallBellaHadid.mp4,,"Style, Fashion, Women, Bella Hadid",Women's Fashion & Modeling,NO,414
 JamilaConner,Demo_JamilaConner_BestFashionMetBallDianeVonFurstenberg.mp4,BestFashionMetBallDianeVonFurstenberg.mp4,,"Style, Fashion, Women, Diane Von Furstenberg",Women's Fashion & Modeling,NO,424
@@ -55,7 +53,7 @@ JamilaConner,Demo_JamilaConner_BestFashionMetBallGigiHadid.mp4,BestFashionMetBal
 JamilaConner,Demo_JamilaConner_BestFashionMetBallGiseleBundchenTomBrady.mp4,BestFashionMetBallGiseleBundchenTomBrady.mp4,,"Style, Fashion, Women, Gisele Bundchen",Women's Fashion & Modeling,NO,552
 JamilaConner,Demo_JamilaConner_BestFashionMetBallHalleBerry.mp4,BestFashionMetBallHalleBerry.mp4,,"Style, Fashion, Women, Halle Berry",Women's Fashion & Modeling,NO,245
 JamilaConner,Demo_JamilaConner_BestFashionMetBallJanelleMonae.mp4,BestFashionMetBallJanelleMonae.mp4,,"Style, Fashion, Women, Jenell Monae",Women's Fashion & Modeling,NO,652
-JamilaConner,Demo_JamilaConner_BestFashionMetBallKatieHolmes.mp4,BestFashionMetBallKatieHolmes.mp4,,"Style, Fashion, Women, Katie Holmes",Women's Fashion & Modeling,NO,354
+JamilaConner,Demo_JamilaConner_BestFashionMetBallKatieHolmes_shorter.mp4,BestFashionMetBallKatieHolmes.mp4,,"Style, Fashion, Women, Katie Holmes",Women's Fashion & Modeling,NO,354
 JamilaConner,Demo_JamilaConner_BestFashionMetBallKatyPerry.mp4,BestFashionMetBallKatyPerry.mp4,,"Style, Fashion, Women, Katy Perry",Women's Fashion & Modeling,NO,774
 JamilaConner,Demo_JamilaConner_BestFashionMetBallKendallJenner.mp4,BestFashionMetBallKendallJenner.mp4,,"Style, Fashion, Women, Kendall Jenner",Women's Fashion & Modeling,NO,156
 JamilaConner,Demo_JamilaConner_BestFashionMetBallKimKardashian.mp4,BestFashionMetBallKimKardashian.mp4,,"Style, Fashion, Women, Kim Kardashian",Women's Fashion & Modeling,NO,241
@@ -391,7 +389,6 @@ TheresaBenitez,Demo_TheresaBenitez_ChampionshipVideoGameFinale7.mp4,Championship
 TheresaBenitez,Demo_TheresaBenitez_ChampionshipVideoGameFinale8.mp4,ChampionshipVideoGameFinale8.mp4,,"eSports, Gaming, Video Game",eSports,NO,124
 TheresaBenitez,Demo_TheresaBenitez_ChampionshipVideoGameFinale9.mp4,ChampionshipVideoGameFinale9.mp4,,"eSports, Gaming, Video Game",eSports,NO,126
 TheresaBenitez,Demo_TheresaBenitez_ChampionshipVideoGameFinale10.mp4,ChampionshipVideoGameFinale10.mp4,,"eSports, Gaming, Video Game",eSports,NO,172
-TheresaBenitez,Demo_TheresaBenitez_NoOneUltrakillvs.TeamEmpireGlobaleSportsCup.mp4,No[o]ne Ultrakill vs. Team Empire @ Global eSports Cup.mp4,,"eSports, Gaming, Video Game",eSports,NO,500
 TheresaBenitez,Demo_TheresaBenitez_BestCatchPeeWeeYouth.mp4,BestCatchPeeWeeYouth.mp4,,"Football, Youth, PeeWee",Football,NO,301
 TheresaBenitez,Demo_TheresaBenitez_BestHighSchoolCatchTate.mp4,BestHighSchoolCatchTate.mp4,,"Football, Catch, High School",Football,NO,176
 TheresaBenitez,Demo_TheresaBenitez_BestHighSchoolInterception.mp4,BestHighSchoolInterception.mp4,,"Football, Interception, High School",Football,NO,154
@@ -573,20 +570,20 @@ GriffeyRomeo,Demo_GriffeyRomeo_TopMMAKnockouts10.mp4,TopMMAKnockouts10.mp4,,"MMA
 GriffeyRomeo,Demo_GriffeyRomeo_TopMMAKnockouts11.mp4,TopMMAKnockouts11.mp4,,"MMA, Knockout",MMA,NO,245
 GriffeyRomeo,Demo_GriffeyRomeo_TopMMAKnockouts13.mp4,TopMMAKnockouts13.mp4,,"MMA, Knockout",MMA,NO,200
 GriffeyRomeo,Demo_GriffeyRomeo_TopMMAKnockouts14.mp4,TopMMAKnockouts14.mp4,,"MMA, Knockout",MMA,NO,292
-GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces1.mp4,BestMichaelPhelpsRaces1.mp4,,"Olmpics, Michael Phelps, Swimming",Olympics,YES,108
-GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces2.mp4,BestMichaelPhelpsRaces2.mp4,,"Olmpics, Michael Phelps, Swimming",Olympics,NO,108
-GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces3.mp4,BestMichaelPhelpsRaces3.mp4,,"Olmpics, Michael Phelps, Swimming",Olympics,NO,112
-GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces4.mp4,BestMichaelPhelpsRaces4.mp4,,"Olmpics, Michael Phelps, Swimming",Olympics,NO,103
-PrescottJames,Demo_PrescottJames_BestMichaelPhelpsRaces5.mp4,BestMichaelPhelpsRaces5.mp4,,"Olmpics, Michael Phelps, Swimming",Olympics,NO,145
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceJamaicanBobsled.mp4,GreatestOlympicPerformanceJamaicanBobsled.mp4,,"Olmpics, Bobsled",Olympics,NO,199
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceJesseOwens.mp4,GreatestOlympicPerformanceJesseOwens.mp4,,"Olmpics, Running, Jesse Owens",Olympics,NO,200
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceKerriStrug.mp4,GreatestOlympicPerformanceKerriStrug.mp4,,"Olmpics, Kerri Strug",Olympics,NO,245
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceShaunWhite.mp4,GreatestOlympicPerformanceShaunWhite.mp4,,"Olmpics, Shaun White",Olympics,NO,278
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceSimoneBiles.mp4,GreatestOlympicPerformanceSimoneBiles.mp4,,"Olmpics, Simone Biles",Olympics,NO,265
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceTommieSmithJohnCarlos.mp4,GreatestOlympicPerformanceTommieSmithJohnCarlos.mp4,,"Olmpics, Tommie Smith, John Carlos",Olympics,NO,293
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceUsainBolt.mp4,GreatestOlympicPerformanceUsainBolt.mp4,,"Olmpics, Usain Bolt",Olympics,YES,321
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceUSHockey.mp4,GreatestOlympicPerformanceUSHockey.mp4,,"Olmpics, Hockey",Olympics,NO,365
-PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceUSSwimTeam.mp4,GreatestOlympicPerformanceUSSwimTeam.mp4,,"Olmpics, Swimming",Olympics,NO,247
+GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces1.mp4,BestMichaelPhelpsRaces1.mp4,,"Olympics, Michael Phelps, Swimming",Olympics,YES,108
+GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces2.mp4,BestMichaelPhelpsRaces2.mp4,,"Olympics, Michael Phelps, Swimming",Olympics,NO,108
+GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces3.mp4,BestMichaelPhelpsRaces3.mp4,,"Olympics, Michael Phelps, Swimming",Olympics,NO,112
+GriffeyRomeo,Demo_GriffeyRomeo_BestMichaelPhelpsRaces4.mp4,BestMichaelPhelpsRaces4.mp4,,"Olympics, Michael Phelps, Swimming",Olympics,NO,103
+PrescottJames,Demo_PrescottJames_BestMichaelPhelpsRaces5.mp4,BestMichaelPhelpsRaces5.mp4,,"Olympics, Michael Phelps, Swimming",Olympics,NO,145
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceJamaicanBobsled.mp4,GreatestOlympicPerformanceJamaicanBobsled.mp4,,"Olympics, Bobsled",Olympics,NO,199
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceJesseOwens.mp4,GreatestOlympicPerformanceJesseOwens.mp4,,"Olympics, Running, Jesse Owens",Olympics,NO,200
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceKerriStrug.mp4,GreatestOlympicPerformanceKerriStrug.mp4,,"Olympics, Kerri Strug",Olympics,NO,245
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceShaunWhite.mp4,GreatestOlympicPerformanceShaunWhite.mp4,,"Olympics, Shaun White",Olympics,NO,278
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceSimoneBiles.mp4,GreatestOlympicPerformanceSimoneBiles.mp4,,"Olympics, Simone Biles",Olympics,NO,265
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceTommieSmithJohnCarlos.mp4,GreatestOlympicPerformanceTommieSmithJohnCarlos.mp4,,"Olympics, Tommie Smith, John Carlos",Olympics,NO,293
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceUsainBolt.mp4,GreatestOlympicPerformanceUsainBolt.mp4,,"Olympics, Usain Bolt",Olympics,YES,321
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceUSHockey.mp4,GreatestOlympicPerformanceUSHockey.mp4,,"Olympics, Hockey",Olympics,NO,365
+PrescottJames,Demo_PrescottJames_GreatestOlympicPerformanceUSSwimTeam.mp4,GreatestOlympicPerformanceUSSwimTeam.mp4,,"Olympics, Swimming",Olympics,NO,247
 PrescottJames,Demo_PrescottJames_BestGoals_Messi1.mp4,BestGoals_Messi1.mp4,,"Soccer, Best Goals, Messi",Soccer,YES,456
 PrescottJames,Demo_PrescottJames_BestGoals_Ronaldinho1.mp4,BestGoals_Ronaldinho1.mp4,,"Soccer, BestGoals_Ronaldinho",Soccer,NO,326
 PrescottJames,Demo_PrescottJames_BestGoalsBenteke1.mp4,BestGoalsBenteke1.mp4,,"Soccer, Best Goals, Benteke",Soccer,NO,233
@@ -855,16 +852,8 @@ KohnkeStephens,Demo_KohnkeStephens_coversongsNice.mp4,coversongsNice.mp4,,"Music
 KohnkeStephens,Demo_KohnkeStephens_SingersBestCoverSongsBrookeWell1.mp4,SingersBestCoverSongsBrookeWell1.mp4,,"Music, Cover Songs, Brookewell",Singers: Cover Songs,NO,108
 KohnkeStephens,Demo_KohnkeStephens_SingersBestCoverSongsBrookeWell2.mp4,SingersBestCoverSongsBrookeWell2.mp4,,"Music, Cover Songs, Brookewell",Singers: Cover Songs,NO,112
 KohnkeStephens,Demo_KohnkeStephens_SingersBestCoverSongsBrookeWell3.mp4,SingersBestCoverSongsBrookeWell3.mp4,,"Music, Cover Songs, Brookewell",Singers: Cover Songs,NO,103
-KohnkeStephens,Demo_KohnkeStephens_JasmineThompson–AdoreOfficial.mp4,Jasmine Thompson – Adore [Official Video].mp4,,"Music, Original Songs, Jasmine Thompson",Singers: Original Songs,NO,145
-KohnkeStephens,Demo_KohnkeStephens_RachelCollier_OriginalSongs&BeatMakers1.mp4,RachelCollier_OriginalSongs&BeatMakers1.mp4,,"Music, Original Songs, Rachel Collier, Beat Makers",Singers: Original Songs,NO,199
-KohnkeStephens,Demo_KohnkeStephens_RachelCollier_OriginalSongs&BeatMakers2.mp4,RachelCollier_OriginalSongs&BeatMakers2.mp4,,"Music, Original Songs, Rachel Collier, Beat Makers",Singers: Original Songs,NO,200
-KohnkeStephens,Demo_KohnkeStephens_RachelCollier_OriginalSongs&BeatMakers3.mp4,RachelCollier_OriginalSongs&BeatMakers3.mp4,,"Music, Original Songs, Rachel Collier, Beat Makers",Singers: Original Songs,NO,245
-KohnkeStephens,Demo_KohnkeStephens_RachelCollier_OriginalSongs&BeatMakers4.mp4,RachelCollier_OriginalSongs&BeatMakers4.mp4,,"Music, Original Songs, Rachel Collier, Beat Makers",Singers: Original Songs,NO,278
 KohnkeStephens,Demo_KohnkeStephens_RuthB-LostBoy.mp4,Ruth B - Lost Boy.mp4,,"Music, Original Songs, Ruth B, Lost Boys",Singers: Original Songs,NO,265
 KohnkeStephens,Demo_KohnkeStephens_SelenaGomez-HandsToMyself.mp4,Selena Gomez - Hands To Myself.mp4,,"Music, Original Songs, Selena Gomez",Singers: Original Songs,NO,293
-KohnkeStephens,Demo_KohnkeStephens_BestBlackOpsMoment9.mp4,BestBlackOpsMoment9.mp4,,"Sports, eSports, Black Ops",Boss Defeats/Gaming,NO,321
-KohnkeStephens,Demo_KohnkeStephens_ChampionshipVideoGameFinale1.mp4,ChampionshipVideoGameFinale1.mp4,,"Sports, eSports, Video Games",Boss Defeats/Gaming,NO,365
-KohnkeStephens,Demo_KohnkeStephens_ChampionshipVideoGameFinale2.mp4,ChampionshipVideoGameFinale2.mp4,,"Sports, eSports, Video Games",Boss Defeats/Gaming,NO,247
 TimJarrett,Demo_TimJarrett_BestCarBuild1.mp4,BestCarBuild1.mp4,,"Lifestyle, Car Builds",Car Builds,NO,456
 TimJarrett,Demo_TimJarrett_BestCarBuild2.mp4,BestCarBuild2.mp4,,"Lifestyle, Car Builds",Car Builds,NO,326
 TimJarrett,Demo_TimJarrett_BestCarBuild3.mp4,BestCarBuild3.mp4,,"Lifestyle, Car Builds",Car Builds,NO,233
@@ -886,9 +875,7 @@ TimJarrett,Demo_TimJarrett_CreamyLemonButterPorkChops.mp4,Creamy Lemon Butter Po
 TimJarrett,Demo_TimJarrett_CrispyAsianBrusselsSprouts.mp4,Crispy Asian Brussels Sprouts.mp4,,"Food, Kimchi, Brussels Sprouts",Food,NO,145
 TimJarrett,Demo_TimJarrett_CrockpotOliveGardenChicken.mp4,Crockpot Olive Garden Chicken.mp4,,"Food, Kimchi, Chicken",Food,NO,178
 TimJarrett,Demo_TimJarrett_EnglishToffeeBites.mp4,English Toffee Bites.mp4,,"Food, Kimchi, Toffee Bites",Food,NO,195
-TimJarrett,Demo_TimJarrett_BestCosplay1.mp4,BestCosplay1.mp4,,"Cosplay, Costumes",Cosplay,NO,165
 TimJarrett,Demo_TimJarrett_BestCosplay2.mp4,BestCosplay2.mp4,,"Cosplay, Costumes",Cosplay,NO,323
-TimJarrett,Demo_TimJarrett_BestCosplay3.mp4,BestCosplay3.mp4,,"Cosplay, Costumes",Cosplay,NO,300
 JeromeBerardino,Demo_JeromeBerardino_BestCosplay4.mp4,BestCosplay4.mp4,,"Cosplay, Costumes",Cosplay,NO,245
 JeromeBerardino,Demo_JeromeBerardino_BestCosplay5.mp4,BestCosplay5.mp4,,"Cosplay, Costumes",Cosplay,NO,145
 JeromeBerardino,Demo_JeromeBerardino_BestCosplay6.mp4,BestCosplay6.mp4,,"Cosplay, Costumes",Cosplay,NO,365
@@ -993,7 +980,6 @@ FannyLulkus,Demo_FannyLulkus_BestDualYogaHagarElad2.mp4,BestDualYogaHagarElad2.m
 FannyLulkus,Demo_FannyLulkus_BestDualYogaHagarElad3.mp4,BestDualYogaHagarElad3.mp4,,Yoga,Yoga,NO,401
 FannyLulkus,Demo_FannyLulkus_BestDualYogaHagarElad4.mp4,BestDualYogaHagarElad4.mp4,,Yoga,Yoga,NO,222
 FannyLulkus,Demo_FannyLulkus_BestDualYogaHagarElad5.mp4,BestDualYogaHagarElad5.mp4,,Yoga,Yoga,NO,122
-FannyLulkus,Demo_FannyLulkus_BestYoga.mp4,BestYoga.mp4,,Yoga,Yoga,NO,222
 FannyLulkus,Demo_FannyLulkus_BestYogaJessamynStanley1.mp4,BestYogaJessamynStanley1.mp4,,Yoga,Yoga,NO,232
 FannyLulkus,Demo_FannyLulkus_BestYogaJessamynStanley2.mp4,BestYogaJessamynStanley2.mp4,,Yoga,Yoga,NO,256
 FannyLulkus,Demo_FannyLulkus_BestYogaRelax1.mp4,BestYogaRelax1.mp4,,Yoga,Yoga,NO,122
@@ -1023,12 +1009,10 @@ AngelicaDibbern,Demo_AngelicaDibbern_BestHIghSchoolRun_JukePlays21.mp4,BestHIghS
 AngelicaDibbern,Demo_AngelicaDibbern_BestHIghSchoolRun_JukePlays22.mp4,BestHIghSchoolRun_JukePlays22.mp4,,"Football, Run, High School",Football,NO,108
 AngelicaDibbern,Demo_AngelicaDibbern_BestHIghSchoolRun_JukePlays23.mp4,BestHIghSchoolRun_JukePlays23.mp4,,"Football, Run, High School",Football,NO,112
 AngelicaDibbern,Demo_AngelicaDibbern_BestHIghSchoolRun_JukePlays24.mp4,BestHIghSchoolRun_JukePlays24.mp4,,"Football, Run, High School",Football,NO,103
-AngelicaDibbern,Demo_AngelicaDibbern_BestHighSchoolSack.mp4,BestHighSchoolSack.mp4,,"Football, Sack, High School",Football,NO,145
 AngelicaDibbern,Demo_AngelicaDibbern_60SECONDMAKEUPLOOKWingedLiner.mp4,60 SECOND MAKEUP LOOK! Winged Liner..mp4,,"Style, Makeup",Makeup,NO,133
 AngelicaDibbern,Demo_AngelicaDibbern_60SECONDMAKEUPLOOKWinterBronze.mp4,60 SECOND MAKEUP LOOK! Winter Bronze!.mp4,,"Style, Makeup",Makeup,NO,76
 AngelicaDibbern,Demo_AngelicaDibbern_60SECONDMAKEUPLOOKWinterGlam.mp4,60 SECOND MAKEUP LOOK! Winter Glam!.mp4,,"Style, Makeup",Makeup,NO,211
 AngelicaDibbern,Demo_AngelicaDibbern_60SECONDMAKEUP.mp4,60 SECOND MAKEUP.mp4,,"Style, Makeup",Makeup,NO,212
-AngelicaDibbern,Demo_AngelicaDibbern_BestFashionMetBallA$APRocky.mp4,BestFashionMetBallA$APRocky.mp4,,"Style, Fashion, A$AP Rocky",Men's Fashion & Modeling,NO,100
 AngelicaDibbern,Demo_AngelicaDibbern_BestFashionMetBallFuture.mp4,BestFashionMetBallFuture.mp4,,"Style, Mens Fashion, Future",Men's Fashion & Modeling,NO,101
 AngelicaDibbern,Demo_AngelicaDibbern_BestFashionMetBallJadenSmith.mp4,BestFashionMetBallJadenSmith.mp4,,"Style, Mens Fashion, Jaden Smith",Men's Fashion & Modeling,NO,102
 AngelicaDibbern,Demo_AngelicaDibbern_BestFashionMetBallLilYachty.mp4,BestFashionMetBallLilYachty.mp4,,"Style, Mens Fashion, Lil Yachty",Men's Fashion & Modeling,NO,133
@@ -1048,7 +1032,6 @@ HarrisonFoster,Demo_HarrisonFoster_MensFashionDolceGabbana2.mp4,MensFashionDolce
 HarrisonFoster,Demo_HarrisonFoster_MensFashionDolceGabbana3.mp4,MensFashionDolceGabbana3.mp4,,"Style, Mens Fashion, Dolce Gabbana",Men's Fashion & Modeling,NO,425
 HarrisonFoster,Demo_HarrisonFoster_MensFashionDolceGabbana4.mp4,MensFashionDolceGabbana4.mp4,,"Style, Mens Fashion, Dolce Gabbana",Men's Fashion & Modeling,NO,567
 HarrisonFoster,Demo_HarrisonFoster_MensFashionDolceGabbana5.mp4,MensFashionDolceGabbana5.mp4,,"Style, Mens Fashion, Dolce Gabbana",Men's Fashion & Modeling,NO,535
-HarrisonFoster,Demo_HarrisonFoster_MensFashionDolceGabbana6.mp4,MensFashionDolceGabbana6.mp4,,"Style, Mens Fashion, Dolce Gabbana",Men's Fashion & Modeling,NO,142
 HarrisonFoster,Demo_HarrisonFoster_MensFashionDolceGabbana7.mp4,MensFashionDolceGabbana7.mp4,,"Style, Mens Fashion, Dolce Gabbana",Men's Fashion & Modeling,NO,245
 HarrisonFoster,Demo_HarrisonFoster_MensFashionDolceGabbana8.mp4,MensFashionDolceGabbana8.mp4,,"Style, Mens Fashion, Dolce Gabbana",Men's Fashion & Modeling,NO,200
 HarrisonFoster,Demo_HarrisonFoster_MensFashionLouisVuitton1.mp4,MensFashionLouisVuitton1.mp4,,"Style, Mens Fashion, Louis Vuitton",Men's Fashion & Modeling,NO,292
@@ -1141,8 +1124,6 @@ JamieSchumacher,Demo_JamieSchumacher_TopPlaysinSoftball9.mp4,TopPlays in Softbal
 JamieSchumacher,Demo_JamieSchumacher_TopPlaysinSoftball10.mp4,TopPlays in Softball10.mp4,,"Baseball, Softball",Baseball,NO,247
 JamieSchumacher,Demo_JamieSchumacher_Top10FanCatches1.mp4,Top 10 Fan Catches1.mp4,,"Baseball, Fan Catch",Baseball,NO,456
 JamieSchumacher,Demo_JamieSchumacher_OldSchoolFashion1.mp4,OldSchoolFashion1.mp4,,Fashion,Women's Fashion & Modeling,NO,326
-JamieSchumacher,Demo_JamieSchumacher_oldschoolfashion11.mp4,oldschoolfashion11.mp4,,Fashion,Women's Fashion & Modeling,NO,233
-JamieSchumacher,Demo_JamieSchumacher_oldschoolfashion12.mp4,oldschoolfashion12.mp4,,Fashion,Women's Fashion & Modeling,NO,1300
 JamieSchumacher,Demo_JamieSchumacher_BestWomensShoesAquazzuraFlat.mp4,BestWomensShoesAquazzuraFlat.mp4,,"Wommen's Shoes, Aquazzurra",Women's Shoes,NO,368
 JamieSchumacher,Demo_JamieSchumacher_BestWomensShoesAquazzuraWildThings.mp4,BestWomensShoesAquazzuraWildThings.mp4,,"Wommen's Shoes, Aquazzurra",Women's Shoes,NO,289
 JamieSchumacher,Demo_JamieSchumacher_BestWomensShoesChanel1.mp4,BestWomensShoesChanel1.mp4,,"Wommen's Shoes, Chanel",Women's Shoes,NO,336
@@ -1167,22 +1148,15 @@ CloonanPhillips,Demo_CloonanPhillips_Experiments10.mp4,Experiments10.mp4,,Experi
 CloonanPhillips,Demo_CloonanPhillips_Experiments11.mp4,Experiments11.mp4,,Experiments,Experiments,NO,145
 CloonanPhillips,Demo_CloonanPhillips_Experiments12.mp4,Experiments12.mp4,,Experiments,Experiments,NO,365
 CloonanPhillips,Demo_CloonanPhillips_Experiments13.mp4,Experiments13.mp4,,Experiments,Experiments,NO,397
-CloonanPhillips,Demo_CloonanPhillips_Curvilux-invention,Curvilux - invention,,Inventions,Inventions,NO,247
-CloonanPhillips,Demo_CloonanPhillips_FontusWaterBottle-invention,Fontus Water Bottle - invention,,Inventions,Inventions,NO,100
-CloonanPhillips,Demo_CloonanPhillips_Opto-invention,Opto - invention,,Inventions,Inventions,NO,99
-CloonanPhillips,Demo_CloonanPhillips_PocketShot-Invention,PocketShot - Invention,,Inventions,Inventions,NO,254
-CloonanPhillips,Demo_CloonanPhillips_SteelWallet,SteelWallet,,Inventions,Inventions,NO,401
 CloonanPhillips,Demo_CloonanPhillips_MannequinChallenge2.mp4,MannequinChallenge2.mp4,,MannequinChallenge,Latest Trends,NO,222
 CloonanPhillips,Demo_CloonanPhillips_MannequinChallenge3.mp4,MannequinChallenge3.mp4,,MannequinChallenge,Latest Trends,NO,467
-CloonanPhillips,Demo_CloonanPhillips_OriginalmannequinChallenge,OriginalmannequinChallenge,,MannequinChallenge,Latest Trends,NO,224
 CloonanPhillips,Demo_CloonanPhillips_BestSkateboardTrick1.mp4,BestSkateboardTrick1.mp4,,Skateboard,Action Sports,NO,226
 CloonanPhillips,Demo_CloonanPhillips_BestSkateboardTrick2.mp4,BestSkateboardTrick2.mp4,,Skateboard,Action Sports,NO,323
-MelissaShirle,Demo_MelissaShirle_BestSkateboardTrick3.mp4,BestSkateboardTrick3.mp4,,Skateboard,Action Sports,NO,145
 MelissaShirle,Demo_MelissaShirle_BestSkateboardTrick4.mp4,BestSkateboardTrick4.mp4,,Skateboard,Action Sports,NO,178
 MelissaShirle,Demo_MelissaShirle_BestSkateboardTrick5.mp4,BestSkateboardTrick5.mp4,,Skateboard,Action Sports,NO,195
 MelissaShirle,Demo_MelissaShirle_BestSkateboardTrick6.mp4,BestSkateboardTrick6.mp4,,Skateboard,Action Sports,NO,165
 MelissaShirle,Demo_MelissaShirle_BestSkateboardTrick7.mp4,BestSkateboardTrick7.mp4,,Skateboard,Action Sports,NO,323
-MelissaShirle,Demo_MelissaShirle_BernoullisPrinciple-physicspingpongball.mp4,Bernoulli's Principle - physics ping pong ball.mp4,,Physics,Physics,NO,300
+MelissaShirle,Demo_MelissaShirle_BernoullisPrinciplephysicspingpongball.mp4,Bernoulli's Principle - physics ping pong ball.mp4,,Physics,Physics,NO,300
 MelissaShirle,Demo_MelissaShirle_physics1.mp4,physics1.mp4,,Physics,Physics,NO,245
 MelissaShirle,Demo_MelissaShirle_LeBronJamesDunks6.mp4,LeBronJamesDunks6.mp4,,"Basketball, Lebron James, Dunk",Basketball,NO,178
 MelissaShirle,Demo_MelissaShirle_LeBronJamesDunks7.mp4,LeBronJamesDunks7.mp4,,"Basketball, Lebron James, Dunk",Basketball,NO,195
@@ -1194,31 +1168,29 @@ MelissaShirle,Demo_MelissaShirle_BestRobotics7.mp4,BestRobotics7.mp4,,Robotics,R
 MelissaShirle,Demo_MelissaShirle_BalancingCandle-Science.mp4,Balancing Candle - Science.mp4,,"Physics, Science, Experiments",Physics,NO,401
 MelissaShirle,Demo_MelissaShirle_BatteryCandle-science.mp4,Battery Candle - science.mp4,,"Physics, Science, Experiments",Physics,NO,222
 MelissaShirle,Demo_MelissaShirle_ChlorineandBrakeFluid-science,Chlorine and Brake Fluid - science,,"Physics, Science, Experiments",Physics,NO,535
-MelissaShirle,Demo_MelissaShirle_CocaColaandChlorine-science.mp4,Coca Cola and Chlorine - science.mp4,,"Physics, Science, Experiments",Physics,NO,142
-MelissaShirle,Demo_MelissaShirle_DancingLiquid-science.mp4,Dancing Liquid! - science.mp4,,"Physics, Science, Experiments",Physics,NO,245
-MelissaShirle,Demo_MelissaShirle_DrainCleanerandAluminumFoil-science.mp4,Drain Cleaner and Aluminum Foil - science.mp4,,"Physics, Science, Experiments",Physics,NO,200
-MelissaShirle,Demo_MelissaShirle_ElephantToothpaste-science.mp4,Elephant Toothpaste - science.mp4,,"Physics, Science, Experiments",Physics,NO,292
-MelissaShirle,Demo_MelissaShirle_FireandHandSanitizer-science,Fire and Hand Sanitizer - science,,"Physics, Science, Experiments",Physics,NO,108
-MelissaShirle,Demo_MelissaShirle_FireIntheMiddle-science.mp4,Fire In the Middle - science.mp4,,"Physics, Science, Experiments",Physics,NO,108
-MelissaShirle,Demo_MelissaShirle_FireSnake-science.mp4,Fire Snake - science.mp4,,"Physics, Science, Experiments",Physics,NO,112
-BenjaminFreida,Demo_BenjaminFreida_FlammableWD40-science.mp4,Flammable WD40 - science.mp4,,"Physics, Science, Experiments",Physics,NO,103
-BenjaminFreida,Demo_BenjaminFreida_HighlyFlammablePingPongBalls-science,HighlyFlammablePingPongBalls - science,,"Physics, Science, Experiments",Physics,NO,145
-BenjaminFreida,Demo_BenjaminFreida_HowtoMakeaWaterBalloonNotBurst-science,HowtoMakeaWaterBalloonNotBurst - science,,"Physics, Science, Experiments",Physics,NO,199
-BenjaminFreida,Demo_BenjaminFreida_JetEngineinjar-science.mp4,Jet Engine in jar - science.mp4,,"Physics, Science, Experiments",Physics,NO,200
-BenjaminFreida,Demo_BenjaminFreida_LiedenfrostEffect-science.mp4,Liedenfrost Effect - science.mp4,,"Physics, Science, Experiments",Physics,NO,245
-BenjaminFreida,Demo_BenjaminFreida_LightMatchinGlasswLaser-science.mp4,Light Match in Glass w Laser - science.mp4,,"Physics, Science, Experiments",Physics,NO,278
-BenjaminFreida,Demo_BenjaminFreida_LightMatchwithouttouching-science.mp4,Light Match w/o touching - science.mp4,,"Physics, Science, Experiments",Physics,NO,265
+MelissaShirle,Demo_MelissaShirle_CocaColaandChlorinescience.mp4,Coca Cola and Chlorine - science.mp4,,"Physics, Science, Experiments",Physics,NO,142
+MelissaShirle,Demo_MelissaShirle_DancingLiquidscience.mp4,Dancing Liquid! - science.mp4,,"Physics, Science, Experiments",Physics,NO,245
+MelissaShirle,Demo_MelissaShirle_DrainCleanerandAluminumFoilscience.mp4,Drain Cleaner and Aluminum Foil - science.mp4,,"Physics, Science, Experiments",Physics,NO,200
+MelissaShirle,Demo_MelissaShirle_ElephantToothpastescience.mp4,Elephant Toothpaste - science.mp4,,"Physics, Science, Experiments",Physics,NO,292
+MelissaShirle,Demo_MelissaShirle_FireandHandSanitizerscience,Fire and Hand Sanitizer - science,,"Physics, Science, Experiments",Physics,NO,108
+MelissaShirle,Demo_MelissaShirle_FireIntheMiddlescience.mp4,Fire In the Middle - science.mp4,,"Physics, Science, Experiments",Physics,NO,108
+MelissaShirle,Demo_MelissaShirle_FireSnakescience.mp4,Fire Snake - science.mp4,,"Physics, Science, Experiments",Physics,NO,112
+BenjaminFreida,Demo_BenjaminFreida_FlammableWD40science.mp4,Flammable WD40 - science.mp4,,"Physics, Science, Experiments",Physics,NO,103
+BenjaminFreida,Demo_BenjaminFreida_HighlyFlammablePingPongBallsscience,HighlyFlammablePingPongBalls - science,,"Physics, Science, Experiments",Physics,NO,145
+BenjaminFreida,Demo_BenjaminFreida_HowtoMakeaWaterBalloonNotBurstscience,HowtoMakeaWaterBalloonNotBurst - science,,"Physics, Science, Experiments",Physics,NO,199
+BenjaminFreida,Demo_BenjaminFreida_JetEngineinjarscience.mp4,Jet Engine in jar - science.mp4,,"Physics, Science, Experiments",Physics,NO,200
+BenjaminFreida,Demo_BenjaminFreida_LiedenfrostEffectscience.mp4,Liedenfrost Effect - science.mp4,,"Physics, Science, Experiments",Physics,NO,245
+BenjaminFreida,Demo_BenjaminFreida_LightMatchinGlasswLaserscience.mp4,Light Match in Glass w Laser - science.mp4,,"Physics, Science, Experiments",Physics,NO,278
 BenjaminFreida,Demo_BenjaminFreida_LightaMatchwithRubberBand-Science,LightaMatchwithRubberBand - Science,,"Physics, Science, Experiments",Physics,NO,293
-BenjaminFreida,Demo_BenjaminFreida_LiquidStacking-science.mp4,Liquid Stacking - science.mp4,,"Physics, Science, Experiments",Physics,NO,321
-BenjaminFreida,Demo_BenjaminFreida_Liquidtrick-science.mp4,Liquid trick - science.mp4,,"Physics, Science, Experiments",Physics,NO,365
-BenjaminFreida,Demo_BenjaminFreida_MagicWaterbarrier-science.mp4,Magic Water barrier - science.mp4,,"Physics, Science, Experiments",Physics,NO,247
-BenjaminFreida,Demo_BenjaminFreida_Noleakmagicbag-science.mp4,No leak magic bag - science.mp4,,"Physics, Science, Experiments",Physics,NO,456
-BenjaminFreida,Demo_BenjaminFreida_AscendingAggies-PVACDemonstration1.mp4,Ascending Aggies - PVAC Demonstration 1.mp4,,"Superhero Powers, Spiderman, Marvel, DC",Superhero Powers,NO,326
+BenjaminFreida,Demo_BenjaminFreida_LiquidStackingscience.mp4,Liquid Stacking - science.mp4,,"Physics, Science, Experiments",Physics,NO,321
+BenjaminFreida,Demo_BenjaminFreida_Liquidtrickscience.mp4,Liquid trick - science.mp4,,"Physics, Science, Experiments",Physics,NO,365
+BenjaminFreida,Demo_BenjaminFreida_MagicWaterbarrierscience.mp4,Magic Water barrier - science.mp4,,"Physics, Science, Experiments",Physics,NO,247
+BenjaminFreida,Demo_BenjaminFreida_Noleakmagicbagscience.mp4,No leak magic bag - science.mp4,,"Physics, Science, Experiments",Physics,NO,456
+BenjaminFreida,Demo_BenjaminFreida_AscendingAggiesPVACDemonstration1.mp4,Ascending Aggies - PVAC Demonstration 1.mp4,,"Superhero Powers, Spiderman, Marvel, DC",Superhero Powers,NO,326
 BenjaminFreida,Demo_BenjaminFreida_CaptainAmericaShieldProjectTeaser.mp4,Captain America Shield Project Teaser.mp4,,"Superhero Powers, Captain America, Marvel, Comic",Superhero Powers,NO,233
 BenjaminFreida,Demo_BenjaminFreida_SpideySenseV1Testing.mp4,Spidey Sense V1 Testing!.mp4,,"Superhero Powers, Spiderman, DC, Marvel",Superhero Powers,NO,1300
-BenjaminFreida,Demo_BenjaminFreida_360VIDEO-SPINAROUND.mp4,360 VIDEO-SPIN AROUND (Flying Drone @Vidcon).mp4,,"Virtual Reality, 360",Virtual Reality,NO,368
-BenjaminFreida,Demo_BenjaminFreida_GoProVR-TripleCrownWinner-AmericanPharoah.mp4,GoPro VR- Triple Crown Winner - American Pharoah.mp4,,"Virtual Reality, 360",Virtual Reality,NO,289
-BenjaminFreida,Demo_BenjaminFreida_StarWars-360VirtualReality.mp4,Star Wars - 360° Virtual Reality.mp4,,"Virtual Reality, 360",Virtual Reality,NO,336
+BenjaminFreida,Demo_BenjaminFreida_TripleCrownWinnerAmericanPharoah.mp4,GoPro VR- Triple Crown Winner - American Pharoah.mp4,,"Virtual Reality, 360",Virtual Reality,NO,289
+BenjaminFreida,Demo_BenjaminFreida_StarWars360VirtualReality.mp4,Star Wars - 360° Virtual Reality.mp4,,"Virtual Reality, 360",Virtual Reality,NO,336
 BenjaminFreida,Demo_BenjaminFreida_GreatestTrickPlaysCollegeBoiseState.mp4,GreatestTrickPlaysCollegeBoiseState.mp4,,"Football, Trick Play, College",Football,NO,224
 BenjaminFreida,Demo_BenjaminFreida_GreatestTrickPlaysCollegeBoiseStateOklahoma.mp4,GreatestTrickPlaysCollegeBoiseStateOklahoma.mp4,,"Football, Trick Play, College",Football,NO,226
 BenjaminFreida,Demo_BenjaminFreida_GreatestTrickPlaysCollegeCincinnatiSyracuse.mp4,GreatestTrickPlaysCollegeCincinnatiSyracuse.mp4,,"Football, Trick Play, College",Football,NO,323
