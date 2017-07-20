@@ -876,6 +876,18 @@ paths:
           required: true
           example: "F#55344F"
           description: "Required Authorization Bearer Token for OAuth2"
+        - in: "query"
+          name: "limit"
+          type: "integer"
+          required: false
+          example: "1"
+          description: "Limit the amount of videos that can come back per response."
+        - in: "query"
+          name: "offset"
+          type: "integer"
+          required: false
+          example: "1"
+          description: "Offset amount for the videos returned on this endpoint"
       responses:
         200:
           description: "Success"

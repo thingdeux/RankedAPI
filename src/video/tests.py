@@ -517,6 +517,112 @@ class VideoAPIVideosListCase(APITestBase):
         self.assertEqual(response2.status_code, 200)
         self.assertEqual(len(response2.data), 4)
 
+    def test_videos_endpoint_limit(self):
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video",
+                                       is_processing=False, is_active=True,
+                                       category=self.primary_category)
+        new_vid.save()
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video2",
+                                       is_processing=False,
+                                       is_active=True, category=self.primary_category)
+        new_vid.save()
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video3",
+                                       is_processing=True,
+                                       is_active=False, category=self.primary_category)
+        new_vid.save()
+
+        profile = Profile.objects.get(pk=self.test_profile.id)
+        profile.follow_user(self.test_profile2.id)
+        profile.follow_user(self.test_profile3.id)
+        profile.save()
+
+        response = self.client.get('/api/v1/videos/?limit=1', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+
+        response = self.client.get('/api/v1/videos/?limit=2', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+
+        # Anything other than integers for limit should be ignored and return 400
+        response = self.client.get('/api/v1/videos/?limit=Quijibo', format='json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_videos_endpoint_offset(self):
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video",
+                                       is_processing=False, is_active=True,
+                                       category=self.primary_category)
+        new_vid.save()
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video2",
+                                       is_processing=False,
+                                       is_active=True, category=self.primary_category)
+        new_vid.save()
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video3",
+                                       is_processing=True,
+                                       is_active=False, category=self.primary_category)
+        new_vid.save()
+
+        profile = Profile.objects.get(pk=self.test_profile.id)
+        profile.follow_user(self.test_profile2.id)
+        profile.follow_user(self.test_profile3.id)
+        profile.save()
+
+        response = self.client.get('/api/v1/videos/?offset=1', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 3)
+
+        response = self.client.get('/api/v1/videos/?offset=3', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+
+        response = self.client.get('/api/v1/videos/?offset=Quijibo', format='json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_videos_endpoint_offset_and_limit(self):
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video",
+                                       is_processing=False, is_active=True,
+                                       category=self.primary_category)
+        new_vid.save()
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video2",
+                                       is_processing=False,
+                                       is_active=True, category=self.primary_category)
+        new_vid.save()
+        new_vid = Video.objects.create(related_profile=self.test_profile2, title="My Inactive Video3",
+                                       is_processing=True,
+                                       is_active=False, category=self.primary_category)
+        new_vid.save()
+
+        profile = Profile.objects.get(pk=self.test_profile.id)
+        profile.follow_user(self.test_profile2.id)
+        profile.follow_user(self.test_profile3.id)
+        profile.save()
+
+        response = self.client.get('/api/v1/videos/?offset=1&limit=3', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 3)
+        self.assertEqual(response.data[0]['id'], 3)
+
+        response = self.client.get('/api/v1/videos/?offset=2&limit=3', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+        self.assertEqual(response.data[0]['id'], 4)
+
+        response = self.client.get('/api/v1/videos/?offset=1&limit=1', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['id'], 3)
+
+
+
     def test_videos_endpoint_empty(self):
         """
         /Videos/ endpoint should return a given users' videos.

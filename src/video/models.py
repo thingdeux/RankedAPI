@@ -51,3 +51,29 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
     @staticmethod
     def get_all_videos_user_has_ranked_queryset(profile_id):
         return Video.objects.filter(rankings__related_profile_id__in=[profile_id]).only('id').values('id')
+
+    @staticmethod
+    def get_videos_from_profiles_user_follows_queryset(profile_id, limit=None, offset=None):
+        from src.profile.models import Profile
+
+        profile = Profile.objects.filter(pk=profile_id) \
+            .select_related('primary_category').select_related('secondary_category') \
+            .select_related('primary_category__parent_category').select_related(
+            'secondary_category__parent_category').first()
+
+        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True) \
+            .select_related('related_profile').select_related('related_profile__secondary_category') \
+            .select_related('related_profile__primary_category').select_related(
+            'related_profile__primary_category__parent_category') \
+            .select_related('related_profile__secondary_category__parent_category').select_related('category') \
+            .select_related('category__parent_category')
+
+        if limit and offset:
+            queryset = queryset[int(offset):]
+            queryset = queryset[:int(limit)]
+        elif limit:
+            queryset = queryset[:int(limit)]
+        elif offset:
+            queryset = queryset[int(offset):]
+
+        return queryset

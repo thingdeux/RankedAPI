@@ -59,17 +59,17 @@ class VideoViewSet(viewsets.ModelViewSet):
             return Response(status=404)
 
     def list(self, request, *args, **kwargs):
-        # TODO: Paginate
-        profile = Profile.objects.get(pk=request.user.id)
-        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True)\
-            .select_related('related_profile').select_related('related_profile__secondary_category')\
-            .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category')\
-            .select_related('related_profile__secondary_category__parent_category').select_related('category')\
-            .select_related('category__parent_category')
+        try:
+            queryset = Video.get_videos_from_profiles_user_follows_queryset(request.user.id,
+                                                                            request.query_params.get('limit', None),
+                                                                            request.query_params.get('offset', None))
 
 
-        serialized = VideoSerializer(queryset, many=True)
-        return Response(status=200, data=serialized.data)
+            serialized = VideoSerializer(queryset, many=True)
+            return Response(status=200, data=serialized.data)
+        except ValueError:
+            error = {'description': 'There was a problem reading your request.'}
+            return Response(status=400, data=error)
 
     def create(self, request, *args, **kwargs):
         error = {"description":  "POST to /videos/ is not how videos are created. Please see documentation."}
@@ -231,8 +231,6 @@ class VideoViewSet(viewsets.ModelViewSet):
                 hashtags = hashtags + ",#" + text
 
         return final_title or "", hashtags
-
-
 
 # Avatar upload View
 class VideoTopView(APIView):
