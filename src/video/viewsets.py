@@ -64,7 +64,6 @@ class VideoViewSet(viewsets.ModelViewSet):
                                                                             request.query_params.get('limit', None),
                                                                             request.query_params.get('offset', None))
 
-
             serialized = VideoSerializer(queryset, many=True)
             return Response(status=200, data=serialized.data)
         except ValueError:
