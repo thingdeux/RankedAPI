@@ -87,3 +87,15 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
             queryset = queryset[int(offset):]
 
         return queryset
+
+    @staticmethod
+    def update_videos_rank_amount(video_id=None, video_object=None):
+        from src.ranking.models import Ranking
+        video = video_object
+
+        if not video_object and video_id:
+            video = Video.objects.get(pk=video_id)
+
+        if video:
+            video.rank_total = Ranking.objects.filter(video__id=video_id).count()
+            video.save()
