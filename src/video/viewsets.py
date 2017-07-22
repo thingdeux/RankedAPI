@@ -121,8 +121,10 @@ class VideoViewSet(viewsets.ModelViewSet):
                 if was_created:
                     new_rank.rank_amount = rank_amount
                     new_rank.save()
+                    video.update_ranking()
                     return Response(status=200, data={'description': 'Success'})
                 else:
+                    video.update_ranking()
                     return Response(status=304, data={'description': 'This video has already been ranked'})
             except ObjectDoesNotExist:
                 error = {"description": "Video Not Found"}

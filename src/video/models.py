@@ -3,6 +3,8 @@ from src.Ranked.basemodels import Base, Hashtagable, MultipleQualityLinkable, Th
 from src.Ranked.basemodels import Activatable, Rankable, CustomFieldStorable
 from src.profile.mixins import ProfileRelatable
 from src.categorization.mixins import MultiCategoryRelatable
+from src.ranking.models import Ranking
+from django.db import transaction
 
 
 class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, CustomFieldStorable,
@@ -88,14 +90,11 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
 
         return queryset
 
-    @staticmethod
-    def update_videos_rank_amount(video_id=None, video_object=None):
-        from src.ranking.models import Ranking
-        video = video_object
+    def update_ranking(self):
+        with transaction.atomic():
+            # Re-Process the ranking total count.
+            # TODO: Celery task / job and decouple from video
+            self.rank_total = Ranking.objects.filter(video__id=self.id).count()
+            self.save()
 
-        if not video_object and video_id:
-            video = Video.objects.get(pk=video_id)
 
-        if video:
-            video.rank_total = Ranking.objects.filter(video__id=video_id).count()
-            video.save()
