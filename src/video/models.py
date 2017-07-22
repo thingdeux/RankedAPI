@@ -75,7 +75,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
             .select_related('related_profile__primary_category').select_related(
             'related_profile__primary_category__parent_category') \
             .select_related('related_profile__secondary_category__parent_category').select_related('category') \
-            .select_related('category__parent_category')
+            .select_related('category__parent_category').order_by('-created')
 
         if limit and offset:
             queryset = queryset[int(offset):]
