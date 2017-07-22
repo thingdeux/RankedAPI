@@ -466,6 +466,22 @@ class VideoAPICasePatch(APITestBase):
         self.assertEqual(updated_video.title, 'I love BEES!')
         self.assertEqual(updated_video.hashtag, "#Bunnies_AND_BEES1245_,#Love,#Dude,")
 
+    def test_video_patch_empty_hashtag_should_not_add_comma(self):
+        """
+        You should be able to set 'hashtag' by proxy via title via /videos/<id>/ PATCH
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        # Hashtags should be stripped and turned into comma-delimited
+        response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
+           'title': "Bunny's are so great"
+        }, format='json')
+
+        updated_video = Video.objects.get(id=self.video1.id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_video.title, "Bunny's are so great")
+        self.assertEqual(updated_video.hashtag, "")
 
     def test_video_patch_should_accept_category(self):
         """
