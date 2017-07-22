@@ -1,3 +1,0 @@
-SHELL=/bin/bash
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
-*/15 * * * * ec2-user /home/ec2-user/src/ranked/scripts/api_management/update_top_ten.sh

@@ -7,6 +7,8 @@ from .models import Profile
 from src.video.models import Video
 from src.categorization.models import Category
 from src.Ranked.test import APITestBase
+from src.manager.models import EnvironmentState
+from src.profile.management.commands.update_favorite_categories import _update_favorite_categories
 # Django Imports
 from django.test import TestCase
 from django.utils import timezone
@@ -556,3 +558,64 @@ class UserPatchTestCase(APITestBase):
     def setUp(self):
         APITestBase.setUp(self)
         self.client = APIClient()
+
+
+class UserFavoriteCategoriesTest(APITestBase):
+
+    def __reset_last_profile_category_update_time(self):
+        state = EnvironmentState.get_environment_state()
+        state.last_updated_favorite_categories = timezone.now() - timedelta(minutes=60)
+        state.is_updating_favorite_categories = False
+        state.save()
+
+    def test_profile_favorite_category_success(self):
+        """
+        All Users favorite categories should be updated correctly.
+        """
+        self.__reset_last_profile_category_update_time()
+        _update_favorite_categories()
+
+        profile_1 = Profile.objects.get(pk=self.test_profile.id)
+        self.assertNotEqual(profile_1.primary_category, None)
+        self.assertEqual(profile_1.primary_category.name, 'Dance')
+        self.assertEqual(profile_1.secondary_category.name, 'Breakdance')
+
+        profile_2 = Profile.objects.get(pk=self.test_profile2.id)
+        self.assertNotEqual(profile_1.primary_category, None)
+        self.assertEqual(profile_2.secondary_category, None)
+        self.assertEqual(profile_2.primary_category.name, 'Breakdance')
+
+        profile_3 = Profile.objects.get(pk=self.test_profile3.id)
+        self.assertEqual(profile_3.primary_category, None)
+        self.assertEqual(profile_3.secondary_category, None)
+
+
+
+    def setUp(self):
+        APITestBase.setUp(self)
+        self.client = APIClient()
+
+        dance = Category(name="Dance")
+        dance.save()
+        breakdance = Category(name="Breakdance", is_active=True, parent_category=dance)
+        breakdance.save()
+
+        video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                       thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                       category=breakdance, rank_total=300)
+        video1.save()
+        video2 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                       category=dance)
+        video2.save()
+        video3 = Video(related_profile=self.test_profile, title="My Video3", is_processing=False, is_active=True,
+                       category=dance)
+        video3.save()
+
+        video1 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
+                       thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                       category=breakdance, rank_total=300)
+        video1.save()
+        video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
+                       category=breakdance)
+        video2.save()
+
