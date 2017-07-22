@@ -49,7 +49,8 @@ class AvatarUploadView(APIView):
             file_obj = request.data['file']
             filesize_in_kilobytes = file_obj.size / 1000
             file_extension = file_obj.name.split('.')[-1:][0]
-            if filesize_in_kilobytes < 2000:
+            # Anything larger than 8MB's gets turned away
+            if filesize_in_kilobytes < 8100:
                 s3 = boto3.resource('s3')
                 profile = Profile.objects.get(pk=request.user.id)
                 generated_s3_key = 'ava{id}-{uuid}.{ext}'.format(id=profile.id, uuid=uuid.uuid4(), ext=file_extension)
