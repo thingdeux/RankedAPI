@@ -609,17 +609,17 @@ class VideoAPIVideosListCase(APITestBase):
         response = self.client.get('/api/v1/videos/?offset=1&limit=3', format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 3)
-        self.assertEqual(response.data[0]['id'], 3)
+        self.assertEqual(response.data[0]['id'], 4)
 
         response = self.client.get('/api/v1/videos/?offset=2&limit=3', format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 2)
-        self.assertEqual(response.data[0]['id'], 4)
+        self.assertEqual(response.data[0]['id'], 3)
 
         response = self.client.get('/api/v1/videos/?offset=1&limit=1', format='json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['id'], 3)
+        self.assertEqual(response.data[0]['id'], 4)
 
 
 
