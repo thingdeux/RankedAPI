@@ -245,6 +245,6 @@ class VideoTopView(APIView):
             .select_related('related_profile__primary_category').select_related(
             'related_profile__primary_category__parent_category') \
             .select_related('related_profile__secondary_category__parent_category').select_related('category')\
-            .select_related('category__parent_category')[:25]
+            .select_related('category__parent_category')[:50]
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)
