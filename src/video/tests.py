@@ -411,7 +411,7 @@ class VideoAPICasePatch(APITestBase):
         updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_video.title, "Bunny's are so great")
-        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude")
+        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude,")
 
         response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
             'title': "Bunny's are so great #Bunnies#Love#Dude"
@@ -420,7 +420,7 @@ class VideoAPICasePatch(APITestBase):
         updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_video.title, "Bunny's are so great")
-        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude")
+        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude,")
 
 
         response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
@@ -429,7 +429,7 @@ class VideoAPICasePatch(APITestBase):
         updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_video.title, "")
-        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude")
+        self.assertEqual(updated_video.hashtag, "#Bunnies,#Love,#Dude,")
 
         response = self.client.patch('/api/v1/videos/{}/'.format(self.video1.id), data={
             'title': "I love BEES!  #Bunnies_AND_BEES1245_ #Love #Dude"
@@ -437,7 +437,7 @@ class VideoAPICasePatch(APITestBase):
         updated_video = Video.objects.get(id=self.video1.id)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_video.title, 'I love BEES!')
-        self.assertEqual(updated_video.hashtag, "#Bunnies_AND_BEES1245_,#Love,#Dude")
+        self.assertEqual(updated_video.hashtag, "#Bunnies_AND_BEES1245_,#Love,#Dude,")
 
 
     def test_video_patch_should_accept_category(self):

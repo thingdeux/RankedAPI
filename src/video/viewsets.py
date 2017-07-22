@@ -229,7 +229,9 @@ class VideoViewSet(viewsets.ModelViewSet):
                     continue
                 hashtags = hashtags + ",#" + text
 
-        return final_title or "", hashtags
+        # Add trailing comma to help with search accuracy for now
+        # TODO: Revisit - will probably need to make hashtags relational
+        return final_title or "", hashtags + ","
 
 # Avatar upload View
 class VideoTopView(APIView):

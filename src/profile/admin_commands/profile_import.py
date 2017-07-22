@@ -114,11 +114,11 @@ class ProfileImporter:
             video.custom_field1 = imported_video.s3filename
             video.is_featured = imported_video.is_featured
             video.rank_total = imported_video.total_rank_amount
-            video.hashtag = '#{}'.format(',#'.join(imported_video.hashtag_string_array))
+            # Make sure to add trailing comma
+            video.hashtag = '#{}'.format(',#'.join(imported_video.hashtag_string_array)) + ","
             self.__add_category_to_video(imported_video.category_string, video)
             self.__generate_demo_urls(video, imported_video.s3filename)
 
-            # TODO: Set this to True when Taylor is done uploading the videos
             video.is_active = True
             video.is_processing = False
             video.save()
@@ -132,7 +132,6 @@ class ProfileImporter:
         video.high = 'http://{}/{}'.format("videos.goranked.com", filename)
         video.low = 'http://{}/{}.webm'.format("videos.goranked.com", filename.split('.')[0])
         filename_parsed = filename.split('.')[0]
-        # TODO: This should be updated to using -lrg-00001.jpg
         video.thumbnail_large = "{}/{}-lrg-00001.jpg".format(STATIC_URL, filename_parsed)
         video.thumbnail_small = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)
 

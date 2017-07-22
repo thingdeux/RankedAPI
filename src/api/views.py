@@ -82,7 +82,9 @@ def __get_explore_search_data(filter_phrase, category_id):
     if category_id:
         base_queryset = base_queryset.filter(category__id=category_id)
     if filter_phrase:
-        base_queryset = base_queryset.filter(title__icontains=str(filter_phrase))
+        # Add the trailing comma for accuracy, ex: if I search for BestNBA or BestNBADunks without the
+        # Trailing comma ending the phrase they'll both return the same videos.
+        base_queryset = base_queryset.filter(hashtag__icontains=str(filter_phrase + ","))
     return VideoSerializer(base_queryset[:50], many=True).data
 
 def __get_profile_by_name(name):

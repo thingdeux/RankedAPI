@@ -25,9 +25,11 @@ class SearchExploreAPICase(TestCase):
         auth_token = "Bearer {}".format(self.test_profile2_token)
         self.client.credentials(HTTP_AUTHORIZATION=auth_token)
 
-        response = self.client.get('/api/v1/search/?category=1', format='json')
+        response = self.client.get('/api/v1/search/?category={}'.format(self.category.id), format='json')
         self.assertEqual(response.status_code, 200)
-        # TODO: Add video category and check here
+        self.assertEqual(len(response.data['videos']), 1)
+        self.assertEqual(response.data['videos'][0]['title'], "My Video")
+
 
     def test_search_trendsetters_success_less_than_20(self):
         """
@@ -40,19 +42,48 @@ class SearchExploreAPICase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['profiles']), 2)
 
+    def test_search_hashtag_success(self):
+        """
+        You should be able to search for videos by hashtag
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/search/explore/?name=beats', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['videos']), 2)
+
+        response = self.client.get('/api/v1/search/explore/?name=love', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['videos']), 1)
+
+    def test_search_hashtag_case_insensitive_success(self):
+        """
+        You should be able to search for videos by hashtag
+        """
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/search/explore/?name=loveontherocks', format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['videos']), 1)
 
     def setUp(self):
         self.client = APIClient()
 
+        self.category = Category.objects.create(name="Tarts")
+        self.category.save()
         self.test_profile = Profile(username="test_user", password="testpass", email="test@user.com")
         self.test_profile.save()
         self.test_profile2 = Profile(username="test_user2", password="testpass", email="test2@user.com")
         self.test_profile2.save()
         self.__create_auth_tokens()
 
-        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True)
+        self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                            hashtag="#love,#beats,", category=self.category)
         self.video1.save()
-        self.video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True)
+        self.video2 = Video(related_profile=self.test_profile2, title="My Video2", is_processing=False, is_active=True,
+                            hashtag="#beats,#loveOnTheRocks,", category=None)
         self.video2.save()
 
     def __create_auth_tokens(self):

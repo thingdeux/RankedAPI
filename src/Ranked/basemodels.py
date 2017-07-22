@@ -19,7 +19,7 @@ class Base(models.Model):
 
 
 class Hashtagable(models.Model):
-    hashtag = models.CharField(max_length=255, blank=True)
+    hashtag = models.CharField(max_length=255, blank=True, db_index=True)
 
     class Meta:
         abstract = True
