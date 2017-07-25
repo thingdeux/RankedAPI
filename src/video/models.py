@@ -54,9 +54,9 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
 
         :return: Queryset
         """
-        base_queryset = Video.objects.order_by('-rank_total')\
+        base_queryset = Video.objects.order_by('-views')\
             .filter(is_active=True)\
-            .select_related('related_profile').select_related('category')[:50]
+            .select_related('related_profile').select_related('category')
 
         base_queryset = add_limit_and_offset_to_queryset(base_queryset, **kwargs)
         return base_queryset
