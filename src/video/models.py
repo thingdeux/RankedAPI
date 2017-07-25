@@ -5,7 +5,7 @@ from src.profile.mixins import ProfileRelatable
 from src.categorization.mixins import MultiCategoryRelatable
 from src.ranking.models import Ranking
 from django.db import transaction
-
+from src.api.utils import add_limit_and_offset_to_queryset
 
 class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, CustomFieldStorable,
             ThumbnailDisplayable, UploadProcessable, Activatable, Rankable, MultiCategoryRelatable):
@@ -27,7 +27,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
             .select_related('category__parent_category')
 
     @staticmethod
-    def get_ranked_10_videos_queryset(category=None, title_filter=None):
+    def get_ranked_10_videos_queryset(category=None, title_filter=None, **kwargs):
         """
         Get videos queryset for videos that have is_ranked_10 flag set.
 
@@ -44,10 +44,11 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
         if title_filter:
             base_queryset = base_queryset.filter(title__icontains=title_filter.lower())[:50]
 
+        base_queryset = add_limit_and_offset_to_queryset(base_queryset, **kwargs)
         return base_queryset
 
     @staticmethod
-    def get_ranked_trending_videos_queryset():
+    def get_ranked_trending_videos_queryset(**kwargs):
         """
         Get videos queryset for highest ranked videos (for now) - will need to determine what 'trending' means later.
 
@@ -57,6 +58,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
             .filter(is_active=True)\
             .select_related('related_profile').select_related('category')[:50]
 
+        base_queryset = add_limit_and_offset_to_queryset(base_queryset, **kwargs)
         return base_queryset
 
     @staticmethod
@@ -80,13 +82,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
             .select_related('category__parent_category').order_by('-created')
 
 
-        if limit and offset:
-            queryset = queryset[int(offset):]
-            queryset = queryset[:int(limit)]
-        elif limit:
-            queryset = queryset[:int(limit)]
-        elif offset:
-            queryset = queryset[int(offset):]
+        queryset = add_limit_and_offset_to_queryset(queryset, limit=limit, offset=offset)
 
         return queryset
 

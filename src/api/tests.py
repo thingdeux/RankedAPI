@@ -30,6 +30,35 @@ class SearchExploreAPICase(TestCase):
         self.assertEqual(len(response.data['videos']), 1)
         self.assertEqual(response.data['videos'][0]['title'], "My Video")
 
+    def test_search_explore_limit_query(self):
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        for i in range(0, 20):
+            video = Video(related_profile=self.test_profile, title="My Video", is_processing=False,
+                                is_active=True,
+                                hashtag="#love,#beats,", category=self.category)
+            video.save()
+
+        response = self.client.get('/api/v1/search/?category={}'.format(self.category.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['videos']), 21)
+
+        response = self.client.get('/api/v1/search/?category={}&limit=5'.format(self.category.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['videos']), 5)
+
+    def test_search_explore_offset_query(self):
+        auth_token = "Bearer {}".format(self.test_profile2_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.get('/api/v1/search/?category={}'.format(self.category.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['videos']), 1)
+
+        response = self.client.get('/api/v1/search/?category={}&offset=1'.format(self.category.id), format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['videos']), 0)
 
     def test_search_trendsetters_success_less_than_20(self):
         """

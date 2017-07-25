@@ -15,7 +15,7 @@ from src.comment.models import Comment
 from src.categorization.models import Category
 from src.profile.serializers import LightProfileSerializer, BasicProfileSerializer
 from .serializers import VideoSerializer
-from src.profile.models import Profile
+from src.api.utils import add_limit_and_offset_to_queryset
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from django.core.exceptions import ObjectDoesNotExist
@@ -47,8 +47,6 @@ class VideoViewSet(viewsets.ModelViewSet):
                 video_serialized = VideoSerializer(video)
                 profile_serialized = BasicProfileSerializer(video.related_profile)
                 comments_serialized = CommentSerializer(video.comments, many=True)
-
-                # TODO: Profile this query - gonna be gnarly
 
                 to_return = video_serialized.data
                 to_return['uploaded_by'] = profile_serialized.data
@@ -249,6 +247,9 @@ class VideoTopView(APIView):
             .select_related('related_profile__primary_category').select_related(
             'related_profile__primary_category__parent_category') \
             .select_related('related_profile__secondary_category__parent_category').select_related('category')\
-            .select_related('category__parent_category')[:50]
+            .select_related('category__parent_category')
+
+        queryset = add_limit_and_offset_to_queryset(queryset, limit=request.query_params.get('limit', 50),
+                                                              offset=request.query_params.get('offset', None))
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)
