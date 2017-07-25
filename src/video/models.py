@@ -34,15 +34,15 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
         :param title_filter: Filter results by title
         :return: Queryset
         """
-        base_queryset = Video.objects.order_by('-rank_total')\
-            .filter(is_top_10=True, is_active=True)\
-            .select_related('related_profile').select_related('category').select_related('category__parent_category')
+
+        base_queryset = Video.get_videos_performant_queryset()
+        base_queryset = base_queryset.order_by('-rank_total').filter(is_top_10=True, is_active=True)
 
         if category:
             base_queryset = base_queryset.filter(category__id=category)
 
         if title_filter:
-            base_queryset = base_queryset.filter(title__icontains=title_filter.lower())[:50]
+            base_queryset = base_queryset.filter(title__icontains=title_filter.lower())
 
         base_queryset = add_limit_and_offset_to_queryset(base_queryset, **kwargs)
         return base_queryset
@@ -54,10 +54,8 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
 
         :return: Queryset
         """
-        base_queryset = Video.objects.order_by('-views')\
-            .filter(is_active=True)\
-            .select_related('related_profile').select_related('category')
-
+        base_queryset = Video.get_videos_performant_queryset()
+        base_queryset = base_queryset.order_by('-views').filter(is_active=True)
         base_queryset = add_limit_and_offset_to_queryset(base_queryset, **kwargs)
         return base_queryset
 
