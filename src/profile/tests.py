@@ -6,6 +6,9 @@ from django.test import TestCase
 from .models import Profile
 from src.video.models import Video
 from src.categorization.models import Category
+from src.Ranked.test import APITestBase
+from src.manager.models import EnvironmentState
+from src.profile.management.commands.update_favorite_categories import _update_favorite_categories
 # Django Imports
 from django.test import TestCase
 from django.utils import timezone
@@ -25,7 +28,7 @@ class RegistrationTestCase(TestCase):
         response = self.client.post('/api/v1/users/register/', {
             'username': 'ishouldwork',
             'password': 'mo3435re',
-            'email': 'shouldwork@user.com',
+            'email': 'shouldwork@user.media',
             'unlock_key': '123123'
         }, format='json')
 
@@ -34,7 +37,7 @@ class RegistrationTestCase(TestCase):
             'id': 2,
             'username': 'ishouldwork',
             'is_featured': False,
-            'email': 'shouldwork@user.com',
+            'email': 'shouldwork@user.media',
             'phone_number': None,
             'is_partner': False,
             'avatar_url': None,
@@ -52,7 +55,7 @@ class RegistrationTestCase(TestCase):
         """
         Email is unique - verify two exact emails can't exist.
         """
-        response = self.client.post('/api/v1/users/register/', {
+        response = self.client.post('/api/v1/users/register/', data={
             'username': 'test_use23232r',
             'password': 'mo3435re',
             'email': 'test@user.com',
@@ -516,3 +519,103 @@ class UserListTestCase(TestCase):
             application=self.application
         )
         self.test_profile3.save()
+
+class UserPatchTestCase(APITestBase):
+
+    def test_profile_update_via_patch_success(self):
+        """
+        /Users/<id>/Patch/ should allow updating of profile  fields
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.patch('/api/v1/users/{}/'.format(self.test_profile.id), data={
+            'password': 'slewfoot',
+            'email': 'somenewemail@email.com'
+        },format="json")
+
+        self.assertEqual(response.status_code, 200)
+        profile = Profile.objects.get(id=self.test_profile.id)
+        self.assertEqual(profile.email, 'somenewemail@email.com')
+
+    def test_profile_update_via_patch_failure_on_email_unique_constraint(self):
+        """
+        /Users/<id>/Patch/ should allow updating of profile  fields
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+        self.test_profile2.email = 'emailtoreuse@yup.com'
+        self.test_profile2.save()
+
+        response = self.client.patch('/api/v1/users/{}/'.format(self.test_profile.id), data={
+            'email': 'emailtoreuse@yup.com'
+        },format="json")
+
+        self.assertEqual(response.status_code, 408)
+
+    def setUp(self):
+        APITestBase.setUp(self)
+        self.client = APIClient()
+
+
+class UserFavoriteCategoriesTest(APITestBase):
+
+    def __reset_last_profile_category_update_time(self):
+        state = EnvironmentState.get_environment_state()
+        state.last_updated_favorite_categories = timezone.now() - timedelta(minutes=60)
+        state.is_updating_favorite_categories = False
+        state.save()
+
+    def test_profile_favorite_category_success(self):
+        """
+        All Users favorite categories should be updated correctly.
+        """
+        self.__reset_last_profile_category_update_time()
+        _update_favorite_categories()
+
+        profile_1 = Profile.objects.get(pk=self.test_profile.id)
+        self.assertNotEqual(profile_1.primary_category, None)
+        self.assertEqual(profile_1.primary_category.name, 'Dance')
+        self.assertEqual(profile_1.secondary_category.name, 'Breakdance')
+
+        profile_2 = Profile.objects.get(pk=self.test_profile2.id)
+        self.assertNotEqual(profile_1.primary_category, None)
+        self.assertEqual(profile_2.secondary_category, None)
+        self.assertEqual(profile_2.primary_category.name, 'Breakdance')
+
+        profile_3 = Profile.objects.get(pk=self.test_profile3.id)
+        self.assertEqual(profile_3.primary_category, None)
+        self.assertEqual(profile_3.secondary_category, None)
+
+
+
+    def setUp(self):
+        APITestBase.setUp(self)
+        self.client = APIClient()
+
+        dance = Category(name="Dance")
+        dance.save()
+        breakdance = Category(name="Breakdance", is_active=True, parent_category=dance)
+        breakdance.save()
+
+        video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                       thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                       category=breakdance, rank_total=300)
+        video1.save()
+        video2 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
+                       category=dance)
+        video2.save()
+        video3 = Video(related_profile=self.test_profile, title="My Video3", is_processing=False, is_active=True,
+                       category=dance)
+        video3.save()
+
+        video1 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
+                       thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                       category=breakdance, rank_total=300)
+        video1.save()
+        video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
+                       category=breakdance)
+        video2.save()
+

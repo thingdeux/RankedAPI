@@ -49,7 +49,8 @@ class AvatarUploadView(APIView):
             file_obj = request.data['file']
             filesize_in_kilobytes = file_obj.size / 1000
             file_extension = file_obj.name.split('.')[-1:][0]
-            if filesize_in_kilobytes < 1000:
+            # Anything larger than 8MB's gets turned away
+            if filesize_in_kilobytes < 8100:
                 s3 = boto3.resource('s3')
                 profile = Profile.objects.get(pk=request.user.id)
                 generated_s3_key = 'ava{id}-{uuid}.{ext}'.format(id=profile.id, uuid=uuid.uuid4(), ext=file_extension)
@@ -61,8 +62,9 @@ class AvatarUploadView(APIView):
                                                   context={"request": request}).data, status=200)
             else :
                 error = { "description": "Filesize too large! Less than 1MB" }
-                return Response(status=304, data=error)
+                return Response(status=413, data=error)
         except ObjectDoesNotExist:
             return Response(status=404)
         except KeyError:
-            return Response(status=304)
+            error = {"description": "'File' parameter missing"}
+            return Response(status=304, data=error)

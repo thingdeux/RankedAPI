@@ -3,7 +3,7 @@ from django.core.management.base import LabelCommand
 # Standard Library Imports
 import os
 # Project Imports
-from src.profile.admin.profile_import import ProfileImporter
+from src.profile.admin_commands.profile_import import ProfileImporter
 
 
 class Command(LabelCommand):

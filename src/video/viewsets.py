@@ -15,7 +15,7 @@ from src.comment.models import Comment
 from src.categorization.models import Category
 from src.profile.serializers import LightProfileSerializer, BasicProfileSerializer
 from .serializers import VideoSerializer
-from src.profile.models import Profile
+from src.api.utils import add_limit_and_offset_to_queryset
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from django.core.exceptions import ObjectDoesNotExist
@@ -48,8 +48,6 @@ class VideoViewSet(viewsets.ModelViewSet):
                 profile_serialized = BasicProfileSerializer(video.related_profile)
                 comments_serialized = CommentSerializer(video.comments, many=True)
 
-                # TODO: Profile this query - gonna be gnarly
-
                 to_return = video_serialized.data
                 to_return['uploaded_by'] = profile_serialized.data
                 to_return['comments'] = comments_serialized.data
@@ -59,17 +57,16 @@ class VideoViewSet(viewsets.ModelViewSet):
             return Response(status=404)
 
     def list(self, request, *args, **kwargs):
-        # TODO: Paginate
-        profile = Profile.objects.get(pk=request.user.id)
-        queryset = Video.objects.filter(related_profile__in=profile.user_ids_i_follow, is_active=True)\
-            .select_related('related_profile').select_related('related_profile__secondary_category')\
-            .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category')\
-            .select_related('related_profile__secondary_category__parent_category').select_related('category')\
-            .select_related('category__parent_category')
+        try:
+            queryset = Video.get_videos_from_profiles_user_follows_queryset(request.user.id,
+                                                                            request.query_params.get('limit', None),
+                                                                            request.query_params.get('offset', None))
 
-
-        serialized = VideoSerializer(queryset, many=True)
-        return Response(status=200, data=serialized.data)
+            serialized = VideoSerializer(queryset, many=True)
+            return Response(status=200, data=serialized.data)
+        except ValueError:
+            error = {'description': 'There was a problem reading your request.'}
+            return Response(status=400, data=error)
 
     def create(self, request, *args, **kwargs):
         error = {"description":  "POST to /videos/ is not how videos are created. Please see documentation."}
@@ -111,7 +108,7 @@ class VideoViewSet(viewsets.ModelViewSet):
             try:
                 video = Video.objects.get(id=pk)
                 profile = self.request.user
-                rank_amount = request.data.get('rank_amount', 1)
+                rank_amount = VideoViewSet.__get_rank_as_int(request.data.get('rank_amount', 1))
 
                 if rank_amount > 10:
                     rank_amount = 10
@@ -122,14 +119,23 @@ class VideoViewSet(viewsets.ModelViewSet):
                 if was_created:
                     new_rank.rank_amount = rank_amount
                     new_rank.save()
+                    video.update_ranking()
                     return Response(status=200, data={'description': 'Success'})
                 else:
+                    video.update_ranking()
                     return Response(status=304, data={'description': 'This video has already been ranked'})
             except ObjectDoesNotExist:
                 error = {"description": "Video Not Found"}
                 return Response(status=404, data=error)
         elif request.method == "DELETE":
             return self.__delete_ranking(self.request.user, pk)
+
+    @staticmethod
+    def __get_rank_as_int(amount):
+        try:
+            return int(amount)
+        except ValueError:
+            return 1
 
     def __delete_ranking(self, profile, video_id):
         try:
@@ -223,9 +229,11 @@ class VideoViewSet(viewsets.ModelViewSet):
                     continue
                 hashtags = hashtags + ",#" + text
 
+        if len(hashtags) > 0:
+            hashtags = hashtags + ","
+        # Add trailing comma to help with search accuracy for now
+        # TODO: Revisit - will probably need to make hashtags relational
         return final_title or "", hashtags
-
-
 
 # Avatar upload View
 class VideoTopView(APIView):
@@ -239,6 +247,9 @@ class VideoTopView(APIView):
             .select_related('related_profile__primary_category').select_related(
             'related_profile__primary_category__parent_category') \
             .select_related('related_profile__secondary_category__parent_category').select_related('category')\
-            .select_related('category__parent_category')[:25]
+            .select_related('category__parent_category')
+
+        queryset = add_limit_and_offset_to_queryset(queryset, limit=request.query_params.get('limit', 50),
+                                                              offset=request.query_params.get('offset', None))
         serialized = VideoSerializer(queryset, many=True)
         return Response(serialized.data)

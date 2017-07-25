@@ -4,9 +4,11 @@ from django.contrib.auth.models import AbstractUser
 from src.Ranked.basemodels import Base
 from src.categorization.models import Category
 from src.categorization.serializers import CategorySerializer
+# Standard Library
+import random
 
 class Profile(AbstractUser, Base):
-    email = models.EmailField(max_length=256, db_index=True)
+    email = models.EmailField(max_length=256, db_index=True, unique=True)
     avatar_url = models.URLField(max_length=512, default=None, null=True)
     is_partner = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
@@ -63,9 +65,15 @@ class Profile(AbstractUser, Base):
 
         """
         # TODO: Make this work - is mocked for demo
-        # TODO: Choose some useful profiles or heck, just randomize
-        return Profile.objects.filter(id__in=[1,3,55], is_active=True)\
-            .select_related('primary_category').select_related('secondary_category')\
-            .prefetch_related('followed_profiles')\
-            .select_related('followed_profiles__primary_category')\
-            .select_related('followed_profiles__secondary_category')
+        try:
+            profile_count = Profile.objects.count()
+            random_ids = random.sample(range(1, profile_count), 20)
+            return Profile.objects.filter(id__in=list(random_ids), is_active=True) \
+                .select_related('primary_category').select_related('secondary_category') \
+                .select_related('primary_category__parent_category') \
+                .select_related('secondary_category__parent_category')
+        except ValueError:
+            return Profile.objects.filter(is_active=True) \
+                .select_related('primary_category').select_related('secondary_category') \
+                .select_related('primary_category__parent_category') \
+                .select_related('secondary_category__parent_category')

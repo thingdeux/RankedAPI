@@ -19,7 +19,7 @@ class Base(models.Model):
 
 
 class Hashtagable(models.Model):
-    hashtag = models.CharField(max_length=255, blank=True)
+    hashtag = models.CharField(max_length=255, blank=True, db_index=True)
 
     class Meta:
         abstract = True
@@ -148,6 +148,15 @@ class CustomFieldStorable(models.Model):
     custom_field1 = models.CharField(max_length=512, default=None, null=True, db_index=True)
     custom_field2 = models.CharField(max_length=512, default=None, null=True)
     custom_field3 = models.CharField(max_length=512, default=None, null=True)
+
+    class Meta:
+        abstract = True
+
+class Orderable(models.Model):
+    """
+    Allow ordinal and create custom order
+    """
+    ordinal = models.IntegerField(default=1000, null=False, blank=False)
 
     class Meta:
         abstract = True

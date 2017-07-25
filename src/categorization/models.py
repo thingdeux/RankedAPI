@@ -1,9 +1,9 @@
 from django.db import models
-from src.Ranked.basemodels import Base, Hashtagable, ThumbnailDisplayable, Activatable
+from src.Ranked.basemodels import Base, Hashtagable, ThumbnailDisplayable, Activatable, Orderable
 from .mixins import ParentCategoryRelatable
 
 
-class Category(Base, Hashtagable, ThumbnailDisplayable, Activatable, ParentCategoryRelatable):
+class Category(Base, Hashtagable, ThumbnailDisplayable, Activatable, ParentCategoryRelatable, Orderable):
     name = models.CharField(max_length=255, null=False, blank=False, db_index=True, unique=True)
 
     class Meta:

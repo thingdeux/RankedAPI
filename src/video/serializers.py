@@ -40,7 +40,8 @@ class VideoSerializer(serializers.Serializer):
 
     def get_hashtag(self, model):
         if model.hashtag:
-            return model.hashtag.split(',')
+            # Kill trailing comma on serialization.
+            return model.hashtag.split(',')[:-1]
         return None
 
     def get_uploaded_by(self, model):

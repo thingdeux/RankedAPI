@@ -6,8 +6,11 @@ from datetime import timedelta
 
 class EnvironmentState(Base):
      last_updated_ranking_scores = models.DateTimeField(auto_now_add=True)
+     last_updated_favorite_categories = models.DateTimeField(default=timezone.now)
+
      is_updating_ranking = models.BooleanField(default=False)
      is_in_maintenance_mode = models.BooleanField(default=False)
+     is_updating_favorite_categories = models.BooleanField(default=False)
 
      @staticmethod
      def get_environment_state():
@@ -18,5 +21,12 @@ class EnvironmentState(Base):
      def should_update_ranking(self):
          if not self.is_in_maintenance_mode and not self.is_updating_ranking:
              if timezone.now() > self.last_updated_ranking_scores + timedelta(minutes=30):
+                 return True
+         return False
+
+     @property
+     def should_update_profiles_favorite_categories(self):
+         if not self.is_in_maintenance_mode and not self.is_updating_favorite_categories:
+             if timezone.now() > self.last_updated_favorite_categories + timedelta(minutes=60):
                  return True
          return False

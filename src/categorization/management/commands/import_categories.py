@@ -3,7 +3,7 @@ from django.core.management.base import LabelCommand
 # Standard Library Imports
 import os
 # Project Imports
-from src.categorization.admin import csv_import
+from src.categorization.admin_commands import csv_import
 
 
 class Command(LabelCommand):

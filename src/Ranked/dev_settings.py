@@ -2,7 +2,7 @@ import os
 import platform
 
 
-ALLOWED_HOSTS = ['dev.goranked.com', 'demo.goranked.com']
+ALLOWED_HOSTS = ['dev.goranked.com', 'demo.goranked.com', '54.202.35.235']
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

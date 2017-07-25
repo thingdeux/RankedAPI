@@ -12,7 +12,6 @@ from .models import Category
 from oauth2_provider.models import Application, AccessToken
 # Standard Library Imports
 from datetime import timedelta
-from django.core.cache import cache
 
 
 class CategoryAPICase(TestCase):
