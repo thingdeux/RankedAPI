@@ -12,7 +12,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
 
     title = models.CharField(default="", max_length=256, blank=False, null=False)
     is_featured = models.BooleanField(default=False)
-    views = models.IntegerField(default=0)
+    views = models.IntegerField(default=0, db_index=True)
 
     def __str__(self):
         return "{}'s video {}".format(self.related_profile, self.id)
