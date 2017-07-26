@@ -5,6 +5,7 @@ class TTLProcessor(object):
     DONT_CACHE = 0
     ONE_MINUTE = 60
     TWO_MINUTES = 60 * 2
+    FIVE_MINUTES = 60 * 5
     THIRTY_MINUTES = 60 * ONE_MINUTE
     ONE_HOUR = ONE_MINUTE * 60
     ONE_DAY = ONE_HOUR * 24
@@ -42,6 +43,8 @@ class TTLProcessor(object):
             '/api/v1/josh/': TTLProcessor.DONT_CACHE,
             '/api/v1/videos/': TTLProcessor.DONT_CACHE,
             '/api/v1/users/me/': TTLProcessor.DONT_CACHE,
+            # Low-Level Cache
+            'video-detail': TTLProcessor.FIVE_MINUTES,
             # Mid-Level Cache Endpoints
             '/api/v1/search/trending/': TTLProcessor.THIRTY_MINUTES,
             '/api/v1/search/trendsetters/': TTLProcessor.THIRTY_MINUTES,
@@ -53,11 +56,10 @@ class TTLProcessor(object):
             # Long lived responses
             '/api/v1/categories/': TTLProcessor.ONE_DAY,
 
-            # Will need to purge early.
-            'profile-following': TTLProcessor.ONE_HOUR,
-            'profile-followers': TTLProcessor.ONE_HOUR,
-            'profile-detail': TTLProcessor.ONE_HOUR,
-            'video-detail': TTLProcessor.TWO_MINUTES
+            # Will need to purge early - but for now won't cache.
+            'profile-following': TTLProcessor.DONT_CACHE,
+            'profile-followers': TTLProcessor.DONT_CACHE,
+            'profile-detail': TTLProcessor.DONT_CACHE,
         }
 
         time = resolver_mapper.get(raw_path, None) or resolver_mapper.get(url_name, None)
