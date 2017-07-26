@@ -11,7 +11,10 @@ from .utils import add_limit_and_offset_to_queryset
 # Library Imports
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 from django.http import HttpResponse
-SIX_HOURS_IN_SECONDS = 21600
+# Django Imports
+from django.views.decorators.cache import cache_page
+
+THREE_HOURS_IN_SECONDS = 10800
 
 # Route "Enums"
 SEARCH_ROUTE_BASE = "base"
@@ -20,6 +23,7 @@ SEARCH_ROUTE_RANKED_10 = "ranked10"
 SEARCH_ROUTE_TRENDING = "trending"
 SEARCH_ROUTE_TRENDSETTERS = "trendsetters"
 
+@cache_page(THREE_HOURS_IN_SECONDS)
 @api_view(('GET',))
 @permission_classes((IsAuthenticated, TokenHasReadWriteScope))
 def search(request, **kwargs):
@@ -83,7 +87,6 @@ def __get_videos_by_category(category_id, **kwargs):
     else:
         return None
 
-
 def __get_explore_search_data(filter_phrase, category_id, **kwargs):
     base_queryset = Video.objects.filter(is_active=True).select_related('category')\
         .select_related('related_profile').select_related('category__parent_category')\
@@ -108,6 +111,6 @@ def __get_profile_by_name(name, **kwargs):
 def __get_trendsetters():
     return LightProfileSerializer(Profile.get_trend_setters_queryset(), many=True).data
 
-
+# Health Check endpoint for ELB
 def health_check(request):
     return HttpResponse(status=200)

@@ -52,6 +52,16 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://rankeddemo.eq7ccp.ng.0001.usw2.cache.amazonaws.com:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
 STATIC_URL = '/static/'
 STATIC_ROOT = '/tmp/static/'
 STATICFILES_DIRS = [
