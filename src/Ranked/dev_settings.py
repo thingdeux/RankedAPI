@@ -16,6 +16,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Keep VarnishCacheParams at the end
+    'src.Ranked.middleware.TTLProcessor'
 ]
 
 DEBUG = False

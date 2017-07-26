@@ -51,7 +51,7 @@ sub vcl_recv {
 
     if (!(req.url ~ "^/josh/")) {
         # Remove All incoming cookies for any route not josh (need csrf token cookies for admin)
-        set req.url = regsub(req.url, "\?.*$", "");
+        # set req.url = regsub(req.url, "\?.*$", "");
         set req.http.Host = regsub(req.http.Host, ":[0-9]+", "");
         unset req.http.Cookie;
         unset req.http.Cache-Control;
@@ -92,7 +92,7 @@ sub vcl_backend_response {
     # and other mistakes your backend does.
 
     # Remove cookies that destroy cache - you can't ignore my cache!
-    if (!(bereq.url ~ "^/admin/")) {
+    if (!(bereq.url ~ "^/josh/")) {
        unset beresp.http.Set-Cookie;
        unset beresp.http.Server;
        unset beresp.http.X-Powered-By;
@@ -105,11 +105,6 @@ sub vcl_backend_response {
         set beresp.ttl = 120s;
         return (deliver);
     }
-     #else {
-     #   if (bereq.url ~ "^/api/v1/config") {
-     #      set beresp.ttl = 86400s;
-     #   }
-     # }
 }
 
 sub vcl_deliver {
