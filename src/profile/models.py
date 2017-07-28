@@ -43,9 +43,11 @@ class Profile(AbstractUser, Base):
         return self.followed_profiles.values('id').prefetch_related('followed_profiles')
 
     def follow_user(self, user_id):
+        # TODO: This should be a Celery task
+
         # Can't follow yourself
         if int(user_id) != self.id:
-            profile_to_follow = Profile.objects.filter(id=user_id).only('id').first()
+            profile_to_follow = Profile.objects.filter(id=user_id).only('id', 'followers_count').first()
 
             self.followed_profiles.add(profile_to_follow)
             self.following_count = self.followed_profiles.count()
@@ -55,8 +57,11 @@ class Profile(AbstractUser, Base):
 
 
     def stop_following_user(self, user_id):
+        # TODO: This should be a Celery task
         profile_to_stop_following = Profile.objects.get(id=user_id)
         self.followed_profiles.remove(profile_to_stop_following)
+        self.following_count = self.followed_profiles.count()
+
 
     @staticmethod
     def get_trend_setters_queryset():
@@ -67,7 +72,7 @@ class Profile(AbstractUser, Base):
         # TODO: Make this work - is mocked for demo
         try:
             profile_count = Profile.objects.count()
-            random_ids = random.sample(range(1, profile_count), 20)
+            random_ids = random.sample(range(1, profile_count), 50)
             return Profile.objects.filter(id__in=list(random_ids), is_active=True) \
                 .select_related('primary_category').select_related('secondary_category') \
                 .select_related('primary_category__parent_category') \

@@ -99,6 +99,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
                     return Response(status=200)
                 elif request.method == "DELETE":
                     profile.stop_following_user(pk)
+                    profile.save()
                     return Response(status=200)
             except ObjectDoesNotExist as e:
                 error = {"description": "Profile not found {}".format(e)}

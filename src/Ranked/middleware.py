@@ -45,8 +45,8 @@ class TTLProcessor(object):
             # No Cache Endpoints
             'default': TTLProcessor.DONT_CACHE,
             '/api/v1/josh/': TTLProcessor.DONT_CACHE,
-            '/api/v1/videos/': TTLProcessor.ONE_MINUTE,
-            '/api/v1/users/me/': TTLProcessor.THIRTY_SECONDS,
+            '/api/v1/videos/': TTLProcessor.DONT_CACHE,
+            '/api/v1/users/me/': TTLProcessor.DONT_CACHE,
             # Low-Level Cache
             'video-detail': TTLProcessor.FIVE_MINUTES,
             # Mid-Level Cache Endpoints
@@ -79,8 +79,8 @@ class TTLProcessor(object):
             # No Cache Endpoints
             'default': TTLProcessor.DONT_CACHE,
             '/api/v1/josh/': TTLProcessor.DONT_CACHE,
-            '/api/v1/videos/': TTLProcessor.ONE_MINUTE,
-            '/api/v1/users/me/': TTLProcessor.THIRTY_SECONDS,
+            '/api/v1/videos/': TTLProcessor.DONT_CACHE,
+            '/api/v1/users/me/': TTLProcessor.DONT_CACHE,
             # Low-Level Cache
             'video-detail': TTLProcessor.FIVE_MINUTES,
             # Mid-Level Cache Endpoints

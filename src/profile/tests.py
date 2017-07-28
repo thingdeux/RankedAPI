@@ -301,6 +301,27 @@ class UsersFollowersTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(profile.followed_profiles.all().count(), 1)
+        self.assertEqual(profile.following_count, 1)
+
+    def test_profile_follow_delete(self):
+        """
+        /Followers should allow you to delete a followed profile.
+        """
+
+        auth_token = "Bearer {}".format(self.test_profile_token)
+        self.client.credentials(HTTP_AUTHORIZATION=auth_token)
+
+        response = self.client.post('/api/v1/users/{}/following/'.format(self.test_profile2.id), format="json")
+        profile = Profile.objects.get(id=self.test_profile.id)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(profile.followed_profiles.all().count(), 1)
+
+        response = self.client.delete('/api/v1/users/{}/following/'.format(self.test_profile2.id), format="json")
+        profile = Profile.objects.get(id=self.test_profile.id)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(profile.following_count, 0)
 
     def test_profile_stop_following_success(self):
         """
