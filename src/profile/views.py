@@ -54,12 +54,14 @@ class AvatarUploadView(APIView):
                 s3 = boto3.resource('s3')
                 profile = Profile.objects.get(pk=request.user.id)
                 generated_s3_key = 'ava{id}-{uuid}.{ext}'.format(id=profile.id, uuid=uuid.uuid4(), ext=file_extension)
-                s3.Bucket('static.goranked.com').put_object(Key=generated_s3_key, Body=file_obj, ACL='public-read')
+
+
+                s3.Bucket('static.goranked.com').put_object(Key=generated_s3_key,Body=file_obj,ACL='public-read',
+                                                            ContentType=self.__get_image_content_type(file_extension))
 
                 profile.avatar_url = "http://static.goranked.com/{}".format(generated_s3_key)
                 profile.save()
-                return Response(ProfileSerializer(instance=profile,
-                                                  context={"request": request}).data, status=200)
+                return Response(ProfileSerializer(instance=profile, context={"request": request}).data, status=200)
             else :
                 error = { "description": "Filesize too large! Less than 1MB" }
                 return Response(status=413, data=error)
@@ -68,3 +70,18 @@ class AvatarUploadView(APIView):
         except KeyError:
             error = {"description": "'File' parameter missing"}
             return Response(status=304, data=error)
+
+    @staticmethod
+    def __get_image_content_type(file_extension):
+        file_type = 'image/png'
+        if file_extension.lower() == "bmp":
+            file_type = 'image/bmp'
+        elif file_extension.lower() == "gif":
+            file_type = 'image/gif'
+        elif file_extension.lower() == "jpeg":
+            file_type = 'image/jpeg'
+        elif file_extension.lower() == "png":
+            file_type = 'image/png'
+        elif file_extension.lower() == "tiff":
+            file_type = 'image/tiff'
+        return file_type
