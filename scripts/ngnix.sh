@@ -9,7 +9,7 @@ cp /home/ec2-user/src/ranked/conf/nginx/default.conf /etc/nginx/nginx.conf
 
 unlink /etc/nginx/sites-enabled/* > /dev/null
 
-cp /home/ec2-user/src/ranked/conf/nginx/prod.conf /etc/nginx/sites-available/goranked.conf
+cp /home/ec2-user/src/ranked/conf/nginx/dev.conf /etc/nginx/sites-available/goranked.conf
 
 ln -s /etc/nginx/sites-available/goranked.conf /etc/nginx/sites-enabled/goranked.conf
 
