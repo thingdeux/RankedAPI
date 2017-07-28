@@ -3,6 +3,7 @@ class TTLProcessor(object):
     Middleware to dynamically attach Varnish Cache headers to response by rendering url.
     """
     DONT_CACHE = 0
+    TEN_SECONDS = 10
     ONE_MINUTE = 60
     TWO_MINUTES = 60 * 2
     FIVE_MINUTES = 60 * 5
@@ -29,6 +30,9 @@ class TTLProcessor(object):
 
         try:
             response['X-CACHE-TTL'] = TTLProcessor.__get_cache_timeout(request.path, request.resolver_match.url_name)
+            response['Cache-Control'] = TTLProcessor.__get_cache_control(request.path, request.resolver_match.url_name)
+
+
             return response
         except AttributeError:
             # Catches requests to /admin - Django doesn't attach a resolver attribute to it.
@@ -67,3 +71,37 @@ class TTLProcessor(object):
             time = TTLProcessor.DONT_CACHE
 
         return time
+
+    @staticmethod
+    def __get_cache_control(raw_path, url_name):
+        # Cache-Control Mapper
+        resolver_mapper = {
+            # No Cache Endpoints
+            'default': TTLProcessor.DONT_CACHE,
+            '/api/v1/josh/': TTLProcessor.DONT_CACHE,
+            '/api/v1/videos/': TTLProcessor.DONT_CACHE,
+            '/api/v1/users/me/': TTLProcessor.DONT_CACHE,
+            # Low-Level Cache
+            'video-detail': TTLProcessor.FIVE_MINUTES,
+            # Mid-Level Cache Endpoints
+            '/api/v1/search/trending/': TTLProcessor.THIRTY_MINUTES,
+            '/api/v1/search/trendsetters/': TTLProcessor.THIRTY_MINUTES,
+            '/api/v1/search/': TTLProcessor.ONE_HOUR,
+            '/api/v1/search/explore/': TTLProcessor.ONE_HOUR,
+            '/api/v1/search/ranked10/': TTLProcessor.ONE_HOUR,
+            '/api/v1/videos/top/': TTLProcessor.ONE_HOUR,
+
+            # Long lived responses
+            '/api/v1/categories/': TTLProcessor.ONE_DAY,
+
+            # Will need to purge early - but for now won't cache.
+            'profile-following': TTLProcessor.DONT_CACHE,
+            'profile-followers': TTLProcessor.DONT_CACHE,
+            'profile-detail': TTLProcessor.DONT_CACHE,
+        }
+
+        age = resolver_mapper.get(raw_path, None) or resolver_mapper.get(url_name, None)
+        if not age:
+            age = TTLProcessor.DONT_CACHE
+
+        return 'max-age={}'.format(age)
