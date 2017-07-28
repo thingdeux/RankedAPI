@@ -28,10 +28,14 @@ class TTLProcessor(object):
         # Pull the url resolver name from the django url route # ex: video-list, video-detail etc
         response = self.get_response(request)
 
+        if request.method == "OPTIONS":
+            response['X-CACHE-TTL'] = TTLProcessor.ONE_WEEK
+            response['Cache-Control'] = 'max-age={}'.format(TTLProcessor.ONE_WEEK)
+            return response
+
         try:
             response['X-CACHE-TTL'] = TTLProcessor.__get_cache_timeout(request.path, request.resolver_match.url_name)
             response['Cache-Control'] = TTLProcessor.__get_cache_control(request.path, request.resolver_match.url_name)
-
 
             return response
         except AttributeError:

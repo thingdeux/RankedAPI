@@ -22,6 +22,10 @@
     {
       "type": "markdown",
       "data": "# Contextual Search\n------\nThe content to be searched for will change based on the selected tab\n\n## Standard\n**Results**: Videos - Search for videos by Category\n\n\n## Explore\n\n**Results**: Mixture of Profile / Video\n**Notes**: \n  - If the search phrase contains a \\# at the beginning - then limit the results to videos.\n  - Allows filtering of search results by title\n  - Allows for searching for users by username.\n\n\n## Trending\n\n**Notes**:\n- Currently just top 20 highest ranked videos\n\n\n## Ranked 10\n\n**Results**: Videos (Limited to videos that are actually ranked10 for their respective category)\n**Notes**: \n  - Allows for filtering by video title or category as well.\n\n### ‘Trend Setters’:\n\n**Results**: Profiles (Profiles with videos that are highly ranked)\n**Notes**: \n  - This won’t be working for the alpha - it'll be a random assortment of user id's."
+    },
+    {
+      "type": "text",
+      "data": "<a href=\"http://static.goranked.com/ava4-da0192be-ffd0-4302-a2f0-0581252228ae.png\">http://static.goranked.com/ava4-da0192be-ffd0-4302-a2f0-0581252228ae.png</a><div><a href=\"http://static.goranked.com/ava65-76e78e37-0e84-4468-a41d-3f5927d437da.png\">http://static.goranked.com/ava65-76e78e37-0e84-4468-a41d-3f5927d437da.png</a><br></div>"
     }
   ]
 }
