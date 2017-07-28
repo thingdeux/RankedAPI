@@ -164,10 +164,6 @@ sub vcl_recv {
        return (synth(404, "Not Found A."));
     }
 
-    if ((req.url ~ "^/api/v1/users/me/$") || (req.url ~ "^/api/v1/videos/$")) {
-       return (pass);
-    }
-
     # Allow PURGE with special header only
     if (req.method == "PURGE") {
        if (req.http.quijibo) {

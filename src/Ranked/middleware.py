@@ -3,7 +3,7 @@ class TTLProcessor(object):
     Middleware to dynamically attach Varnish Cache headers to response by rendering url.
     """
     DONT_CACHE = 0
-    TEN_SECONDS = 10
+    THIRTY_SECONDS = 30
     ONE_MINUTE = 60
     TWO_MINUTES = 60 * 2
     FIVE_MINUTES = 60 * 5
@@ -45,8 +45,8 @@ class TTLProcessor(object):
             # No Cache Endpoints
             'default': TTLProcessor.DONT_CACHE,
             '/api/v1/josh/': TTLProcessor.DONT_CACHE,
-            '/api/v1/videos/': TTLProcessor.DONT_CACHE,
-            '/api/v1/users/me/': TTLProcessor.DONT_CACHE,
+            '/api/v1/videos/': TTLProcessor.ONE_MINUTE,
+            '/api/v1/users/me/': TTLProcessor.THIRTY_SECONDS,
             # Low-Level Cache
             'video-detail': TTLProcessor.FIVE_MINUTES,
             # Mid-Level Cache Endpoints
@@ -63,7 +63,7 @@ class TTLProcessor(object):
             # Will need to purge early - but for now won't cache.
             'profile-following': TTLProcessor.DONT_CACHE,
             'profile-followers': TTLProcessor.DONT_CACHE,
-            'profile-detail': TTLProcessor.DONT_CACHE,
+            'profile-detail': TTLProcessor.THIRTY_SECONDS,
         }
 
         time = resolver_mapper.get(raw_path, None) or resolver_mapper.get(url_name, None)
@@ -79,8 +79,8 @@ class TTLProcessor(object):
             # No Cache Endpoints
             'default': TTLProcessor.DONT_CACHE,
             '/api/v1/josh/': TTLProcessor.DONT_CACHE,
-            '/api/v1/videos/': TTLProcessor.DONT_CACHE,
-            '/api/v1/users/me/': TTLProcessor.DONT_CACHE,
+            '/api/v1/videos/': TTLProcessor.ONE_MINUTE,
+            '/api/v1/users/me/': TTLProcessor.THIRTY_SECONDS,
             # Low-Level Cache
             'video-detail': TTLProcessor.FIVE_MINUTES,
             # Mid-Level Cache Endpoints
@@ -97,7 +97,7 @@ class TTLProcessor(object):
             # Will need to purge early - but for now won't cache.
             'profile-following': TTLProcessor.DONT_CACHE,
             'profile-followers': TTLProcessor.DONT_CACHE,
-            'profile-detail': TTLProcessor.DONT_CACHE,
+            'profile-detail': TTLProcessor.THIRTY_SECONDS,
         }
 
         age = resolver_mapper.get(raw_path, None) or resolver_mapper.get(url_name, None)
