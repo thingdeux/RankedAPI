@@ -128,9 +128,9 @@ class ProfileImporter:
 
     def __generate_demo_urls(self, video: Video, filename):
         # TODO: Should pull this from django settings.
-        STATIC_URL = "http://static.goranked.com"
-        video.high = 'http://{}/{}'.format("videos.goranked.com", filename)
-        video.low = 'http://{}/{}.webm'.format("videos.goranked.com", filename.split('.')[0])
+        STATIC_URL = "https://static.goranked.com"
+        video.high = 'https://{}/{}'.format("videos.goranked.com", filename)
+        video.low = 'https://{}/{}.webm'.format("videos.goranked.com", filename.split('.')[0])
         filename_parsed = filename.split('.')[0]
         video.thumbnail_large = "{}/{}-lrg-00001.jpg".format(STATIC_URL, filename_parsed)
         video.thumbnail_small = "{}/{}-00001.png".format(STATIC_URL, filename_parsed)

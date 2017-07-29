@@ -884,7 +884,7 @@ class VideoAPIUploadingCase(APITestBase):
               '2163E8A4-3A45-47BE-AA5A-489F8919B118.MOV'
 
         filename = Video.generate_thumbnail_links(url)[0]
-        self.assertEqual(filename, 'http://static.goranked.com/51-1bdedd12-2a36-45b6-8da2-ff2514fe6f86-trim'
+        self.assertEqual(filename, 'https://static.goranked.com/51-1bdedd12-2a36-45b6-8da2-ff2514fe6f86-trim'
                                    '2163E8A4-3A45-47BE-AA5A-489F8919B118-lrg-00001.jpg')
 
 
@@ -899,6 +899,6 @@ class VideoAPIUploadingCase(APITestBase):
 
 
         self.video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
-                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            thumbnail_small="https://MyThumb.jpg", thumbnail_large="https://MyLargeThumb.jpg",
                             category=self.sub_category, rank_total=300)
         self.video1.save()

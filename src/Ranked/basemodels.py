@@ -100,8 +100,8 @@ class UploadProcessable(models.Model):
 
         return {
             'data': pre_signed_post,
-            'final_url': 'http://{}/{}.mp4'.format("videos.goranked.com", generated_filename.split('.')[0]),
-            'low_url': 'http://{}/{}.webm'.format("videos.goranked.com", generated_filename.split('.')[0])
+            'final_url': 'https://{}/{}.mp4'.format("videos.goranked.com", generated_filename.split('.')[0]),
+            'low_url': 'https://{}/{}.webm'.format("videos.goranked.com", generated_filename.split('.')[0])
         }
 
     @staticmethod
@@ -120,7 +120,7 @@ class UploadProcessable(models.Model):
 
     @staticmethod
     def generate_thumbnail_links(filename):
-        STATIC_URL = "http://static.goranked.com"
+        STATIC_URL = "https://static.goranked.com"
         try:
             filename_parsed = filename.split('.')[0]
             return ("{}/{}-lrg-00001.jpg".format(STATIC_URL, filename_parsed),

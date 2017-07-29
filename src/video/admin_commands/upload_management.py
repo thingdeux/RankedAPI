@@ -71,7 +71,7 @@ def update_videos_to_large_urls():
                 vid_to_update = Video.objects.filter(custom_field1='{}.mov'.format(filename)).first()
             finally:
                 if vid_to_update:
-                    vid_to_update.thumbnail_large = 'http://static.goranked.com/{}-lrg-00001.jpg'.format(filename)
+                    vid_to_update.thumbnail_large = 'https://static.goranked.com/{}-lrg-00001.jpg'.format(filename)
                     vid_to_update.save()
 
 def purge_old_videos():

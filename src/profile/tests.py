@@ -221,7 +221,7 @@ class UsersMeTestCase(TestCase):
         sub_category.save()
 
         video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
-                            thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                            thumbnail_small="https://MyThumb.jpg", thumbnail_large="https://MyLargeThumb.jpg",
                             category=sub_category, rank_total=300)
         video1.save()
         video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
@@ -622,7 +622,7 @@ class UserFavoriteCategoriesTest(APITestBase):
         breakdance.save()
 
         video1 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
-                       thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                       thumbnail_small="https://MyThumb.jpg", thumbnail_large="https://MyLargeThumb.jpg",
                        category=breakdance, rank_total=300)
         video1.save()
         video2 = Video(related_profile=self.test_profile, title="My Video", is_processing=False, is_active=True,
@@ -633,7 +633,7 @@ class UserFavoriteCategoriesTest(APITestBase):
         video3.save()
 
         video1 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,
-                       thumbnail_small="http://MyThumb.jpg", thumbnail_large="http://MyLargeThumb.jpg",
+                       thumbnail_small="https://MyThumb.jpg", thumbnail_large="https://MyLargeThumb.jpg",
                        category=breakdance, rank_total=300)
         video1.save()
         video2 = Video(related_profile=self.test_profile2, title="My Video", is_processing=False, is_active=True,

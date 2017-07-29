@@ -25,7 +25,7 @@ def me(request):
             .select_related('primary_category__parent_category').select_related('secondary_category')\
             .select_related('secondary_category__parent_category').first()
         videos = Video.objects.filter(related_profile=profile).select_related('related_profile')\
-            .select_related('category').select_related('category__parent_category')
+            .select_related('category').select_related('category__parent_category').order_by('-views')
 
         my_ranked_videos = [x['id'] for x in Video.get_all_videos_user_has_ranked_queryset(profile.id)]
 
@@ -59,7 +59,7 @@ class AvatarUploadView(APIView):
                 s3.Bucket('static.goranked.com').put_object(Key=generated_s3_key,Body=file_obj,ACL='public-read',
                                                             ContentType=self.__get_image_content_type(file_extension))
 
-                profile.avatar_url = "http://static.goranked.com/{}".format(generated_s3_key)
+                profile.avatar_url = "https://static.goranked.com/{}".format(generated_s3_key)
                 profile.save()
                 return Response(ProfileSerializer(instance=profile, context={"request": request}).data, status=200)
             else :
