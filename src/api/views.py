@@ -80,8 +80,12 @@ def __get_explore_data(name, category_id, **kwargs):
 
 def __get_videos_by_category(category_id, **kwargs):
     if category_id:
-        results = Video.objects.filter(category__id=category_id, is_active=True).select_related('category')\
-            .select_related('related_profile').select_related('category').select_related('category__parent_category')
+        results = Video.get_videos_performant_queryset()
+        results = results.filter(is_active=True)
+
+        if category_id:
+            results = results.filter(Q(category__id=category_id) | Q(category__parent_category__id=category_id))
+
         results = add_limit_and_offset_to_queryset(results, **kwargs)
 
         return VideoSerializer(results, many=True).data
