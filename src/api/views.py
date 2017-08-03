@@ -12,6 +12,7 @@ from .utils import add_limit_and_offset_to_queryset
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 from django.http import HttpResponse
 # Django Imports
+from django.db.models import Q
 from django.views.decorators.cache import cache_page
 
 THREE_HOURS_IN_SECONDS = 10800
@@ -79,8 +80,12 @@ def __get_explore_data(name, category_id, **kwargs):
 
 def __get_videos_by_category(category_id, **kwargs):
     if category_id:
-        results = Video.objects.filter(category__id=category_id, is_active=True).select_related('category')\
-            .select_related('related_profile').select_related('category').select_related('category__parent_category')
+        results = Video.get_videos_performant_queryset()
+        results = results.filter(is_active=True)
+
+        if category_id:
+            results = results.filter(Q(category__id=category_id) | Q(category__parent_category__id=category_id))
+
         results = add_limit_and_offset_to_queryset(results, **kwargs)
 
         return VideoSerializer(results, many=True).data
@@ -88,13 +93,12 @@ def __get_videos_by_category(category_id, **kwargs):
         return None
 
 def __get_explore_search_data(filter_phrase, category_id, **kwargs):
-    base_queryset = Video.objects.filter(is_active=True).select_related('category')\
-        .select_related('related_profile').select_related('category__parent_category')\
-        .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category')\
-        .select_related('related_profile__secondary_category').select_related('related_profile__secondary_category__parent_category')\
+    base_queryset = Video.get_videos_performant_queryset()
+    base_queryset = base_queryset.filter(is_active=True)
 
     if category_id:
-        base_queryset = base_queryset.filter(category__id=category_id)
+        base_queryset = base_queryset.filter(Q(category__id=category_id) | Q(category__parent_category__id=category_id))
+
     if filter_phrase:
         # Add the trailing comma for accuracy, ex: if I search for BestNBA or BestNBADunks without the
         # Trailing comma ending the phrase they'll both return the same videos.

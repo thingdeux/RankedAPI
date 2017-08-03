@@ -21,8 +21,7 @@ class Video(Base, Hashtagable, ProfileRelatable, MultipleQualityLinkable, Custom
     def get_videos_performant_queryset():
         return Video.objects.filter() \
             .select_related('related_profile').select_related('related_profile__secondary_category') \
-            .select_related('related_profile__primary_category').select_related(
-            'related_profile__primary_category__parent_category') \
+            .select_related('related_profile__primary_category').select_related('related_profile__primary_category__parent_category') \
             .select_related('related_profile__secondary_category__parent_category').select_related('category') \
             .select_related('category__parent_category')
 
