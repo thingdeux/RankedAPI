@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   title: "Ranked API"
-  description: "API for mobile and/or Web Clients"
+  description: "API Documentation for mobile and Web Clients"
   version: "0.8.26"
   contact:
     email: "me@josh.land"
@@ -18,15 +18,21 @@ tags:
   - Videos:
     name: "Videos"
     description: "Everything related to Videos"
+  - Pictures:
+    name: "Pictures"
+    description: "Everything related to Pictures"
   - Comments:
     name: "Comments"
-    description: "Everything related to comments"
+    description: "Everything related to Comments"
   - Search:
     name: "Search"
     description: "Everything related to Searching"
   - Categories:
     name: "Categories"
     description: "Everything related to categories"
+  - Contests:
+    name: "Contests"
+    description: "GoRanked Contest Details"
 
 securityDefinitions:
   ranked_auth:
@@ -157,8 +163,6 @@ definitions:
 
       image_links:
         $ref: "#/definitions/VideoImageOptions"
-      video_urls:
-        $ref: "#/definitions/VideoQualityOptions"
       uploaded_by:
         $ref: "#/definitions/User"
   VideoDetail:
@@ -247,6 +251,57 @@ definitions:
         type: "array"
         items:
           $ref: '#/definitions/Video'
+
+  # Pictures Definitions
+  Picture:
+    type: "object"
+    description: "Representation of an uploaded picture post for Ranked."
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 12345
+      title:
+        type: "string"
+        example: "When you've got it - flaunt it"
+        description: "Small Blurb about the picture in question"
+      rank_total:
+        type: "integer"
+        format: "int32"
+        example: 34
+        description: "Total number of ranks this picture has received"
+      is_featured:
+        type: "boolean"
+        example: false
+        description: "Whether or not this picture is a featured/promoted picture"
+      category:
+        $ref: "#/definitions/Category"
+        description: "Pictures associated category."
+      hashtag:
+        type: "array"
+        example: ['#Gems', '#Ballin', '#DabIsStillRelevant', '#Corporate']
+        items:
+          type: "string"
+      average_rank:
+        type: integer
+        description: "Ranking between 1-10"
+        format: "int32"
+        example: 12
+
+      image_links:
+        $ref: "#/definitions/VideoImageOptions"
+      video_urls:
+        $ref: "#/definitions/VideoQualityOptions"
+      uploaded_by:
+        $ref: "#/definitions/User"
+
+  PictureList:
+    type: "object"
+    properties:
+      pictures:
+        type: "array"
+        items:
+          $ref: '#/definitions/Picture'
 
   # Upload Definitions
   VideoUploadAWSDetails:
@@ -855,6 +910,48 @@ paths:
             description: "Account does not exist"
           403:
             "description": "Access Denied"
+
+  # Pictures
+  /pictures/:
+    get:
+      summary: "List of pictures from the profiles the authenticated user is following"
+      operationId: "get_followed_pictures"
+      tags:
+        - "Pictures"
+      produces:
+        - "application/json"
+      security:
+        - ranked_auth:
+           - read:videos
+           - read:user
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          example: "F#55344F"
+          description: "Required Authorization Bearer Token for OAuth2"
+        - in: "query"
+          name: "limit"
+          type: "integer"
+          required: false
+          example: "1"
+          description: "Limit the amount of videos that can come back per response."
+        - in: "query"
+          name: "offset"
+          type: "integer"
+          required: false
+          example: "1"
+          description: "Offset amount for the videos returned on this endpoint"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PictureList"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Access Denied"
 
   # Videos
   /videos/:
