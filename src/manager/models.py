@@ -26,6 +26,10 @@ class EnvironmentState(Base):
 
      @property
      def should_update_profiles_favorite_categories(self):
+         should_force_update = (timezone.now() - self.last_updated_favorite_categories).days > 0
+         if should_force_update:
+             return True
+
          if not self.is_in_maintenance_mode and not self.is_updating_favorite_categories:
              if timezone.now() > self.last_updated_favorite_categories + timedelta(minutes=60):
                  return True

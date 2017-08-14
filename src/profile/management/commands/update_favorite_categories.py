@@ -11,7 +11,7 @@ from src.profile.models import Profile
 from src.manager.models import EnvironmentState
 import logging
 
-logger = logging.getLogger("cron.update_ranking")
+logger = logging.getLogger("cron.update_categories")
 
 
 class Command(LabelCommand):
@@ -33,9 +33,10 @@ def _update_favorite_categories():
     """
     # TODO: Run as a celery job.
     state = EnvironmentState.get_environment_state()
+    should_update = state.should_update_profiles_favorite_categories
 
-    if not state.should_update_profiles_favorite_categories:
-        print("No need to update favorite categories - bailing.")
+    if not should_update:
+        logger.info("No need to update favorite categories - bailing.")
         return
 
     state.is_updating_favorite_categories = True
@@ -47,9 +48,9 @@ def _update_favorite_categories():
         with transaction.atomic():
             for profile in Profile.objects.filter(is_active=True):
                 __update_favorite_category_for_profile(profile)
-            state.last_updated_ranking_scores = timezone.now()
-        state.is_updating_favorite_categories = False
-        state.save()
+            state.last_updated_favorite_categories = timezone.now()
+            state.is_updating_favorite_categories = False
+            state.save()
     except Exception as error:
         logger.error("Error Running Profile Category Update Job {}".format(error))
         state.is_updating_favorite_categories = False

@@ -7,7 +7,7 @@
     },
     {
       "type": "markdown",
-      "data": "### Up Next:\n- [ ] Define API structure for Photos\n- [ ] Define API structure for Notifications\n- [ ] Define API structure for Sharing\n- [ ] Define API structure for Contests.\n- [ ] Setup Celery Worker queues\n- [ ] 'Add by Username' [SETTINGS]\n- [ ] 'Add Highest Ranked in Category' functionality [SETTINGS] - gnarly query - can cache for a while.\n"
+      "data": "### Up Next:\n- [ ] Look into exception being thrown on update categories - or setting that update category flag manually back for crashes\n- [ ] Define API structure for Photos\n- [ ] Define API structure for Notifications\n- [ ] Define API structure for Sharing\n- [ ] Define API structure for Contests.\n- [ ] Setup Celery Worker queues\n- [ ] 'Add by Username' [SETTINGS]\n- [ ] 'Add Highest Ranked in Category' functionality [SETTINGS] - gnarly query - can cache for a while.\n"
     },
     {
       "type": "markdown",
