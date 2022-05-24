@@ -1,5 +1,3 @@
-# README #
-
 Ranked API - A Backend platform for providing services to the Ranked Mobile apps.
 
 ### What is this repository for? ###
